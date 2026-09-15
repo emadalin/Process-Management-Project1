@@ -62,8 +62,10 @@ Package.swift                      swift-tools-version 6.0 (Swift 6 language mod
 Sources/ThreadLab/
   main.swift                       mode switch, thread harness, banners   (Member 2)
   VendingMachine.swift             shared resource: Unsafe + Safe methods (Members 3 & 4)
+  PriorityTest.swift               Part C: PickerRobot racers, QoS comparison   (Member 5)
 docs/
   section1-threading-model.md      Thread vs. GCD vs. Task, @unchecked Sendable
+  section5-priority-scheduling.md  QoS vs. threadPriority, P/E cores, results
   section7-pros-cons-limitations.md
   machine-details.md               every team Mac's OS, chip, cores, Swift version
 project1-threads-brief.md          assignment brief

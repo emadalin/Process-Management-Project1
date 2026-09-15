@@ -75,8 +75,8 @@ Owns demo section 2.
 Owns demo section 3.
 
 - [x] Write the `VendingMachine` class skeleton with the three `Int` properties (coordinate with Member 4 on the shape before either of you codes methods)
-- [ ] Write the unsafe methods: `buyOneUnsafe()`, `buyComboUnsafe()`, `restockUnsafe()`, `collectCashUnsafe()`
-- [ ] Use read → `sched_yield()` → write to widen the timing window (be ready to say this *exposes* the bug, it does not create it)
+- [x] Write the unsafe methods: `buyOneUnsafe()`, `buyComboUnsafe()`, `restockUnsafe()`, `collectCashUnsafe()`
+- [x] Use read → `sched_yield()` → write to widen the timing window (be ready to say this *exposes* the bug, it does not create it)
 - [ ] Write the four worker thread bodies, each with its private tally
 - [ ] Keep `print` out of the hot loops — printing slows threads and hides races
 - [ ] Capture sample output showing negative stock, lost trays, and vanished cash
@@ -96,14 +96,14 @@ Owns demo section 4.
 ### Member 5 — Priority & Scheduling (Part C) · `Sarah Rae & Calli`
 Owns demo section 5.
 
-- [ ] Write the three `PickerRobot` racer threads: identical CPU-bound loop counting iterations until a 2-second deadline
-- [ ] Print each thread's `qualityOfService`, `threadPriority`, and `qos_class_self()` (requested vs. actually applied)
-- [ ] Store racer results in a lock-protected store, print after all racers finish
+- [x] Write the three `PickerRobot` racer threads: identical CPU-bound loop counting iterations until a 2-second deadline
+- [x] Print each thread's `qualityOfService`, `threadPriority`, and `qos_class_self()` (requested vs. actually applied)
+- [x] Store racer results in a lock-protected store, print after all racers finish
 - [ ] Run config 1 (all `.default`) at least 5 times; run config 2 (`.userInteractive` / `.utility` / `.background`) at least 5 times
-- [ ] Add extra load threads so there are more CPU-bound threads than cores — that is how we create contention, since macOS has no CPU pinning
-- [ ] Note the chip for every run (`uname -m`); on Apple Silicon check `sysctl hw.perflevel0.physicalcpu hw.perflevel1.physicalcpu`
+- [x] Add extra load threads so there are more CPU-bound threads than cores — that is how we create contention, since macOS has no CPU pinning
+- [x] Note the chip for every run (`uname -m`); on Apple Silicon check `sysctl hw.perflevel0.physicalcpu hw.perflevel1.physicalcpu`
 - [ ] Reduce noise: plugged in, Low Power Mode off, heavy apps closed, machine cooled between runs
-- [ ] Measure **work done in a fixed time**, not who prints first — the first thread started gets a head start regardless of QoS
+- [x] Measure **work done in a fixed time**, not who prints first — the first thread started gets a head start regardless of QoS
 - [ ] Fill in the results table; be ready to explain P-core vs. E-core placement and why QoS is a request, not a guarantee
 
 ---
