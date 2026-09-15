@@ -48,23 +48,38 @@ final class VendingMachine: @unchecked Sendable {
     /// If stock > 0, take 1 item and add its price to the coin box.
     @discardableResult
     func buyOneUnsafe() -> Bool {
-        fatalError("TODO(Member 3): implement buyOneUnsafe")
+        guard itemsInStock > 0 else { return false }
+        let currentStock = itemsInStock    // READ
+        sched_yield()                      // widen the timing window (exposes the bug, doesn't create it)
+        itemsInStock = currentStock - 1    // WRITE (may overwrite another thread's update)
+        coinBoxCents += itemPriceCents     // also not atomic
+        return true
     }
 
     /// If stock >= comboSize, take comboSize items and add comboSize x price.
     @discardableResult
     func buyComboUnsafe() -> Bool {
-        fatalError("TODO(Member 3): implement buyComboUnsafe")
+        guard itemsInStock >= comboSize else { return false }  // CHECK
+        sched_yield()                                          // widen the check-then-act gap
+        itemsInStock -= comboSize                              // ACT (stock can go negative if another thread already passed the check)
+        coinBoxCents += comboSize * itemPriceCents
+        return true
     }
 
     /// When stock drops below restockThreshold, load a tray of restockTraySize.
     func restockUnsafe() {
-        fatalError("TODO(Member 3): implement restockUnsafe")
+        guard itemsInStock < restockThreshold else { return }
+        let currentStock = itemsInStock            // READ
+        sched_yield()                              // widen the window (another restock landing here gets overwritten)
+        itemsInStock = currentStock + restockTraySize  // WRITE
     }
 
     /// Read coinBoxCents, add it to cashCollectedCents, reset the box to 0.
     func collectCashUnsafe() {
-        fatalError("TODO(Member 3): implement collectCashUnsafe")
+        let collected = coinBoxCents       // READ
+        sched_yield()                      // widen the window (a purchase landing here gets erased below)
+        cashCollectedCents += collected
+        coinBoxCents = 0                   // RESET (wipes out anything added during the yield)
     }
 
     // MARK: - Synchronized methods (Member 4, Part B second half)
