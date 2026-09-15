@@ -1,0 +1,19 @@
+{
+  "": {
+    "swift-dependencies": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/primary.swiftdeps"
+  },
+  "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/VendingMachine.swift": {
+    "dependencies": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.d",
+    "object": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o",
+    "swiftmodule": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine~partial.swiftmodule",
+    "swift-dependencies": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swiftdeps",
+    "diagnostics": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.dia"
+  },
+  "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/main.swift": {
+    "dependencies": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.d",
+    "object": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.swift.o",
+    "swiftmodule": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.swiftdeps",
+    "diagnostics": "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.dia"
+  }
+}

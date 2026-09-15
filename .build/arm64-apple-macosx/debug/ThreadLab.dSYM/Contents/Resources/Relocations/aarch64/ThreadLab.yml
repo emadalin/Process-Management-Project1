@@ -1,0 +1,51 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab'
+relocations:
+  - { offset: 0x89A9E, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12itemsInStockSivg', symObjAddr: 0x0, symBinAddr: 0x100000D78, symSize: 0x48 }
+  - { offset: 0x89D60, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC4lock33_887977CC19FCADB853BE0B86378F666FLLSo6NSLockCvpfi', symObjAddr: 0x2CC, symBinAddr: 0x100001044, symSize: 0x28 }
+  - { offset: 0x89D78, size: 0x8, addend: 0x0, symName: '_$sSo6NSLockCMa', symObjAddr: 0x2F4, symBinAddr: 0x10000106C, symSize: 0x60 }
+  - { offset: 0x89D8C, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13startingStock14itemPriceCents9comboSize16restockThreshold0l4TrayK0ACSi_S4itcfcfA_', symObjAddr: 0x3B0, symBinAddr: 0x100001128, symSize: 0xC }
+  - { offset: 0x89DA6, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13startingStock14itemPriceCents9comboSize16restockThreshold0l4TrayK0ACSi_S4itcfcfA0_', symObjAddr: 0x3BC, symBinAddr: 0x100001134, symSize: 0xC }
+  - { offset: 0x89DC0, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13startingStock14itemPriceCents9comboSize16restockThreshold0l4TrayK0ACSi_S4itcfcfA1_', symObjAddr: 0x3C8, symBinAddr: 0x100001140, symSize: 0xC }
+  - { offset: 0x89DDA, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13startingStock14itemPriceCents9comboSize16restockThreshold0l4TrayK0ACSi_S4itcfcfA2_', symObjAddr: 0x3D4, symBinAddr: 0x10000114C, symSize: 0xC }
+  - { offset: 0x89DF4, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13startingStock14itemPriceCents9comboSize16restockThreshold0l4TrayK0ACSi_S4itcfcfA3_', symObjAddr: 0x3E0, symBinAddr: 0x100001158, symSize: 0xC }
+  - { offset: 0x89E0E, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineCMa', symObjAddr: 0xA20, symBinAddr: 0x100001798, symSize: 0x24 }
+  - { offset: 0x89E45, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12itemsInStockSivg', symObjAddr: 0x0, symBinAddr: 0x100000D78, symSize: 0x48 }
+  - { offset: 0x89E64, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12itemsInStockSivs', symObjAddr: 0x48, symBinAddr: 0x100000DC0, symSize: 0x48 }
+  - { offset: 0x89E78, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12itemsInStockSivM', symObjAddr: 0x90, symBinAddr: 0x100000E08, symSize: 0x40 }
+  - { offset: 0x89E8C, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12itemsInStockSivM.resume.0', symObjAddr: 0xD0, symBinAddr: 0x100000E48, symSize: 0x14 }
+  - { offset: 0x89EA0, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12coinBoxCentsSivg', symObjAddr: 0xE4, symBinAddr: 0x100000E5C, symSize: 0x48 }
+  - { offset: 0x89EB4, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12coinBoxCentsSivs', symObjAddr: 0x12C, symBinAddr: 0x100000EA4, symSize: 0x48 }
+  - { offset: 0x89EC8, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12coinBoxCentsSivM', symObjAddr: 0x174, symBinAddr: 0x100000EEC, symSize: 0x40 }
+  - { offset: 0x89EDC, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12coinBoxCentsSivM.resume.0', symObjAddr: 0x1B4, symBinAddr: 0x100000F2C, symSize: 0x14 }
+  - { offset: 0x89EF0, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC18cashCollectedCentsSivg', symObjAddr: 0x1C8, symBinAddr: 0x100000F40, symSize: 0x48 }
+  - { offset: 0x89F04, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC18cashCollectedCentsSivs', symObjAddr: 0x210, symBinAddr: 0x100000F88, symSize: 0x48 }
+  - { offset: 0x89F18, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC18cashCollectedCentsSivM', symObjAddr: 0x258, symBinAddr: 0x100000FD0, symSize: 0x40 }
+  - { offset: 0x89F2C, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC18cashCollectedCentsSivM.resume.0', symObjAddr: 0x298, symBinAddr: 0x100001010, symSize: 0x14 }
+  - { offset: 0x89F40, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC14itemPriceCentsSivg', symObjAddr: 0x2AC, symBinAddr: 0x100001024, symSize: 0x8 }
+  - { offset: 0x89F54, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC9comboSizeSivg', symObjAddr: 0x2B4, symBinAddr: 0x10000102C, symSize: 0x8 }
+  - { offset: 0x89F68, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC16restockThresholdSivg', symObjAddr: 0x2BC, symBinAddr: 0x100001034, symSize: 0x8 }
+  - { offset: 0x89F7C, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC15restockTraySizeSivg', symObjAddr: 0x2C4, symBinAddr: 0x10000103C, symSize: 0x8 }
+  - { offset: 0x89FE3, size: 0x8, addend: 0x0, symName: '_$sSo6NSLockCABycfC', symObjAddr: 0x354, symBinAddr: 0x1000010CC, symSize: 0x2C }
+  - { offset: 0x89FF7, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC4lock33_887977CC19FCADB853BE0B86378F666FLLSo6NSLockCvg', symObjAddr: 0x380, symBinAddr: 0x1000010F8, symSize: 0x30 }
+  - { offset: 0x8A016, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13startingStock14itemPriceCents9comboSize16restockThreshold0l4TrayK0ACSi_S4itcfC', symObjAddr: 0x3EC, symBinAddr: 0x100001164, symSize: 0x68 }
+  - { offset: 0x8A02A, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13startingStock14itemPriceCents9comboSize16restockThreshold0l4TrayK0ACSi_S4itcfc', symObjAddr: 0x454, symBinAddr: 0x1000011CC, symSize: 0xB4 }
+  - { offset: 0x8A099, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12buyOneUnsafeSbyF', symObjAddr: 0x508, symBinAddr: 0x100001280, symSize: 0x94 }
+  - { offset: 0x8A0BD, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC14buyComboUnsafeSbyF', symObjAddr: 0x59C, symBinAddr: 0x100001314, symSize: 0x94 }
+  - { offset: 0x8A0E1, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC13restockUnsafeyyF', symObjAddr: 0x630, symBinAddr: 0x1000013A8, symSize: 0x94 }
+  - { offset: 0x8A105, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC17collectCashUnsafeyyF', symObjAddr: 0x6C4, symBinAddr: 0x10000143C, symSize: 0x94 }
+  - { offset: 0x8A129, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC10buyOneSafeSbyF', symObjAddr: 0x758, symBinAddr: 0x1000014D0, symSize: 0x94 }
+  - { offset: 0x8A14D, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC12buyComboSafeSbyF', symObjAddr: 0x7EC, symBinAddr: 0x100001564, symSize: 0x94 }
+  - { offset: 0x8A171, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC11restockSafeyyF', symObjAddr: 0x880, symBinAddr: 0x1000015F8, symSize: 0x94 }
+  - { offset: 0x8A195, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineC15collectCashSafeyyF', symObjAddr: 0x914, symBinAddr: 0x10000168C, symSize: 0x94 }
+  - { offset: 0x8A1CB, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineCfd', symObjAddr: 0x9A8, symBinAddr: 0x100001720, symSize: 0x3C }
+  - { offset: 0x8A1EF, size: 0x8, addend: 0x0, symName: '_$s9ThreadLab14VendingMachineCfD', symObjAddr: 0x9E4, symBinAddr: 0x10000175C, symSize: 0x3C }
+  - { offset: 0x8A213, size: 0x8, addend: 0x0, symName: '_$sSo6NSLockCABycfcTO', symObjAddr: 0xA44, symBinAddr: 0x1000017BC, symSize: 0x18 }
+  - { offset: 0x8A2B2, size: 0x8, addend: 0x0, symName: _ThreadLab_main, symObjAddr: 0x0, symBinAddr: 0x1000017D4, symSize: 0xC8 }
+  - { offset: 0x8A2CA, size: 0x8, addend: 0x0, symName: _ThreadLab_main, symObjAddr: 0x0, symBinAddr: 0x1000017D4, symSize: 0xC8 }
+  - { offset: 0x8A2E8, size: 0x8, addend: 0x0, symName: '_$sSa12_endMutationyyF', symObjAddr: 0x160, symBinAddr: 0x100001934, symSize: 0xC }
+  - { offset: 0x8A30B, size: 0x8, addend: 0x0, symName: '_$ss27_finalizeUninitializedArrayySayxGABnlF', symObjAddr: 0xC8, symBinAddr: 0x10000189C, symSize: 0x40 }
+  - { offset: 0x8A335, size: 0x8, addend: 0x0, symName: '_$ss5print_9separator10terminatoryypd_S2StFfA0_', symObjAddr: 0x108, symBinAddr: 0x1000018DC, symSize: 0x2C }
+  - { offset: 0x8A351, size: 0x8, addend: 0x0, symName: '_$ss5print_9separator10terminatoryypd_S2StFfA1_', symObjAddr: 0x134, symBinAddr: 0x100001908, symSize: 0x2C }
+...

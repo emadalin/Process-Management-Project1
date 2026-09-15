@@ -1,0 +1,81 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "ThreadLab-arm64-apple-macosx-debug.exe": ["<ThreadLab-arm64-apple-macosx-debug.exe>"]
+  "ThreadLab-arm64-apple-macosx-debug.module": ["<ThreadLab-arm64-apple-macosx-debug.module>"]
+  "main": ["<ThreadLab-arm64-apple-macosx-debug.exe>","<ThreadLab-arm64-apple-macosx-debug.module>"]
+  "test": ["<ThreadLab-arm64-apple-macosx-debug.exe>","<ThreadLab-arm64-apple-macosx-debug.module>"]
+default: "main"
+nodes:
+  "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab":
+    is-mutated: true
+commands:
+  "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab-entitlement.plist":
+    tool: write-auxiliary-file
+    inputs: ["<entitlement-plist>","<com.apple.security.get-task-allow>"]
+    outputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab-entitlement.plist"]
+    description: "Write auxiliary file /Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab-entitlement.plist"
+
+  "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/VendingMachine.swift","/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/main.swift"]
+    outputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/sources"]
+    description: "Write auxiliary file /Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/sources"
+
+  "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.swift.o"]
+    outputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.product/Objects.LinkFileList"
+
+  "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+
+  "<ThreadLab-arm64-apple-macosx-debug.exe>":
+    tool: phony
+    inputs: ["<ThreadLab-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    outputs: ["<ThreadLab-arm64-apple-macosx-debug.exe>"]
+
+  "<ThreadLab-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.swift.o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/Modules/ThreadLab.swiftmodule"]
+    outputs: ["<ThreadLab-arm64-apple-macosx-debug.module>"]
+
+  "C.ThreadLab-arm64-apple-macosx-debug.exe":
+    tool: shell
+    inputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.swift.o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.product/Objects.LinkFileList"]
+    outputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/ThreadLab"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug","-o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab","-module-name","ThreadLab","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-alias","-Xlinker","_ThreadLab_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx13.0","-Xlinker","-add_ast_path","-Xlinker","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/Modules/ThreadLab.swiftmodule","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.ThreadLab-arm64-apple-macosx-debug.exe-entitlements":
+    tool: shell
+    inputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab-entitlement.plist"]
+    outputs: ["<ThreadLab-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    description: "Applying debug entitlements to ./.build/arm64-apple-macosx/debug/ThreadLab"
+    args: ["codesign","--force","--sign","-","--entitlements","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab-entitlement.plist","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab"]
+
+  "C.ThreadLab-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/VendingMachine.swift","/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/main.swift","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/sources"]
+    outputs: ["/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.swift.o","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/Modules/ThreadLab.swiftmodule"]
+    description: "Compiling Swift Module 'ThreadLab' (2 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","ThreadLab","-emit-dependencies","-emit-module","-emit-module-path","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/Modules/ThreadLab.swiftmodule","-output-file-map","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/output-file-map.json","-incremental","-c","@/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/sources","-I","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx13.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j18","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","ThreadLab_main","-swift-version","6","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","process_management_project1"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/","/Users/ellamadalinski/Process-Management-Project1/Package.swift","/Users/ellamadalinski/Process-Management-Project1/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+
