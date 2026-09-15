@@ -50,18 +50,18 @@ In `sync` mode both hold on every run. In `unsync` mode both usually drift.
 
 ## 3. Owned Areas
 
-### Member 1 — Research & Threading Model · `________`
+### Member 1 — Research & Threading Model · `Sarah Rae & Calli`
 Owns demo sections 1 and 7, plus repo setup.
 
-- [ ] Create the Swift package (`Package.swift` + `Sources/ThreadLab/`), push it, confirm it builds on all five Macs
-- [ ] Write notes on: Foundation `Thread` = 1:1 kernel threads vs. GCD's managed pool vs. Swift Concurrency `Task`s
-- [ ] Write notes on `@unchecked Sendable` — what it means and why our race demo needs it
-- [ ] Prepare the Pros/Cons/Limitations section: lock overhead and contention, results varying by Mac hardware, and the "rewrite `VendingMachine` as an `actor`" improvement
+- [x] Create the Swift package (`Package.swift` + `Sources/ThreadLab/`), push it, confirm it builds on all five Macs
+- [x] Write notes on: Foundation `Thread` = 1:1 kernel threads vs. GCD's managed pool vs. Swift Concurrency `Task`s
+- [x] Write notes on `@unchecked Sendable` — what it means and why our race demo needs it
+- [x] Prepare the Pros/Cons/Limitations section: lock overhead and contention, results varying by Mac hardware, and the "rewrite `VendingMachine` as an `actor`" improvement
 - [ ] Record everyone's machine details: `sw_vers`, `uname -m`, `sysctl -n hw.ncpu`, `swift --version`
-- [ ] Own the README and the team contribution statement
-- [ ] Schedule the rehearsal and confirm each person is explaining a section they did not write
+- [x] Own the README and the team contribution statement
+- [x] Schedule the rehearsal and confirm each person is explaining a section they did not write
 
-### Member 2 — Thread Creation Harness (Part A) · `________`
+### Member 2 — Thread Creation Harness (Part A) · `Stephen`
 Owns demo section 2.
 
 - [ ] Write `startWorker(_:group:qos:task:)` — sets `thread.name`, sets `qualityOfService` **before** `start()`, calls `group.enter()` / `group.leave()`
@@ -71,10 +71,10 @@ Owns demo section 2.
 - [ ] Confirm `group.wait()` on the main thread actually blocks — test by removing it and showing threads get killed when `main` exits
 - [ ] Be ready to explain why `Thread` has no `join()` and how `DispatchGroup` works as a latch
 
-### Member 3 — Unsynchronized Mode (Part B, first half) · `________`
+### Member 3 — Unsynchronized Mode (Part B, first half) · `Ella`
 Owns demo section 3.
 
-- [ ] Write the `VendingMachine` class skeleton with the three `Int` properties (coordinate with Member 4 on the shape before either of you codes methods)
+- [x] Write the `VendingMachine` class skeleton with the three `Int` properties (coordinate with Member 4 on the shape before either of you codes methods)
 - [ ] Write the unsafe methods: `buyOneUnsafe()`, `buyComboUnsafe()`, `restockUnsafe()`, `collectCashUnsafe()`
 - [ ] Use read → `sched_yield()` → write to widen the timing window (be ready to say this *exposes* the bug, it does not create it)
 - [ ] Write the four worker thread bodies, each with its private tally
@@ -82,7 +82,7 @@ Owns demo section 3.
 - [ ] Capture sample output showing negative stock, lost trays, and vanished cash
 - [ ] Be ready to explain exactly where the read-modify-write gap is in each method
 
-### Member 4 — Synchronized Mode & Auditor (Part B, second half) · `________`
+### Member 4 — Synchronized Mode & Auditor (Part B, second half) · `Georgia`
 Owns demo section 4.
 
 - [ ] Write the safe methods with `NSLock`: `lock.lock()` + `defer { lock.unlock() }`, identical logic otherwise
@@ -93,7 +93,7 @@ Owns demo section 4.
 - [ ] Be ready to answer: can this deadlock? Why or why not?
 - [ ] **Optional bonus:** `NSConditionLock` turnstile to force ordering, which shows the contrast with a plain lock
 
-### Member 5 — Priority & Scheduling (Part C) · `________`
+### Member 5 — Priority & Scheduling (Part C) · `Sarah Rae & Calli`
 Owns demo section 5.
 
 - [ ] Write the three `PickerRobot` racer threads: identical CPU-bound loop counting iterations until a 2-second deadline
@@ -146,13 +146,14 @@ The instructor can ask any team member about any part.
 
 **Cross-assignment for rehearsal** (present someone else's section):
 
+Members 1 and 5 are the same people, so the swap is by person:
+
 | Presenter | Presents |
 |---|---|
-| Member 1 | Part C priority results (Member 5's) |
-| Member 2 | Synchronized mode (Member 4's) |
-| Member 3 | Threading model (Member 1's) |
-| Member 4 | Unsynchronized mode (Member 3's) |
-| Member 5 | Thread creation harness (Member 2's) |
+| Sarah Rae & Calli (Members 1, 5) | Section 2, thread creation harness (Stephen's) and Section 3, unsynchronized mode (Ella's) |
+| Stephen (Member 2) | Section 4, synchronized mode (Georgia's) |
+| Ella (Member 3) | Sections 1 and 7, threading model and pros/cons (Sarah Rae & Calli's) |
+| Georgia (Member 4) | Section 5, priority results (Sarah Rae & Calli's) |
 
 ---
 
