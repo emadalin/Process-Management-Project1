@@ -83,28 +83,47 @@ final class VendingMachine: @unchecked Sendable {
     }
 
     // MARK: - Synchronized methods (Member 4, Part B second half)
-    // TODO(Member 4): lock.lock() + defer { lock.unlock() }, identical logic
-    // to the Unsafe versions above — same checks, same math, just guarded.
+    // lock.lock() + defer { lock.unlock() }, identical logic to the Unsafe
+    // versions above — same checks, same math, just guarded. NSLock is not
+    // recursive (locking twice on one thread deadlocks) and must be unlocked
+    // on the same thread that locked it, so each method takes the lock once.
 
     /// Safe counterpart of buyOneUnsafe().
     @discardableResult
     func buyOneSafe() -> Bool {
-        fatalError("TODO(Member 4): implement buyOneSafe")
+        lock.lock()
+        defer { lock.unlock() }
+        guard itemsInStock > 0 else { return false }
+        itemsInStock -= 1
+        coinBoxCents += itemPriceCents
+        return true
     }
 
     /// Safe counterpart of buyComboUnsafe().
     @discardableResult
     func buyComboSafe() -> Bool {
-        fatalError("TODO(Member 4): implement buyComboSafe")
+        lock.lock()
+        defer { lock.unlock() }
+        guard itemsInStock >= comboSize else { return false }
+        itemsInStock -= comboSize
+        coinBoxCents += comboSize * itemPriceCents
+        return true
     }
 
     /// Safe counterpart of restockUnsafe().
     func restockSafe() {
-        fatalError("TODO(Member 4): implement restockSafe")
+        lock.lock()
+        defer { lock.unlock() }
+        guard itemsInStock < restockThreshold else { return }
+        itemsInStock += restockTraySize
     }
 
     /// Safe counterpart of collectCashUnsafe().
     func collectCashSafe() {
-        fatalError("TODO(Member 4): implement collectCashSafe")
+        lock.lock()
+        defer { lock.unlock() }
+        let collected = coinBoxCents
+        coinBoxCents = 0
+        cashCollectedCents += collected
     }
 }
