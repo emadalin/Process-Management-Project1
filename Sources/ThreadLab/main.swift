@@ -1,8 +1,43 @@
 import Foundation
 
-// TODO(Member 2, Section 2): replace this with the real mode switch
-// (unsync / sync / priority / all), the startWorker(_:group:qos:task:)
-// harness, and the output banners. This placeholder only exists so the
-// package builds end to end for everyone right now.
+// =============================================================================
+// main.swift — the CLI mode switch, and nothing else · Member 2
+//
+// Top-level statements are legal ONLY in a file named main.swift; every other
+// file in an executable target may contain declarations only. That is the entire
+// reason this file exists.
+//
+//   Harness.swift       Member 2   Config, Safety, startWorker, the run functions
+//   Workers.swift       Member 3   the four worker thread bodies
+//   Auditor.swift       Member 4   the Auditor thread and the invariant report
+//   PriorityTest.swift  Member 5   the PickerRobot racers
+//   Tallies.swift       shared     the tally store the Auditor reads
+//   VendingMachine.swift  M3 + M4  the shared resource
+//
+// All one module (ThreadLab), so these files see each other with no imports.
+// =============================================================================
 
-print("ThreadLab skeleton builds. Mode switch not implemented yet.")
+let arguments = CommandLine.arguments.dropFirst()
+
+/// Demo switch for the "does group.wait() actually block?" experiment — lets us
+/// show threads being killed when main exits, without editing the source live.
+let skipWait = arguments.contains("--no-wait")
+let mode = arguments.first(where: { !$0.hasPrefix("--") }) ?? "all"
+
+warnIfWorkerBodiesNotReady(mode: mode)
+
+switch mode {
+case "unsync":
+    runUnsynchronized(skipWait: skipWait)
+case "sync":
+    runSynchronized(skipWait: skipWait)
+case "priority":
+    runPriorityMode()
+case "all":
+    runUnsynchronized(skipWait: skipWait)
+    runSynchronized(skipWait: skipWait)
+    runPriorityMode()
+default:
+    print("usage: ThreadLab [unsync|sync|priority|all] [--no-wait]")
+    exit(1)
+}
