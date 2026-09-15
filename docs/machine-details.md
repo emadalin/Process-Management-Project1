@@ -15,8 +15,8 @@ swift --version
 
 | Name (Member #) | macOS (`sw_vers`) | Chip (`uname -m` / brand) | Cores (`hw.ncpu`) | P / E cores | Swift (`swift --version`) |
 |---|---|---|---|---|---|
-| Sarah Rae (1, 5) | 15.7.4 (24G517) | arm64 (Apple Silicon) | 8 | 4 / 4 | 6.2.1 (swiftlang-6.2.1.4.8) |
-| Calli (1, 5) | | | | | |
+| Sarah Rae (1, 5) | 15.7.4 (24G517) | arm64 (Apple M2) | 8 | 4 / 4 | 6.2.1 (swiftlang-6.2.1.4.8) |
+| Calli (1, 5) | 26.6.2 (25G83) | arm64 (Apple M3 Pro) | 11 | 5 / 6 | 6.2.3 (swiftlang-6.2.3.3.21) |
 | Stephen (2) | | | | | |
 | Ella (3) | 26.5.1 (25F80) | arm64 (Apple M5 Pro) | 18 | 6 / 12 | 6.3.3 (swiftlang-6.3.3.1.3) |
 | Georgia (4) | | | | | |
