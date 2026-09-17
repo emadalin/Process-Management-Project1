@@ -79,7 +79,7 @@ Owns demo section 3.
 - [x] Use read → `sched_yield()` → write to widen the timing window (be ready to say this *exposes* the bug, it does not create it)
 - [x] Write the four worker thread bodies, each with its private tally *(written by Stephen in `Workers.swift` + `Tallies.swift`)*
 - [x] Keep `print` out of the hot loops — printing slows threads and hides races
-- [x] Capture sample output showing negative stock, lost trays, and vanished cash *(`output-unsync-ella-run1.txt`, `output-unsync-ella-run2.txt`, `output-unsync-negative-stock.txt`)*
+- [x] Capture sample output showing negative stock, lost trays, and vanished cash *(`output-unsync-ella-run1.txt`/`run2.txt` show both invariants failing by tens of millions after retuning Config's iteration counts so restocking actually happens; `output-unsync-negative-stock.txt` catches `itemsInStock` at -3 mid-run; `output-unsync-run1.txt` (Stephen's original, smaller-scale capture) still stands as the first evidence of vanished cash)*
 - [ ] Be ready to explain exactly where the read-modify-write gap is in each method
 
 ### Member 4 — Synchronized Mode & Auditor (Part B, second half) · `Georgia`
@@ -113,7 +113,7 @@ Owns demo section 5.
 - [ ] `swift run --sanitize=thread ThreadLab unsync` → save the data race reports
 - [ ] `swift run --sanitize=thread ThreadLab sync` → confirm clean, save that too
 - [ ] Run both debug and `-c release`; note any difference in how often the race appears
-- [ ] Save outputs: `swift run ThreadLab unsync | tee output-unsync-run1.txt` (at least 2 runs total, more is better)
+- [ ] Save outputs: `swift run ThreadLab unsync | tee output-unsync-run1.txt` (at least 2 runs total, more is better) *(1 of 2: Stephen saved `output-unsync-run1.txt`)*
 - [ ] Hand the priority results table to Member 1 for the README
 
 ---
