@@ -26,9 +26,14 @@ func runAuditor(_ machine: VendingMachine,
           + "restock=\(t.restockPasses) passes, collections=\(t.cashCollections)")
 
     // Invariant 1: itemsInStock == startingStock + restocked - sold
-    // Unverifiable until restockSafe/Unsafe report how much they actually added.
-    print("  invariant 1 (stock): SKIPPED — restock methods return Void, "
-          + "so 'restocked' is unknown. Needs the -> Bool/-> Int signature change.")
+    // restockSafe/Unsafe now return whether a tray was actually loaded, so
+    // t.restockPasses is trays loaded (not passes attempted) — see Workers.swift.
+    let restocked = t.restockPasses * machine.restockTraySize
+    let expectedStock = Config.startingStock + restocked - t.totalItemsSold
+    let actualStock = machine.itemsInStock
+    let stockDrift = actualStock - expectedStock
+    print("  invariant 1 (stock): expected=\(expectedStock) actual=\(actualStock) "
+          + "drift=\(stockDrift) \(stockDrift == 0 ? "OK" : "MISMATCH")")
 
     // Invariant 2: itemsSold * price == coinBoxCents + cashCollectedCents
     let expectedMoney = t.totalItemsSold * machine.itemPriceCents

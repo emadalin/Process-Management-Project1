@@ -1,0 +1,21 @@
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 0 trays of 50
+[RestockDriver] finished
+[SingleBuyer] sold 6463 items
+[SingleBuyer] finished
+[ComboBuyer] sold 6568 combos = 19704 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=6463 items, combo=6568 purchases/19704 items, restock=0 passes, collections=200
+  invariant 1 (stock): expected=-16167 actual=0 drift=16167 MISMATCH
+  invariant 2 (money): expected=3925050c actual=3670200c drift=-254850c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
