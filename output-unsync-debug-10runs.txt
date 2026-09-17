@@ -1,0 +1,252 @@
+=== 10x unsync, debug build ===
+Machine: Apple M2 (arm64), macOS 15.7.4, 4P/4E, swift-driver version: 1.127.14.1 Apple Swift version 6.2.1 (swiftlang-6.2.1.4.8 clang-1700.4.4.1)
+--- run 1 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=455 coinBox=483506100c cash=72150c
+[Auditor] snapshot 2: stock=517 coinBox=963032400c cash=72150c
+[RestockDriver] loaded 530999 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1117501200c cash=72150c
+[ComboBuyer] sold 1967214 combos = 5901642 items
+[ComboBuyer] finished
+[SingleBuyer] sold 1962026 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=1962026 items, combo=1967214 purchases/5901642 items, restock=530999 passes, collections=200
+  invariant 1 (stock): expected=18696282 actual=0 drift=-18696282 MISMATCH
+  invariant 2 (money): expected=1179550200c actual=1117573350c drift=-61976850c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 2 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=521 coinBox=485610450c cash=60150c
+[Auditor] snapshot 2: stock=519 coinBox=975466950c cash=60150c
+[RestockDriver] loaded 636528 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1143973650c cash=60150c
+[SingleBuyer] sold 2043619 items
+[SingleBuyer] finished
+[ComboBuyer] sold 2041582 combos = 6124746 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=2043619 items, combo=2041582 purchases/6124746 items, restock=636528 passes, collections=200
+  invariant 1 (stock): expected=23668035 actual=0 drift=-23668035 MISMATCH
+  invariant 2 (money): expected=1225254750c actual=1144033800c drift=-81220950c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 3 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=516 coinBox=488470500c cash=157200c
+[Auditor] snapshot 2: stock=519 coinBox=975819000c cash=157200c
+[RestockDriver] loaded 554173 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1109532000c cash=157200c
+[SingleBuyer] sold 1997619 items
+[SingleBuyer] finished
+[ComboBuyer] sold 1999386 combos = 5998158 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=1997619 items, combo=1999386 purchases/5998158 items, restock=554173 passes, collections=200
+  invariant 1 (stock): expected=19722873 actual=0 drift=-19722873 MISMATCH
+  invariant 2 (money): expected=1199366550c actual=1109689200c drift=-89677350c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 4 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=531 coinBox=475983300c cash=111000c
+[Auditor] snapshot 2: stock=505 coinBox=952423350c cash=111000c
+[RestockDriver] loaded 584266 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1110535050c cash=111000c
+[SingleBuyer] sold 2010716 items
+[SingleBuyer] finished
+[ComboBuyer] sold 2011971 combos = 6035913 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=2010716 items, combo=2011971 purchases/6035913 items, restock=584266 passes, collections=200
+  invariant 1 (stock): expected=21176671 actual=0 drift=-21176671 MISMATCH
+  invariant 2 (money): expected=1206994350c actual=1110646050c drift=-96348300c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 5 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=519 coinBox=491976600c cash=72750c
+[Auditor] snapshot 2: stock=501 coinBox=995478750c cash=72750c
+[RestockDriver] loaded 861555 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1235204550c cash=72750c
+[ComboBuyer] sold 2179703 combos = 6539109 items
+[ComboBuyer] finished
+[SingleBuyer] sold 2175818 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=2175818 items, combo=2179703 purchases/6539109 items, restock=861555 passes, collections=200
+  invariant 1 (stock): expected=34372823 actual=0 drift=-34372823 MISMATCH
+  invariant 2 (money): expected=1307239050c actual=1235277300c drift=-71961750c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 6 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[RestockDriver] started
+[ComboBuyer] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=541 coinBox=473235300c cash=82800c
+[Auditor] snapshot 2: stock=490 coinBox=941766450c cash=82800c
+[RestockDriver] loaded 441172 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1042103400c cash=82800c
+[SingleBuyer] sold 1936134 items
+[SingleBuyer] finished
+[ComboBuyer] sold 1930316 combos = 5790948 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=1936134 items, combo=1930316 purchases/5790948 items, restock=441172 passes, collections=200
+  invariant 1 (stock): expected=14341518 actual=0 drift=-14341518 MISMATCH
+  invariant 2 (money): expected=1159062300c actual=1042186200c drift=-116876100c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 7 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=505 coinBox=484189050c cash=76650c
+[Auditor] snapshot 2: stock=534 coinBox=915733950c cash=76650c
+[RestockDriver] loaded 567516 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1105024650c cash=76650c
+[SingleBuyer] sold 1987890 items
+[SingleBuyer] finished
+[ComboBuyer] sold 1986432 combos = 5959296 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=1987890 items, combo=1986432 purchases/5959296 items, restock=567516 passes, collections=200
+  invariant 1 (stock): expected=20438614 actual=0 drift=-20438614 MISMATCH
+  invariant 2 (money): expected=1192077900c actual=1105101300c drift=-86976600c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 8 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=547 coinBox=464243550c cash=89250c
+[Auditor] snapshot 2: stock=548 coinBox=954275700c cash=89250c
+[RestockDriver] loaded 616106 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1129705950c cash=89250c
+[ComboBuyer] sold 1984087 combos = 5952261 items
+[ComboBuyer] finished
+[SingleBuyer] sold 1948513 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=1948513 items, combo=1984087 purchases/5952261 items, restock=616106 passes, collections=200
+  invariant 1 (stock): expected=22914526 actual=0 drift=-22914526 MISMATCH
+  invariant 2 (money): expected=1185116100c actual=1129795200c drift=-55320900c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 9 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=523 coinBox=479523750c cash=84300c
+[Auditor] snapshot 2: stock=508 coinBox=966055200c cash=84300c
+[RestockDriver] loaded 679284 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1173064950c cash=84300c
+[ComboBuyer] sold 2040040 combos = 6120120 items
+[ComboBuyer] finished
+[SingleBuyer] sold 2033812 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=2033812 items, combo=2040040 purchases/6120120 items, restock=679284 passes, collections=200
+  invariant 1 (stock): expected=25820268 actual=0 drift=-25820268 MISMATCH
+  invariant 2 (money): expected=1223089800c actual=1173149250c drift=-49940550c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 10 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=506 coinBox=491750850c cash=123600c
+[Auditor] snapshot 2: stock=405 coinBox=977237400c cash=123600c
+[RestockDriver] loaded 721560 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 3: stock=0 coinBox=1173602400c cash=123600c
+[SingleBuyer] sold 2102821 items
+[SingleBuyer] finished
+[ComboBuyer] sold 2102671 combos = 6308013 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=2102821 items, combo=2102671 purchases/6308013 items, restock=721560 passes, collections=200
+  invariant 1 (stock): expected=27677166 actual=0 drift=-27677166 MISMATCH
+  invariant 2 (money): expected=1261625100c actual=1173726000c drift=-87899100c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===

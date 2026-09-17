@@ -1,0 +1,222 @@
+=== 10x unsync, release build ===
+Machine: Apple M2 (arm64), macOS 15.7.4, 4P/4E, swift-driver version: 1.127.14.1 Apple Swift version 6.2.1 (swiftlang-6.2.1.4.8 clang-1700.4.4.1)
+--- run 1 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 15406 trays of 50
+[RestockDriver] finished
+[ComboBuyer] sold 24552 combos = 73656 items
+[ComboBuyer] finished
+[SingleBuyer] sold 25865 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=25865 items, combo=24552 purchases/73656 items, restock=15406 passes, collections=200
+  invariant 1 (stock): expected=680779 actual=0 drift=-680779 MISMATCH
+  invariant 2 (money): expected=14928150c actual=14804700c drift=-123450c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 2 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 35367 trays of 50
+[RestockDriver] finished
+[SingleBuyer] sold 46490 items
+[SingleBuyer] finished
+[ComboBuyer] sold 45383 combos = 136149 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=46490 items, combo=45383 purchases/136149 items, restock=35367 passes, collections=200
+  invariant 1 (stock): expected=1595711 actual=0 drift=-1595711 MISMATCH
+  invariant 2 (money): expected=27395850c actual=27150450c drift=-245400c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 3 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 32962 trays of 50
+[RestockDriver] finished
+[SingleBuyer] sold 43241 items
+[ComboBuyer] sold 42679 combos = 128037 items
+[ComboBuyer] finished
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=43241 items, combo=42679 purchases/128037 items, restock=32962 passes, collections=200
+  invariant 1 (stock): expected=1486822 actual=0 drift=-1486822 MISMATCH
+  invariant 2 (money): expected=25691700c actual=25500150c drift=-191550c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 4 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[Auditor] started
+[CashCollector] started
+[ComboBuyer] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 36444 trays of 50
+[RestockDriver] finished
+[ComboBuyer] sold 46513 combos = 139539 items
+[ComboBuyer] finished
+[SingleBuyer] sold 46960 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=46960 items, combo=46513 purchases/139539 items, restock=36444 passes, collections=200
+  invariant 1 (stock): expected=1645701 actual=0 drift=-1645701 MISMATCH
+  invariant 2 (money): expected=27974850c actual=27815250c drift=-159600c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 5 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 34224 trays of 50
+[RestockDriver] finished
+[SingleBuyer] sold 45382 items
+[SingleBuyer] finished
+[ComboBuyer] sold 45025 combos = 135075 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=45382 items, combo=45025 purchases/135075 items, restock=34224 passes, collections=200
+  invariant 1 (stock): expected=1540743 actual=0 drift=-1540743 MISMATCH
+  invariant 2 (money): expected=27068550c actual=26810700c drift=-257850c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 6 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[Auditor] started
+[RestockDriver] started
+[ComboBuyer] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 34473 trays of 50
+[RestockDriver] finished
+[ComboBuyer] sold 44685 combos = 134055 items
+[ComboBuyer] finished
+[SingleBuyer] sold 45144 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=45144 items, combo=44685 purchases/134055 items, restock=34473 passes, collections=200
+  invariant 1 (stock): expected=1554451 actual=0 drift=-1554451 MISMATCH
+  invariant 2 (money): expected=26879850c actual=26687400c drift=-192450c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 7 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[Auditor] started
+[CashCollector] started
+[ComboBuyer] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 34028 trays of 50
+[RestockDriver] finished
+[ComboBuyer] sold 44322 combos = 132966 items
+[ComboBuyer] finished
+[SingleBuyer] sold 45021 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=45021 items, combo=44322 purchases/132966 items, restock=34028 passes, collections=200
+  invariant 1 (stock): expected=1533413 actual=0 drift=-1533413 MISMATCH
+  invariant 2 (money): expected=26698050c actual=26503650c drift=-194400c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 8 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 35325 trays of 50
+[RestockDriver] finished
+[ComboBuyer] sold 45331 combos = 135993 items
+[SingleBuyer] sold 46049 items
+[ComboBuyer] finished
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=46049 items, combo=45331 purchases/135993 items, restock=35325 passes, collections=200
+  invariant 1 (stock): expected=1594208 actual=0 drift=-1594208 MISMATCH
+  invariant 2 (money): expected=27306300c actual=27040350c drift=-265950c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 9 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 35951 trays of 50
+[RestockDriver] finished
+[ComboBuyer] sold 46070 combos = 138210 items
+[ComboBuyer] finished
+[SingleBuyer] sold 46805 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=46805 items, combo=46070 purchases/138210 items, restock=35951 passes, collections=200
+  invariant 1 (stock): expected=1622535 actual=0 drift=-1622535 MISMATCH
+  invariant 2 (money): expected=27752250c actual=27549000c drift=-203250c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
+--- run 10 ---
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[RestockDriver] loaded 35563 trays of 50
+[RestockDriver] finished
+[ComboBuyer] sold 46035 combos = 138105 items
+[ComboBuyer] finished
+[SingleBuyer] sold 46667 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=46667 items, combo=46035 purchases/138105 items, restock=35563 passes, collections=200
+  invariant 1 (stock): expected=1603378 actual=0 drift=-1603378 MISMATCH
+  invariant 2 (money): expected=27715800c actual=27376200c drift=-339600c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===
