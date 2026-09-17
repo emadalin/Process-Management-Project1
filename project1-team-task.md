@@ -64,10 +64,10 @@ Owns demo sections 1 and 7, plus repo setup.
 ### Member 2 — Thread Creation Harness (Part A) · `Stephen`
 Owns demo section 2.
 
-- [ ] Write `startWorker(_:group:qos:task:)` — sets `thread.name`, sets `qualityOfService` **before** `start()`, calls `group.enter()` / `group.leave()`
-- [ ] Write the `main.swift` CLI mode switch: `unsync`, `sync`, `priority`, `all`
-- [ ] Add the output banners: `=== UNSYNCHRONIZED RUN ===`, `=== SYNCHRONIZED RUN ===`, `=== PRIORITY TEST ===`
-- [ ] Make sure every thread prints when it starts, what it does, and when it finishes
+- [x] Write `startWorker(_:group:qos:task:)` — sets `thread.name`, sets `qualityOfService` **before** `start()`, calls `group.enter()` / `group.leave()`
+- [x] Write the `main.swift` CLI mode switch: `unsync`, `sync`, `priority`, `all`
+- [x] Add the output banners: `=== UNSYNCHRONIZED RUN ===`, `=== SYNCHRONIZED RUN ===`, `=== PRIORITY TEST ===`
+- [x] Make sure every thread prints when it starts, what it does, and when it finishes
 - [ ] Confirm `group.wait()` on the main thread actually blocks — test by removing it and showing threads get killed when `main` exits
 - [ ] Be ready to explain why `Thread` has no `join()` and how `DispatchGroup` works as a latch
 
@@ -77,17 +77,17 @@ Owns demo section 3.
 - [x] Write the `VendingMachine` class skeleton with the three `Int` properties (coordinate with Member 4 on the shape before either of you codes methods)
 - [x] Write the unsafe methods: `buyOneUnsafe()`, `buyComboUnsafe()`, `restockUnsafe()`, `collectCashUnsafe()`
 - [x] Use read → `sched_yield()` → write to widen the timing window (be ready to say this *exposes* the bug, it does not create it)
-- [ ] Write the four worker thread bodies, each with its private tally
-- [ ] Keep `print` out of the hot loops — printing slows threads and hides races
+- [x] Write the four worker thread bodies, each with its private tally *(written by Stephen in `Workers.swift` + `Tallies.swift`)*
+- [x] Keep `print` out of the hot loops — printing slows threads and hides races
 - [ ] Capture sample output showing negative stock, lost trays, and vanished cash
 - [ ] Be ready to explain exactly where the read-modify-write gap is in each method
 
 ### Member 4 — Synchronized Mode & Auditor (Part B, second half) · `Georgia`
 Owns demo section 4.
 
-- [ ] Write the safe methods with `NSLock`: `lock.lock()` + `defer { lock.unlock() }`, identical logic otherwise
-- [ ] Note the `NSLock` caveats for the demo: not recursive (locking twice on one thread deadlocks), must unlock on the locking thread
-- [ ] Write the `Auditor` thread: periodic snapshots plus the final expected-vs-actual report for both invariants
+- [x] Write the safe methods with `NSLock`: `lock.lock()` + `defer { lock.unlock() }`, identical logic otherwise
+- [x] Note the `NSLock` caveats for the demo: not recursive (locking twice on one thread deadlocks), must unlock on the locking thread
+- [ ] Write the `Auditor` thread: periodic snapshots plus the final expected-vs-actual report for both invariants *(partly done by Stephen in `Auditor.swift`: snapshots and invariant 2 work, invariant 1 is skipped until `restockSafe`/`restockUnsafe` return how much they added)*
 - [ ] Verify `sync` mode matches on every run (run it at least 10 times)
 - [ ] Be ready to answer: does our lock give mutual exclusion, ordering, or both? (Mutual exclusion only)
 - [ ] Be ready to answer: can this deadlock? Why or why not?
