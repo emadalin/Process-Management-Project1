@@ -87,8 +87,8 @@ Owns demo section 4.
 
 - [x] Write the safe methods with `NSLock`: `lock.lock()` + `defer { lock.unlock() }`, identical logic otherwise
 - [x] Note the `NSLock` caveats for the demo: not recursive (locking twice on one thread deadlocks), must unlock on the locking thread
-- [ ] Write the `Auditor` thread: periodic snapshots plus the final expected-vs-actual report for both invariants *(partly done by Stephen in `Auditor.swift`: snapshots and invariant 2 work, invariant 1 is skipped until `restockSafe`/`restockUnsafe` return how much they added)*
-- [ ] Verify `sync` mode matches on every run (run it at least 10 times)
+- [x] Write the `Auditor` thread: periodic snapshots plus the final expected-vs-actual report for both invariants *(Stephen wrote the snapshots + invariant 2 in `Auditor.swift`; Georgia finished invariant 1 once `restockSafe`/`restockUnsafe` started returning whether a tray was actually loaded)*
+- [x] Verify `sync` mode matches on every run (run it at least 10 times) *(ran release build 10x, both invariants OK every run; `unsync` still shows real drift for contrast)*
 - [ ] Be ready to answer: does our lock give mutual exclusion, ordering, or both? (Mutual exclusion only)
 - [ ] Be ready to answer: can this deadlock? Why or why not?
 - [ ] **Optional bonus:** `NSConditionLock` turnstile to force ordering, which shows the contrast with a plain lock
