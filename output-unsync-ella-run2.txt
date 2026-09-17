@@ -1,0 +1,26 @@
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'ThreadLab' complete! (0.06s)
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[Auditor] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=363 coinBox=623241600c cash=71550c
+[RestockDriver] loaded 754451 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 2: stock=0 coinBox=1128390600c cash=71550c
+[SingleBuyer] sold 2183310 items
+[SingleBuyer] finished
+[ComboBuyer] sold 2154606 combos = 6463818 items
+[ComboBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=2183310 items, combo=2154606 purchases/6463818 items, restock=754451 passes, collections=200
+  invariant 1 (stock): expected=29085422 actual=0 drift=-29085422 MISMATCH
+  invariant 2 (money): expected=1297069200c actual=1128462150c drift=-168607050c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===

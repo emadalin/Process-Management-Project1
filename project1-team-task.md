@@ -79,7 +79,7 @@ Owns demo section 3.
 - [x] Use read → `sched_yield()` → write to widen the timing window (be ready to say this *exposes* the bug, it does not create it)
 - [x] Write the four worker thread bodies, each with its private tally *(written by Stephen in `Workers.swift` + `Tallies.swift`)*
 - [x] Keep `print` out of the hot loops — printing slows threads and hides races
-- [x] Capture sample output showing negative stock, lost trays, and vanished cash *(`output-unsync-run1.txt`, `output-unsync-run2.txt`, `output-unsync-negative-stock.txt`)*
+- [x] Capture sample output showing negative stock, lost trays, and vanished cash *(`output-unsync-ella-run1.txt`, `output-unsync-ella-run2.txt`, `output-unsync-negative-stock.txt`)*
 - [ ] Be ready to explain exactly where the read-modify-write gap is in each method
 
 ### Member 4 — Synchronized Mode & Auditor (Part B, second half) · `Georgia`

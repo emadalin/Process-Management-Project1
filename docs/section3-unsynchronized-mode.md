@@ -51,7 +51,7 @@ itemsInStock = currentStock + restockTraySize  // WRITE
 ```
 - **The gap:** same shape as `buyOneUnsafe` — READ, yield, WRITE, using a stale snapshot.
 - **The failure:** if a buyer's decrement lands *during* the yield, the restocker's WRITE overwrites it with `currentStock + 50`, silently erasing whatever the buyer just did. A whole 50-item tray can also just not "count" correctly if two conceptual restocks overlap — in our design there's only one `RestockDriver` thread, so the interesting collision here is specifically restocker-vs-buyer, not restocker-vs-restocker.
-- **Evidence:** `output-unsync-run1.txt`/`run2.txt` show hundreds of thousands of trays reported "loaded" by the tally, while `coinBoxCents`/`cashCollectedCents` still drift by tens of millions of cents from what the sales tallies say they should be — the restocking and the selling are stepping on each other the whole time.
+- **Evidence:** `output-unsync-ella-run1.txt`/`run2.txt` show hundreds of thousands of trays reported "loaded" by the tally, while invariant 1 (`itemsInStock == startingStock + restocked − sold`, wired up by Georgia in `Auditor.swift` once `restockUnsafe`/`restockSafe` started returning `Bool`) now fails by tens of *millions* — `itemsInStock` sits at `0` while the math says it should be over 40 million. Invariant 2 fails right alongside it, by well over $1M in cents.
 
 ### `collectCashUnsafe()` — [VendingMachine.swift:81-86](../Sources/ThreadLab/VendingMachine.swift#L81-L86)
 ```swift
@@ -77,7 +77,7 @@ coinBoxCents = 0                   // RESET (wipes out anything added during the
 Every Unsafe method does its read (or check) and its write as separate, non-atomic steps. `sched_yield()` between them gives another thread a real chance to run in that gap. Depending on which method, the result is a lost update (`buyOneUnsafe`, `restockUnsafe`), overselling into negative stock (`buyComboUnsafe`), or money that gets read, then erased by an unconditional reset before it's ever counted (`collectCashUnsafe`).
 
 **Q6. What would happen if we removed the lock (i.e., this *is* what happens without it)?**
-Exactly what's in `output-unsync-run1.txt`, `run2.txt`, and `output-unsync-negative-stock.txt`: invariant 2 (`itemsSold × price == coinBoxCents + cashCollectedCents`) fails by tens of millions of cents, and `itemsInStock` can be observed negative mid-run (`stock=-3`).
+Exactly what's in `output-unsync-ella-run1.txt`, `run2.txt`, and `output-unsync-negative-stock.txt`: both invariants fail — invariant 1 (stock) off by tens of millions, invariant 2 (money) off by well over $1M in cents — and `itemsInStock` can be observed negative mid-run (`stock=-3`).
 
 **Q9. What is one limitation of our implementation?**
 `sched_yield()` is a demo aid, not part of the bug — it just makes a rare-but-real race show up reliably in a few seconds instead of possibly never showing up in a short run. It's honest to say this out loud if asked: TSan (Section 4) still flags every one of these races with `sched_yield()` removed, which is the proof it's not manufacturing anything.
@@ -87,4 +87,4 @@ Exactly what's in `output-unsync-run1.txt`, `run2.txt`, and `output-unsync-negat
 ## Sources to cite
 - Project brief, Section 4.2 (data races are undefined behavior; `sched_yield()` widens, doesn't create, the window) and Section 5 (`sellUnsafe`/`sellSafe` sketch this is modeled on).
 - `Sources/ThreadLab/VendingMachine.swift` — the four Unsafe methods.
-- `output-unsync-run1.txt`, `output-unsync-run2.txt`, `output-unsync-negative-stock.txt` — captured evidence.
+- `output-unsync-ella-run1.txt`, `output-unsync-ella-run2.txt`, `output-unsync-negative-stock.txt` — captured evidence.
