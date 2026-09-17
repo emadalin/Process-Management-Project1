@@ -34,7 +34,7 @@ Compare this line-for-line against Member 3's `buyOneUnsafe()`: same guard, same
 
 ## 3. Does our lock give mutual exclusion, ordering, or both? (practice question 5)
 
-**Mutual exclusion only.** `lock.lock()` guarantees at most one thread is inside a Safe method at a time — that's the entire promise. It says nothing about *which* waiting thread gets in next; the kernel/runtime picks. If `SingleBuyer`, `ComboBuyer`, and `RestockDriver` are all waiting on the lock, there's no guarantee they get serviced in the order they arrived, or even fairly over time (in principle one could be starved, though that's not something we've observed or specifically tested for). Forcing a turn order would need something with ordering semantics — `NSConditionLock`, in the optional bonus below — not a plain `NSLock`.
+**Mutual exclusion only.** `lock.lock()` guarantees at most one thread is inside a Safe method at a time — that's the entire promise. It says nothing about *which* waiting thread gets in next; the kernel/runtime picks. If `SingleBuyer`, `ComboBuyer`, and `RestockDriver` are all waiting on the lock, there's no guarantee they get serviced in the order they arrived, or even fairly over time (in principle one could be starved, though that's not something we've observed or specifically tested for). Forcing a turn order would need something with ordering semantics — `NSConditionLock`, described in the optional bonus below, which we didn't implement — not a plain `NSLock`.
 
 ## 4. Could this deadlock? (practice question 10)
 
@@ -118,7 +118,7 @@ Full captured run saved at [`output-sync-run1.txt`](../output-sync-run1.txt). Co
 
 ---
 
-## 7. Optional bonus: `NSConditionLock` turnstile (not yet implemented)
+## 7. Optional bonus: `NSConditionLock` turnstile (not implemented: the team decided to skip it)
 
 `NSLock` gives mutual exclusion, not ordering — Section 3 above. `NSConditionLock` adds a condition value so threads can lock "when condition == N," forcing a specific hand-off order:
 ```swift

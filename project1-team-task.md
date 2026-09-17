@@ -57,7 +57,7 @@ Owns demo sections 1 and 7, plus repo setup.
 - [x] Write notes on: Foundation `Thread` = 1:1 kernel threads vs. GCD's managed pool vs. Swift Concurrency `Task`s
 - [x] Write notes on `@unchecked Sendable` — what it means and why our race demo needs it
 - [x] Prepare the Pros/Cons/Limitations section: lock overhead and contention, results varying by Mac hardware, and the "rewrite `VendingMachine` as an `actor`" improvement
-- [ ] Record everyone's machine details: `sw_vers`, `uname -m`, `sysctl -n hw.ncpu`, `swift --version`
+- [x] Record everyone's machine details: `sw_vers`, `uname -m`, `sysctl -n hw.ncpu`, `swift --version`
 - [x] Own the README and the team contribution statement
 - [x] Schedule the rehearsal and confirm each person is explaining a section they did not write
 
@@ -91,7 +91,7 @@ Owns demo section 4.
 - [x] Verify `sync` mode matches on every run (run it at least 10 times) *(ran release build 10x, both invariants OK every run; `unsync` still shows real drift for contrast)*
 - [ ] Be ready to answer: does our lock give mutual exclusion, ordering, or both? (Mutual exclusion only)
 - [ ] Be ready to answer: can this deadlock? Why or why not?
-- [ ] **Optional bonus:** `NSConditionLock` turnstile to force ordering, which shows the contrast with a plain lock
+- [ ] ~~**Optional bonus:** `NSConditionLock` turnstile to force ordering, which shows the contrast with a plain lock~~ *(skipped: the team decided not to do the optional bonus)*
 
 ### Member 5 — Priority & Scheduling (Part C) · `Sarah Rae & Calli`
 Owns demo section 5.

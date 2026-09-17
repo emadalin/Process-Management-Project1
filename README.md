@@ -138,7 +138,49 @@ The M3 Pro run (Calli's) had Low Power Mode **on**, so treat it as a hardware co
 - Every member worked through all 18 practice questions in the brief.
 - Each member walked through code they didn't write: thread creation, the shared class, the critical sections, and the QoS settings.
 
+## What we found along the way
+
+Things that surprised us, broke, or blocked us while building and testing. Several of these make good answers if the instructor asks "what went wrong?"
+
+**1. ThreadSanitizer found a race in the *synchronized* mode.**
+Both invariants said `OK` in `sync` mode on every run, but `swift run --sanitize=thread ThreadLab sync` reported 5 data races. They came from the Auditor's snapshots during the run: it read `itemsInStock`, `coinBoxCents` and `cashCollectedCents` directly, without the lock, while the workers were writing to them under it. The invariants never caught it because the final report only runs after every worker has finished. We fixed it with a locked `VendingMachine.snapshot()`, and `sync` then ran with 0 warnings on 4 runs. Lesson: correct final numbers don't prove there's no race, and a lock only protects data if **every** access goes through it, reads included. Evidence: [`output-tsan-sync-before-fix.txt`](output-tsan-sync-before-fix.txt) and [`output-tsan-sync.txt`](output-tsan-sync.txt). Details are in [`docs/section4-synchronized-mode-auditor.md`](docs/section4-synchronized-mode-auditor.md).
+
+**2. ThreadSanitizer crashed on one team Mac, which blocked a test.**
+On Calli's Apple M3 Pro (macOS 26.6.2), `swift run --sanitize=thread` crashed on startup in both debug and release, with a segfault inside ThreadSanitizer's own setup (`__tsan::InitializePlatform`) before our program printed anything. Plain runs without the sanitizer worked fine on that Mac. The same sanitizer runs worked on Sarah Rae's Apple M2 (macOS 15.7.4), so all of our sanitizer evidence comes from that Mac. We didn't find the cause. This blocked the debug vs. release comparison on Calli's Mac, until we realized the task didn't need the sanitizer at all: plain `unsync` runs are enough to count how often the invariants break. We ran it on the M2 instead.
+
+**3. The race happens in both debug and release builds, but release loses much less.**
+In 10 `unsync` runs per build, both invariants broke in 10/10 runs of each. Release lost 0.84% of revenue on average vs. 6.59% in debug. Release runs finish in about 0.2 s, and most loop passes find the stock empty, so far fewer real purchases happen and there are fewer chances to overlap. The optimizer doesn't fix the race. It just gives it fewer chances. See the [Sample output](#sample-output) section.
+
+**4. Low Power Mode quietly affected a priority run.**
+The first full priority run (Calli's M3 Pro) printed `Low Power Mode: ON` in its banner. Our noise-reduction rules require it off, so we re-ran on Sarah Rae's M2, plugged in, with Low Power Mode off and heavy apps closed, and used that as the official run. Printing the power and thermal state in the program itself is what caught this.
+
+**5. How much QoS matters depends on the Mac.**
+With mixed QoS, the `.utility` racer did 39% of the top racer's work on the M2 (4 performance + 4 efficiency cores) but only 12% on the M3 Pro (5 + 6). The `.background` racer did 8% vs. 1%. The order was the same on both, but the gap was not. The M3 Pro run had Low Power Mode on, so it isn't a clean comparison. It still shows why QoS is a request to the scheduler, not a guarantee.
+
+**6. Invariant 1 couldn't be checked at first.**
+`restockUnsafe()` and `restockSafe()` originally returned nothing, so the Auditor couldn't tell a restock that loaded a tray from one that did nothing because stock was above the threshold. Invariant 1 was reported as skipped until the methods were changed to return `Bool`, like the buy methods already did. Sections 3 and 4 depended on each other more than we expected.
+
+**7. The race was always there, but some symptoms were hard to capture.**
+Our first `unsync` captures showed vanished cash, but stock ended at exactly 0 and no trays were lost. It took retuning the iteration counts so restocking actually happens to capture `itemsInStock` at -3 mid-run ([`output-unsync-negative-stock.txt`](output-unsync-negative-stock.txt)).
+
+**8. Swift 6 and Git details that tripped us up.**
+- In Swift 6, top-level `let` constants in `main.swift` are isolated to the main actor, so our `Thread` closures couldn't use them. We moved the settings into `enum Config` in `Harness.swift`.
+- `.build/` (compiler output) was committed early on and caused pull conflicts, so we stopped tracking it and added it to `.gitignore`.
+
 ## AI tools and outside sources
 
-- Claude Code (AI assistant) was used to help draft documentation (`docs/`, this README). The team reviewed, edited, and verified it against the code and Apple's documentation.
-- *Add any other AI use or online examples here, and confirm the code was reviewed, adapted, and tested.*
+**Tool used:** Claude Code, Anthropic's AI coding assistant (Claude Opus 5 and Claude Sonnet 5 models). Every team member used it at some point. Commits where it helped are marked with a `Co-Authored-By: Claude …` line in the Git history (`git log`).
+
+**What it helped with:**
+- **Documentation:** drafting the `docs/` talking-point files, this README, the team task list, and machine-details tables.
+- **Code:** the Part C priority test (`PriorityTest.swift`), wiring up the real worker bodies, and the fix for the Auditor snapshot race (`VendingMachine.snapshot()`).
+- **Testing and evidence:** running the ThreadSanitizer, debug vs. release and priority tests, and summarizing their output into the tables above.
+- **Repo housekeeping:** pulling and merging teammates' work, updating the task list, and removing tracked build files.
+
+**How we checked the AI's work:**
+- **Code changes were verified by running the program:** builds in debug and release, the Auditor's two invariants, and ThreadSanitizer (`unsync` must report races, `sync` must be clean).
+- **Numbers in the docs were checked against the saved output files.** This caught real mistakes. For example, the AI first wrote the debug vs. release dollar amounts 100× too small, and that was fixed before committing.
+- **Claims were checked against the code.** One task list note said ThreadSanitizer had worked earlier on Calli's Mac, but the cited output files were actually from Sarah Rae's Mac, so the README says what we actually know.
+- **Everyone is responsible for explaining any part of the code**, including AI-assisted parts, per the team rules in [`project1-team-task.md`](project1-team-task.md).
+
+**Other sources:** Apple's documentation for `Thread`, `DispatchGroup`, `NSLock` and `QualityOfService`, and the project brief ([`project1-threads-brief.md`](project1-threads-brief.md)).

@@ -70,7 +70,7 @@ actor VendingMachine {
 | `Mutex` (Synchronization module) | Needs macOS 15+; our package targets macOS 13 so it builds on every team Mac |
 | `OSAllocatedUnfairLock` | Faster, but lower-level and less familiar to explain than `NSLock` |
 | Serial `DispatchQueue` (`queue.sync { }`) | Works, but mixes GCD into a demo that's about threads |
-| `NSConditionLock` | Adds ordering; kept as Member 4's optional bonus to contrast with plain mutual exclusion |
+| `NSConditionLock` | Adds ordering; considered as an optional bonus to contrast with plain mutual exclusion, but not implemented |
 
 ---
 
