@@ -99,12 +99,12 @@ Owns demo section 5.
 - [x] Write the three `PickerRobot` racer threads: identical CPU-bound loop counting iterations until a 2-second deadline
 - [x] Print each thread's `qualityOfService`, `threadPriority`, and `qos_class_self()` (requested vs. actually applied)
 - [x] Store racer results in a lock-protected store, print after all racers finish
-- [ ] Run config 1 (all `.default`) at least 5 times; run config 2 (`.userInteractive` / `.utility` / `.background`) at least 5 times
+- [x] Run config 1 (all `.default`) at least 5 times; run config 2 (`.userInteractive` / `.utility` / `.background`) at least 5 times *(Calli: `output-priority-run1.txt` on M3 Pro; Sarah Rae: `output-priority-run2.txt` on M2)*
 - [x] Add extra load threads so there are more CPU-bound threads than cores — that is how we create contention, since macOS has no CPU pinning
 - [x] Note the chip for every run (`uname -m`); on Apple Silicon check `sysctl hw.perflevel0.physicalcpu hw.perflevel1.physicalcpu`
-- [ ] Reduce noise: plugged in, Low Power Mode off, heavy apps closed, machine cooled between runs
+- [x] Reduce noise: plugged in, Low Power Mode off, heavy apps closed, machine cooled between runs *(met in run 2; run 1 had Low Power Mode on)*
 - [x] Measure **work done in a fixed time**, not who prints first — the first thread started gets a head start regardless of QoS
-- [ ] Fill in the results table; be ready to explain P-core vs. E-core placement and why QoS is a request, not a guarantee
+- [ ] Fill in the results table *(done, see Section 5)*; be ready to explain P-core vs. E-core placement and why QoS is a request, not a guarantee
 
 ---
 
@@ -118,20 +118,33 @@ Owns demo section 5.
 
 ---
 
-## 5. Results Table Template
+## 5. Results Table
+
+Clean run on Sarah Rae's Mac (plugged in, Low Power Mode off, heavy apps closed, thermal state nominal). Full output: `output-priority-run2.txt`. Every racer's `qos_class_self()` matched the QoS it requested.
 
 | Run | Config | Picker-1 | Picker-2 | Picker-3 | Chip | Build | Notes |
 |---|---|---|---|---|---|---|---|
-| 1 | All `.default` | | | | | | |
-| 2 | All `.default` | | | | | | |
-| 3 | All `.default` | | | | | | |
-| 4 | All `.default` | | | | | | |
-| 5 | All `.default` | | | | | | |
-| 1 | `.userInteractive` / `.utility` / `.background` | | | | | | |
-| 2 | `.userInteractive` / `.utility` / `.background` | | | | | | |
-| 3 | `.userInteractive` / `.utility` / `.background` | | | | | | |
-| 4 | `.userInteractive` / `.utility` / `.background` | | | | | | |
-| 5 | `.userInteractive` / `.utility` / `.background` | | | | | | |
+| 1 | All `.default` | 86,009,143 | 85,525,152 | 86,179,471 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 2 | All `.default` | 87,117,482 | 87,342,800 | 85,358,754 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 3 | All `.default` | 87,285,531 | 85,710,834 | 86,524,599 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 4 | All `.default` | 86,684,015 | 85,492,367 | 95,983,137 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 5 | All `.default` | 87,297,979 | 94,688,459 | 87,601,165 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 1 | `.userInteractive` / `.utility` / `.background` | 102,171,518 | 42,497,988 | 7,546,914 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 2 | `.userInteractive` / `.utility` / `.background` | 102,611,424 | 45,802,594 | 9,672,077 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 3 | `.userInteractive` / `.utility` / `.background` | 103,367,904 | 35,483,978 | 8,358,784 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 4 | `.userInteractive` / `.utility` / `.background` | 99,916,055 | 37,869,646 | 8,130,092 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+| 5 | `.userInteractive` / `.utility` / `.background` | 100,112,780 | 40,223,563 | 11,264,271 | Apple M2 | release | +8 load threads, AC power, Low Power Mode off |
+
+**Averages (% of the fastest racer in that config):**
+
+| Machine | Config | Picker-1 | Picker-2 | Picker-3 |
+|---|---|---|---|---|
+| Apple M2 (4P / 4E), run 2 | All `.default` | 86,878,830 (98%) | 87,751,922 (99%) | 88,329,425 (100%) |
+| Apple M2 (4P / 4E), run 2 | `.userInteractive` / `.utility` / `.background` | 101,635,936 (100%) | 40,375,553 (39%) | 8,994,427 (8%) |
+| Apple M3 Pro (5P / 6E), run 1 | All `.default` | 97,315,196 (99%) | 97,696,332 (99%) | 97,826,963 (100%) |
+| Apple M3 Pro (5P / 6E), run 1 | `.userInteractive` / `.utility` / `.background` | 111,829,576 (100%) | 14,393,371 (12%) | 1,958,152 (1%) |
+
+The M3 Pro run (Calli's, `output-priority-run1.txt`) had **Low Power Mode ON**, so use it only as a hardware comparison, not as the main evidence.
 
 ---
 

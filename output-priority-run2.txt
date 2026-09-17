@@ -1,0 +1,105 @@
+
+=== PRIORITY TEST ===
+Machine: Apple M2 (arm64), macOS Version 15.7.4 (Build 24G517)
+Cores: 8 logical = 4 performance + 4 efficiency
+Build: release · Low Power Mode: off · Thermal state: nominal
+Each race: 3 PickerRobot racers + 8 load threads, 2.0 s, 1.0 s cooldown between races
+
+[Run 1] All `.default`
+  PickerRobot1  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 86,009,143
+  PickerRobot2  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 85,525,152
+  PickerRobot3  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 86,179,471
+
+[Run 1] `.userInteractive` / `.utility` / `.background`
+  PickerRobot1  requested: .userInteractive  Thread.qualityOfService: .userInteractive  threadPriority: 0.50  qos_class_self(): USER_INTERACTIVE
+                iterations in 2.0 s: 102,171,518
+  PickerRobot2  requested: .utility          Thread.qualityOfService: .utility          threadPriority: 0.50  qos_class_self(): UTILITY
+                iterations in 2.0 s: 42,497,988
+  PickerRobot3  requested: .background       Thread.qualityOfService: .background       threadPriority: 0.50  qos_class_self(): BACKGROUND
+                iterations in 2.0 s: 7,546,914
+
+[Run 2] All `.default`
+  PickerRobot1  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 87,117,482
+  PickerRobot2  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 87,342,800
+  PickerRobot3  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 85,358,754
+
+[Run 2] `.userInteractive` / `.utility` / `.background`
+  PickerRobot1  requested: .userInteractive  Thread.qualityOfService: .userInteractive  threadPriority: 0.50  qos_class_self(): USER_INTERACTIVE
+                iterations in 2.0 s: 102,611,424
+  PickerRobot2  requested: .utility          Thread.qualityOfService: .utility          threadPriority: 0.50  qos_class_self(): UTILITY
+                iterations in 2.0 s: 45,802,594
+  PickerRobot3  requested: .background       Thread.qualityOfService: .background       threadPriority: 0.50  qos_class_self(): BACKGROUND
+                iterations in 2.0 s: 9,672,077
+
+[Run 3] All `.default`
+  PickerRobot1  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 87,285,531
+  PickerRobot2  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 85,710,834
+  PickerRobot3  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 86,524,599
+
+[Run 3] `.userInteractive` / `.utility` / `.background`
+  PickerRobot1  requested: .userInteractive  Thread.qualityOfService: .userInteractive  threadPriority: 0.50  qos_class_self(): USER_INTERACTIVE
+                iterations in 2.0 s: 103,367,904
+  PickerRobot2  requested: .utility          Thread.qualityOfService: .utility          threadPriority: 0.50  qos_class_self(): UTILITY
+                iterations in 2.0 s: 35,483,978
+  PickerRobot3  requested: .background       Thread.qualityOfService: .background       threadPriority: 0.50  qos_class_self(): BACKGROUND
+                iterations in 2.0 s: 8,358,784
+
+[Run 4] All `.default`
+  PickerRobot1  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 86,684,015
+  PickerRobot2  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 85,492,367
+  PickerRobot3  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 95,983,137
+
+[Run 4] `.userInteractive` / `.utility` / `.background`
+  PickerRobot1  requested: .userInteractive  Thread.qualityOfService: .userInteractive  threadPriority: 0.50  qos_class_self(): USER_INTERACTIVE
+                iterations in 2.0 s: 99,916,055
+  PickerRobot2  requested: .utility          Thread.qualityOfService: .utility          threadPriority: 0.50  qos_class_self(): UTILITY
+                iterations in 2.0 s: 37,869,646
+  PickerRobot3  requested: .background       Thread.qualityOfService: .background       threadPriority: 0.50  qos_class_self(): BACKGROUND
+                iterations in 2.0 s: 8,130,092
+
+[Run 5] All `.default`
+  PickerRobot1  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 87,297,979
+  PickerRobot2  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 94,688,459
+  PickerRobot3  requested: not set           Thread.qualityOfService: .default          threadPriority: 0.50  qos_class_self(): DEFAULT
+                iterations in 2.0 s: 87,601,165
+
+[Run 5] `.userInteractive` / `.utility` / `.background`
+  PickerRobot1  requested: .userInteractive  Thread.qualityOfService: .userInteractive  threadPriority: 0.50  qos_class_self(): USER_INTERACTIVE
+                iterations in 2.0 s: 100,112,780
+  PickerRobot2  requested: .utility          Thread.qualityOfService: .utility          threadPriority: 0.50  qos_class_self(): UTILITY
+                iterations in 2.0 s: 40,223,563
+  PickerRobot3  requested: .background       Thread.qualityOfService: .background       threadPriority: 0.50  qos_class_self(): BACKGROUND
+                iterations in 2.0 s: 11,264,271
+
+Results table:
+| Run | Config | Picker-1 | Picker-2 | Picker-3 | Chip | Build | Notes |
+|---|---|---|---|---|---|---|---|
+| 1 | All `.default` | 86,009,143 | 85,525,152 | 86,179,471 | Apple M2 | release | +8 load threads |
+| 2 | All `.default` | 87,117,482 | 87,342,800 | 85,358,754 | Apple M2 | release | +8 load threads |
+| 3 | All `.default` | 87,285,531 | 85,710,834 | 86,524,599 | Apple M2 | release | +8 load threads |
+| 4 | All `.default` | 86,684,015 | 85,492,367 | 95,983,137 | Apple M2 | release | +8 load threads |
+| 5 | All `.default` | 87,297,979 | 94,688,459 | 87,601,165 | Apple M2 | release | +8 load threads |
+| 1 | `.userInteractive` / `.utility` / `.background` | 102,171,518 | 42,497,988 | 7,546,914 | Apple M2 | release | +8 load threads |
+| 2 | `.userInteractive` / `.utility` / `.background` | 102,611,424 | 45,802,594 | 9,672,077 | Apple M2 | release | +8 load threads |
+| 3 | `.userInteractive` / `.utility` / `.background` | 103,367,904 | 35,483,978 | 8,358,784 | Apple M2 | release | +8 load threads |
+| 4 | `.userInteractive` / `.utility` / `.background` | 99,916,055 | 37,869,646 | 8,130,092 | Apple M2 | release | +8 load threads |
+| 5 | `.userInteractive` / `.utility` / `.background` | 100,112,780 | 40,223,563 | 11,264,271 | Apple M2 | release | +8 load threads |
+
+Average iterations per racer (% of the fastest racer in that config):
+  All `.default`: PickerRobot1 86,878,830 (98%) · PickerRobot2 87,751,922 (99%) · PickerRobot3 88,329,425 (100%)
+  `.userInteractive` / `.utility` / `.background`: PickerRobot1 101,635,936 (100%) · PickerRobot2 40,375,553 (39%) · PickerRobot3 8,994,427 (8%)
+=== PRIORITY TEST COMPLETE ===
