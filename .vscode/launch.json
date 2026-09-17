@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Process-Management-Project1}",
+            "name": "Debug ThreadLab",
+            "target": "ThreadLab",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ThreadLab"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Process-Management-Project1}",
+            "name": "Release ThreadLab",
+            "target": "ThreadLab",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ThreadLab"
+        }
+    ]
+}
