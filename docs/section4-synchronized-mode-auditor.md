@@ -23,7 +23,7 @@ Compare this line-for-line against Member 3's `buyOneUnsafe()`: same guard, same
 
 **Why `defer`:** `defer { lock.unlock() }` runs no matter how the function exits — including the early `return false` from a failed guard. Without `defer`, that early return would leave the lock held forever, and every other Safe method would block on `lock.lock()` permanently. This is the single most important line to point at if asked to explain the fix.
 
-**One lock, not four:** all four Safe methods share the same `private let lock = NSLock()` ([VendingMachine.swift:27](../Sources/ThreadLab/VendingMachine.swift#L27)) rather than a lock per counter. That's deliberate — a purchase touches `itemsInStock` *and* `coinBoxCents` together, and locking both under one lock means the Auditor never observes a half-finished purchase (item gone, coins not yet added, or vice versa). A separate lock per field would allow more parallelism but reopen exactly that kind of inconsistency, plus adds a lock-ordering deadlock risk the moment any method needs to hold two locks at once. See Section 7's pros/cons notes for the fuller trade-off discussion.
+**One lock, not four:** all four Safe methods share the same `private let lock = NSLock()` ([VendingMachine.swift:27](../Sources/ThreadLab/VendingMachine.swift#L27)) rather than a lock per counter. That's deliberate — a purchase touches `itemsInStock` *and* `coinBoxCents` together, and locking both under one lock means the Auditor never observes a half-finished purchase (item gone, coins not yet added, or vice versa), *as long as the Auditor takes that same lock too* (see Section 5, where ThreadSanitizer caught it not doing so). A separate lock per field would allow more parallelism but reopen exactly that kind of inconsistency, plus adds a lock-ordering deadlock risk the moment any method needs to hold two locks at once. See Section 7's pros/cons notes for the fuller trade-off discussion.
 
 ---
 
@@ -44,20 +44,36 @@ Compare this line-for-line against Member 3's `buyOneUnsafe()`: same guard, same
 
 ## 5. The Auditor thread ([Auditor.swift](../Sources/ThreadLab/Auditor.swift))
 
-The fifth distinct task, and it's coordination, not more counting — the Auditor never touches `itemsInStock`/`coinBoxCents`/`cashCollectedCents` itself, it only reads them.
+The fifth distinct task, and it's coordination, not more counting — the Auditor never changes `itemsInStock`/`coinBoxCents`/`cashCollectedCents`, it only reads them. But reading while other threads write still needs the lock, which is the bug covered below.
 
 **Periodic snapshots, using `wait(timeout:)` instead of a bare `wait()`:**
 ```swift
 var snapshots = 0
 while workerGroup.wait(timeout: .now() + Config.auditSnapshotInterval) == .timedOut {
     snapshots += 1
-    print("[Auditor] snapshot \(snapshots): stock=\(machine.itemsInStock) "
-          + "coinBox=\(machine.coinBoxCents)c cash=\(machine.cashCollectedCents)c")
+    let s = machine.snapshot()   // locked read, see below
+    print("[Auditor] snapshot \(snapshots): stock=\(s.stock) "
+          + "coinBox=\(s.coinBox)c cash=\(s.cash)c")
 }
 ```
 This is the same `DispatchGroup` mechanism Member 2's section covers, but used differently: instead of one blocking `wait()`, the Auditor loops on `wait(timeout:)`, which returns `.timedOut` if the four workers aren't all done yet (print a snapshot, loop again) or `.success` the instant they are (exit the loop). That's what lets the Auditor watch the shared counters live, *while the race is happening*, instead of only seeing the final state.
 
-**The two invariants, computed after the loop exits ([Auditor.swift:28-43](../Sources/ThreadLab/Auditor.swift#L28-L43)):**
+**The race ThreadSanitizer found in `sync` mode (and the fix):** the snapshot line originally read the counters directly: `machine.itemsInStock`, `machine.coinBoxCents`, `machine.cashCollectedCents`. The workers write those under the lock, but the Auditor read them *without* it, so a snapshot could land in the middle of a write. That is a data race inside the "safe" mode. Running `swift run --sanitize=thread ThreadLab sync` reported 5 races, all on the snapshot lines, while both invariants still said `OK` (evidence: [`output-tsan-sync-before-fix.txt`](../output-tsan-sync-before-fix.txt)). The fix is a locked read in `VendingMachine` ([VendingMachine.swift:136-143](../Sources/ThreadLab/VendingMachine.swift#L136-L143)):
+```swift
+func snapshot() -> (stock: Int, coinBox: Int, cash: Int) {
+    lock.lock()
+    defer { lock.unlock() }
+    return (itemsInStock, coinBoxCents, cashCollectedCents)
+}
+```
+It uses the same `lock` as the Safe methods, and it reads all three counters in one locked block, so a snapshot is also internally consistent (never an item gone with its coins not yet added). After the fix, `sync` under ThreadSanitizer reports 0 warnings ([`output-tsan-sync.txt`](../output-tsan-sync.txt), confirmed on 4 runs). `unsync` still reports its 13 races, because the Unsafe methods never take the lock regardless of what the Auditor does.
+
+**Talking points:**
+- *"Why did the invariants pass if there was a race?"* The final report only runs after all four workers have finished, so nothing is writing anymore by then. Only the mid-run snapshots were affected. A correct final number does not prove the absence of a race, which is exactly why we ran the sanitizer.
+- *"Does a read really need a lock?"* Yes, whenever another thread may be writing at the same time. Mutual exclusion only works if **every** access to the shared data goes through the lock, readers included.
+- *"The final report still reads `machine.itemsInStock` directly. Isn't that the same bug?"* No. By then `workerGroup.wait(timeout:)` has returned `.success`, so every writer thread has finished. There is no concurrent writer, so there is no race, and ThreadSanitizer agrees.
+
+**The two invariants, computed after the loop exits ([Auditor.swift:31-46](../Sources/ThreadLab/Auditor.swift#L31-L46)):**
 ```swift
 let restocked = t.restockPasses * machine.restockTraySize
 let expectedStock = Config.startingStock + restocked - t.totalItemsSold
@@ -92,6 +108,14 @@ invariant 2 (money): expected=1764725250c actual=1764725250c drift=0c OK
 ```
 Full captured run saved at [`output-sync-run1.txt`](../output-sync-run1.txt). Contrast directly against any `output-unsync-*.txt`, where both invariants routinely miss by tens of millions of stock units or over $1M in cents (see Section 3's docs and evidence). Same threads, same work, same tallying — the only variable between the two modes is whether the methods take the lock.
 
+**ThreadSanitizer evidence:**
+
+| Run | TSan warnings | Invariants | File |
+|---|---|---|---|
+| `unsync` | 13 (all four Unsafe methods) | Both MISMATCH | [`output-tsan-unsync.txt`](../output-tsan-unsync.txt) |
+| `sync`, before the snapshot fix | 5 (Auditor snapshot lines only) | Both OK | [`output-tsan-sync-before-fix.txt`](../output-tsan-sync-before-fix.txt) |
+| `sync`, after the snapshot fix | **0** (4 runs) | Both OK | [`output-tsan-sync.txt`](../output-tsan-sync.txt) |
+
 ---
 
 ## 7. Optional bonus: `NSConditionLock` turnstile (not yet implemented)
@@ -110,6 +134,7 @@ This would be a nice contrast to show live — "here's mutual exclusion (what we
 
 ## Sources to cite
 - Project brief, Section 4.3 (`NSLock` notes, caveats, `NSConditionLock`).
-- `Sources/ThreadLab/VendingMachine.swift` — the four Safe methods.
+- `Sources/ThreadLab/VendingMachine.swift` — the four Safe methods and the locked `snapshot()`.
 - `Sources/ThreadLab/Auditor.swift` — snapshots and both invariants.
 - `output-sync-run1.txt` — captured clean run; any `output-unsync-*.txt` for contrast.
+- `output-tsan-unsync.txt`, `output-tsan-sync-before-fix.txt`, `output-tsan-sync.txt` — ThreadSanitizer runs.

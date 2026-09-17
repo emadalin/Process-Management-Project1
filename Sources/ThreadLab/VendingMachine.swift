@@ -132,4 +132,13 @@ final class VendingMachine: @unchecked Sendable {
         coinBoxCents = 0
         cashCollectedCents += collected
     }
+
+    /// Reads all three counters under the lock, for the Auditor's mid-run
+    /// snapshots. Reading the properties directly while workers are writing
+    /// is itself a data race, even in sync mode (ThreadSanitizer flagged it).
+    func snapshot() -> (stock: Int, coinBox: Int, cash: Int) {
+        lock.lock()
+        defer { lock.unlock() }
+        return (itemsInStock, coinBoxCents, cashCollectedCents)
+    }
 }

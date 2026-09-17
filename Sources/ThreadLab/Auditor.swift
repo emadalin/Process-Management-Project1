@@ -15,8 +15,11 @@ func runAuditor(_ machine: VendingMachine,
     var snapshots = 0
     while workerGroup.wait(timeout: .now() + Config.auditSnapshotInterval) == .timedOut {
         snapshots += 1
-        print("[Auditor] snapshot \(snapshots): stock=\(machine.itemsInStock) "
-              + "coinBox=\(machine.coinBoxCents)c cash=\(machine.cashCollectedCents)c")
+        // Locked read: the workers are still writing, so reading the
+        // properties directly here would be a data race of its own.
+        let s = machine.snapshot()
+        print("[Auditor] snapshot \(snapshots): stock=\(s.stock) "
+              + "coinBox=\(s.coinBox)c cash=\(s.cash)c")
     }
 
     let t = tallies.current

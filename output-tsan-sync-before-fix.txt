@@ -1,0 +1,374 @@
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'ThreadLab' complete! (0.08s)
+==================
+WARNING: ThreadSanitizer: data race (pid=54874)
+  Read of size 8 at 0x000107100ab0 by thread T5:
+    #0 runAuditor(_:tallies:waitingOn:) Auditor.swift:18 (ThreadLab:arm64+0x100001448)
+    #1 closure #5 in runVendingDemo(_:skipWait:) Harness.swift:111 (ThreadLab:arm64+0x100004d60)
+    #2 partial apply for closure #5 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004e08)
+    #3 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #4 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #5 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #6 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Previous write of size 8 at 0x000107100ab0 by thread T1 (mutexes: write M0):
+    #0 VendingMachine.buyOneSafe() VendingMachine.swift:101 (ThreadLab:arm64+0x100017fe4)
+    #1 runSingleBuyer(_:_:_:) Workers.swift:20 (ThreadLab:arm64+0x100018dc8)
+    #2 closure #1 in runVendingDemo(_:skipWait:) Harness.swift:106 (ThreadLab:arm64+0x10000480c)
+    #3 partial apply for closure #1 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x1000048a8)
+    #4 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #5 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #6 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #7 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Location is heap block of size 80 at 0x000107100aa0 allocated by main thread:
+    #0 malloc <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x60500)
+    #1 _malloc_type_malloc_outlined <null> (libsystem_malloc.dylib:arm64e+0x1d9d4)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Mutex M0 (0x0001072014a8) created at:
+    #0 pthread_mutex_init <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x310f8)
+    #1 -[NSLock init] <null> (Foundation:arm64e+0x3f68)
+    #2 NSLock.__allocating_init() NSObject.h (ThreadLab:arm64+0x100006cdc)
+    #3 VendingMachine.init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift:27 (ThreadLab:arm64+0x100017664)
+    #4 VendingMachine.__allocating_init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift (ThreadLab:arm64+0x100017554)
+    #5 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #6 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #7 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #8 <null> <null> (0x000185a9eb98)
+
+  Thread T5 (tid=16370580, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:110 (ThreadLab:arm64+0x1000045b4)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Thread T1 (tid=16370576, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:106 (ThreadLab:arm64+0x100004220)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+SUMMARY: ThreadSanitizer: data race Auditor.swift:18 in runAuditor(_:tallies:waitingOn:)
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=54874)
+  Read of size 8 at 0x000107100ab8 by thread T5:
+    #0 runAuditor(_:tallies:waitingOn:) Auditor.swift:19 (ThreadLab:arm64+0x1000015ec)
+    #1 closure #5 in runVendingDemo(_:skipWait:) Harness.swift:111 (ThreadLab:arm64+0x100004d60)
+    #2 partial apply for closure #5 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004e08)
+    #3 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #4 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #5 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #6 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Previous write of size 8 at 0x000107100ab8 by thread T1 (mutexes: write M0):
+    #0 VendingMachine.buyOneSafe() VendingMachine.swift:102 (ThreadLab:arm64+0x100018074)
+    #1 runSingleBuyer(_:_:_:) Workers.swift:20 (ThreadLab:arm64+0x100018dc8)
+    #2 closure #1 in runVendingDemo(_:skipWait:) Harness.swift:106 (ThreadLab:arm64+0x10000480c)
+    #3 partial apply for closure #1 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x1000048a8)
+    #4 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #5 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #6 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #7 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Location is heap block of size 80 at 0x000107100aa0 allocated by main thread:
+    #0 malloc <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x60500)
+    #1 _malloc_type_malloc_outlined <null> (libsystem_malloc.dylib:arm64e+0x1d9d4)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Mutex M0 (0x0001072014a8) created at:
+    #0 pthread_mutex_init <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x310f8)
+    #1 -[NSLock init] <null> (Foundation:arm64e+0x3f68)
+    #2 NSLock.__allocating_init() NSObject.h (ThreadLab:arm64+0x100006cdc)
+    #3 VendingMachine.init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift:27 (ThreadLab:arm64+0x100017664)
+    #4 VendingMachine.__allocating_init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift (ThreadLab:arm64+0x100017554)
+    #5 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #6 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #7 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #8 <null> <null> (0x000185a9eb98)
+
+  Thread T5 (tid=16370580, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:110 (ThreadLab:arm64+0x1000045b4)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Thread T1 (tid=16370576, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:106 (ThreadLab:arm64+0x100004220)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+SUMMARY: ThreadSanitizer: data race Auditor.swift:19 in runAuditor(_:tallies:waitingOn:)
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=54874)
+  Read of size 8 at 0x000107100ab0 by thread T5:
+    #0 runAuditor(_:tallies:waitingOn:) Auditor.swift:18 (ThreadLab:arm64+0x100001448)
+    #1 closure #5 in runVendingDemo(_:skipWait:) Harness.swift:111 (ThreadLab:arm64+0x100004d60)
+    #2 partial apply for closure #5 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004e08)
+    #3 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #4 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #5 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #6 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Previous write of size 8 at 0x000107100ab0 by thread T2 (mutexes: write M0):
+    #0 VendingMachine.buyComboSafe() VendingMachine.swift:112 (ThreadLab:arm64+0x100018310)
+    #1 runComboBuyer(_:_:_:) Workers.swift:34 (ThreadLab:arm64+0x100019568)
+    #2 closure #2 in runVendingDemo(_:skipWait:) Harness.swift:107 (ThreadLab:arm64+0x100004964)
+    #3 partial apply for closure #2 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004a00)
+    #4 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #5 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #6 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #7 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Location is heap block of size 80 at 0x000107100aa0 allocated by main thread:
+    #0 malloc <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x60500)
+    #1 _malloc_type_malloc_outlined <null> (libsystem_malloc.dylib:arm64e+0x1d9d4)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Mutex M0 (0x0001072014a8) created at:
+    #0 pthread_mutex_init <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x310f8)
+    #1 -[NSLock init] <null> (Foundation:arm64e+0x3f68)
+    #2 NSLock.__allocating_init() NSObject.h (ThreadLab:arm64+0x100006cdc)
+    #3 VendingMachine.init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift:27 (ThreadLab:arm64+0x100017664)
+    #4 VendingMachine.__allocating_init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift (ThreadLab:arm64+0x100017554)
+    #5 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #6 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #7 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #8 <null> <null> (0x000185a9eb98)
+
+  Thread T5 (tid=16370580, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:110 (ThreadLab:arm64+0x1000045b4)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Thread T2 (tid=16370577, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:107 (ThreadLab:arm64+0x100004304)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+SUMMARY: ThreadSanitizer: data race Auditor.swift:18 in runAuditor(_:tallies:waitingOn:)
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=54874)
+  Read of size 8 at 0x000107100ab0 by thread T5:
+    #0 runAuditor(_:tallies:waitingOn:) Auditor.swift:18 (ThreadLab:arm64+0x100001448)
+    #1 closure #5 in runVendingDemo(_:skipWait:) Harness.swift:111 (ThreadLab:arm64+0x100004d60)
+    #2 partial apply for closure #5 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004e08)
+    #3 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #4 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #5 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #6 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Previous write of size 8 at 0x000107100ab0 by thread T3 (mutexes: write M0):
+    #0 VendingMachine.restockSafe() VendingMachine.swift:123 (ThreadLab:arm64+0x100018670)
+    #1 runRestockDriver(_:_:_:) Workers.swift:52 (ThreadLab:arm64+0x100019e58)
+    #2 closure #3 in runVendingDemo(_:skipWait:) Harness.swift:108 (ThreadLab:arm64+0x100004abc)
+    #3 partial apply for closure #3 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004b58)
+    #4 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #5 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #6 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #7 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Location is heap block of size 80 at 0x000107100aa0 allocated by main thread:
+    #0 malloc <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x60500)
+    #1 _malloc_type_malloc_outlined <null> (libsystem_malloc.dylib:arm64e+0x1d9d4)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Mutex M0 (0x0001072014a8) created at:
+    #0 pthread_mutex_init <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x310f8)
+    #1 -[NSLock init] <null> (Foundation:arm64e+0x3f68)
+    #2 NSLock.__allocating_init() NSObject.h (ThreadLab:arm64+0x100006cdc)
+    #3 VendingMachine.init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift:27 (ThreadLab:arm64+0x100017664)
+    #4 VendingMachine.__allocating_init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift (ThreadLab:arm64+0x100017554)
+    #5 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #6 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #7 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #8 <null> <null> (0x000185a9eb98)
+
+  Thread T5 (tid=16370580, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:110 (ThreadLab:arm64+0x1000045b4)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Thread T3 (tid=16370578, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:108 (ThreadLab:arm64+0x1000043e8)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+SUMMARY: ThreadSanitizer: data race Auditor.swift:18 in runAuditor(_:tallies:waitingOn:)
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=54874)
+  Read of size 8 at 0x000107100ab8 by thread T5:
+    #0 runAuditor(_:tallies:waitingOn:) Auditor.swift:19 (ThreadLab:arm64+0x1000015ec)
+    #1 closure #5 in runVendingDemo(_:skipWait:) Harness.swift:111 (ThreadLab:arm64+0x100004d60)
+    #2 partial apply for closure #5 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004e08)
+    #3 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #4 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #5 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #6 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Previous write of size 8 at 0x000107100ab8 by thread T2 (mutexes: write M0):
+    #0 VendingMachine.buyComboSafe() VendingMachine.swift:113 (ThreadLab:arm64+0x1000183d0)
+    #1 runComboBuyer(_:_:_:) Workers.swift:34 (ThreadLab:arm64+0x100019568)
+    #2 closure #2 in runVendingDemo(_:skipWait:) Harness.swift:107 (ThreadLab:arm64+0x100004964)
+    #3 partial apply for closure #2 in runVendingDemo(_:skipWait:) /<compiler-generated> (ThreadLab:arm64+0x100004a00)
+    #4 closure #1 in startWorker(_:group:qos:task:) Harness.swift:79 (ThreadLab:arm64+0x100003c44)
+    #5 partial apply for closure #1 in startWorker(_:group:qos:task:) /<compiler-generated> (ThreadLab:arm64+0x100003f4c)
+    #6 thunk for @escaping @callee_guaranteed @Sendable () -> () /<compiler-generated> (ThreadLab:arm64+0x100005bd0)
+    #7 __NSThread__start__ <null> (Foundation:arm64e+0x53ba4)
+
+  Location is heap block of size 80 at 0x000107100aa0 allocated by main thread:
+    #0 malloc <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x60500)
+    #1 _malloc_type_malloc_outlined <null> (libsystem_malloc.dylib:arm64e+0x1d9d4)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Mutex M0 (0x0001072014a8) created at:
+    #0 pthread_mutex_init <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x310f8)
+    #1 -[NSLock init] <null> (Foundation:arm64e+0x3f68)
+    #2 NSLock.__allocating_init() NSObject.h (ThreadLab:arm64+0x100006cdc)
+    #3 VendingMachine.init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift:27 (ThreadLab:arm64+0x100017664)
+    #4 VendingMachine.__allocating_init(startingStock:itemPriceCents:comboSize:restockThreshold:restockTraySize:) VendingMachine.swift (ThreadLab:arm64+0x100017554)
+    #5 runVendingDemo(_:skipWait:) Harness.swift:99 (ThreadLab:arm64+0x100004108)
+    #6 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #7 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #8 <null> <null> (0x000185a9eb98)
+
+  Thread T5 (tid=16370580, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:110 (ThreadLab:arm64+0x1000045b4)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+  Thread T2 (tid=16370577, running) created by main thread at:
+    #0 pthread_create <null> (libclang_rt.tsan_osx_dynamic.dylib:arm64e+0x2f708)
+    #1 -[NSThread startAndReturnError:] <null> (Foundation:arm64e+0x922e88)
+    #2 runVendingDemo(_:skipWait:) Harness.swift:107 (ThreadLab:arm64+0x100004304)
+    #3 runSynchronized(skipWait:) Harness.swift:131 (ThreadLab:arm64+0x1000051ec)
+    #4 ThreadLab_main main.swift:33 (ThreadLab:arm64+0x10001b078)
+    #5 <null> <null> (0x000185a9eb98)
+
+SUMMARY: ThreadSanitizer: data race Auditor.swift:19 in runAuditor(_:tallies:waitingOn:)
+==================
+
+=== SYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[CashCollector] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=509 coinBox=41158950c cash=124650c
+[Auditor] snapshot 2: stock=526 coinBox=81442350c cash=124650c
+[Auditor] snapshot 3: stock=1 coinBox=122036100c cash=124650c
+[Auditor] snapshot 4: stock=0 coinBox=163090650c cash=124650c
+[Auditor] snapshot 5: stock=549 coinBox=203965050c cash=124650c
+[Auditor] snapshot 6: stock=491 coinBox=245146350c cash=124650c
+[Auditor] snapshot 7: stock=509 coinBox=285984450c cash=124650c
+[Auditor] snapshot 8: stock=511 coinBox=326110500c cash=124650c
+[Auditor] snapshot 9: stock=492 coinBox=367357950c cash=124650c
+[Auditor] snapshot 10: stock=289 coinBox=407575500c cash=124650c
+[Auditor] snapshot 11: stock=503 coinBox=447694650c cash=124650c
+[Auditor] snapshot 12: stock=516 coinBox=489459300c cash=124650c
+[Auditor] snapshot 13: stock=520 coinBox=530239800c cash=124650c
+[Auditor] snapshot 14: stock=526 coinBox=570344850c cash=124650c
+[Auditor] snapshot 15: stock=531 coinBox=611052600c cash=124650c
+[Auditor] snapshot 16: stock=529 coinBox=651800100c cash=124650c
+[Auditor] snapshot 17: stock=516 coinBox=692950650c cash=124650c
+[Auditor] snapshot 18: stock=507 coinBox=735096150c cash=124650c
+[Auditor] snapshot 19: stock=500 coinBox=775483500c cash=124650c
+[Auditor] snapshot 20: stock=531 coinBox=816020850c cash=124650c
+[Auditor] snapshot 21: stock=501 coinBox=857051100c cash=124650c
+[Auditor] snapshot 22: stock=0 coinBox=887973450c cash=124650c
+[Auditor] snapshot 23: stock=455 coinBox=930439350c cash=124650c
+[Auditor] snapshot 24: stock=541 coinBox=972272100c cash=124650c
+[Auditor] snapshot 25: stock=497 coinBox=1014535050c cash=124650c
+[Auditor] snapshot 26: stock=502 coinBox=1056397650c cash=124650c
+[Auditor] snapshot 27: stock=548 coinBox=1097898300c cash=124650c
+[Auditor] snapshot 28: stock=515 coinBox=1139964000c cash=124650c
+[Auditor] snapshot 29: stock=499 coinBox=1182138450c cash=124650c
+[Auditor] snapshot 30: stock=518 coinBox=1224414900c cash=124650c
+[Auditor] snapshot 31: stock=495 coinBox=1266462750c cash=124650c
+[Auditor] snapshot 32: stock=519 coinBox=1310109450c cash=124650c
+[Auditor] snapshot 33: stock=530 coinBox=1352523150c cash=124650c
+[Auditor] snapshot 34: stock=526 coinBox=1394697000c cash=124650c
+[Auditor] snapshot 35: stock=534 coinBox=1436406150c cash=124650c
+[Auditor] snapshot 36: stock=543 coinBox=1479199800c cash=124650c
+[Auditor] snapshot 37: stock=539 coinBox=1521650250c cash=124650c
+[Auditor] snapshot 38: stock=513 coinBox=1563083550c cash=124650c
+[Auditor] snapshot 39: stock=544 coinBox=1604905200c cash=124650c
+[Auditor] snapshot 40: stock=528 coinBox=1647097050c cash=124650c
+[Auditor] snapshot 41: stock=535 coinBox=1688683950c cash=124650c
+[Auditor] snapshot 42: stock=506 coinBox=1730851200c cash=124650c
+[Auditor] snapshot 43: stock=500 coinBox=1767320100c cash=124650c
+[Auditor] snapshot 44: stock=535 coinBox=1809396300c cash=124650c
+[Auditor] snapshot 45: stock=528 coinBox=1851393450c cash=124650c
+[Auditor] snapshot 46: stock=546 coinBox=1893162750c cash=124650c
+[Auditor] snapshot 47: stock=499 coinBox=1935540000c cash=124650c
+[Auditor] snapshot 48: stock=526 coinBox=1979658000c cash=124650c
+[Auditor] snapshot 49: stock=513 coinBox=2022233400c cash=124650c
+[Auditor] snapshot 50: stock=523 coinBox=2060602200c cash=124650c
+[Auditor] snapshot 51: stock=525 coinBox=2103669000c cash=124650c
+[Auditor] snapshot 52: stock=498 coinBox=2147056650c cash=124650c
+[Auditor] snapshot 53: stock=537 coinBox=2189623050c cash=124650c
+[Auditor] snapshot 54: stock=473 coinBox=2232670350c cash=124650c
+[Auditor] snapshot 55: stock=506 coinBox=2275901850c cash=124650c
+[Auditor] snapshot 56: stock=476 coinBox=2315229150c cash=124650c
+[SingleBuyer] sold 3995383 items
+[SingleBuyer] finished
+[Auditor] snapshot 57: stock=548 coinBox=2367942450c cash=124650c
+[ComboBuyer] sold 3993503 combos = 11980509 items
+[ComboBuyer] finished
+[Auditor] snapshot 58: stock=508 coinBox=2396259150c cash=124650c
+[Auditor] snapshot 59: stock=508 coinBox=2396259150c cash=124650c
+[RestockDriver] loaded 319328 trays of 50
+[RestockDriver] finished
+[Auditor] all workers done — final report
+  tallies: single=3995383 items, combo=3993503 purchases/11980509 items, restock=319328 passes, collections=200
+  invariant 1 (stock): expected=508 actual=508 drift=0 OK
+  invariant 2 (money): expected=2396383800c actual=2396383800c drift=0c OK
+[Auditor] finished
+=== SYNCHRONIZED RUN COMPLETE ===
+ThreadSanitizer: reported 5 warnings
