@@ -1,0 +1,4 @@
+
+=== UNSYNCHRONIZED RUN ===
+>>> --no-wait: main is NOT waiting. Expect missing 'finished' lines.
+=== UNSYNCHRONIZED RUN COMPLETE ===
