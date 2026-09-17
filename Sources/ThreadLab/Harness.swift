@@ -23,7 +23,7 @@ enum Config {
     /// methods. Until then the workers spin without touching shared state, so
     /// the harness itself (naming, QoS, DispatchGroup) can be tested end to end
     /// without tripping their `fatalError` placeholders.
-    static let realWorkerBodiesReady = false
+    static let realWorkerBodiesReady = true
 
     /// VendingMachine doesn't expose its starting stock after init, and the
     /// Auditor needs it for invariant 1 — so we hold the value here and
