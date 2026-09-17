@@ -163,10 +163,13 @@ Members 1 and 5 are the same people, so the swap is by person:
 
 | Presenter | Presents |
 |---|---|
-| Sarah Rae & Calli (Members 1, 5) | Section 2, thread creation harness (Stephen's) and Section 3, unsynchronized mode (Ella's) |
+| Calli | Section 2, thread creation harness (Stephen's) |
+| Sarah Rae | Section 3, unsynchronized mode (Ella's) |
 | Stephen (Member 2) | Section 4, synchronized mode (Georgia's) |
 | Ella (Member 3) | Sections 1 and 7, threading model and pros/cons (Sarah Rae & Calli's) |
 | Georgia (Member 4) | Section 5, priority results (Sarah Rae & Calli's) |
+
+Five sections, five presenters, each presenting someone else's work.
 
 ---
 

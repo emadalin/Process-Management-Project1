@@ -1,6 +1,6 @@
 # Demo Section 3: Unsynchronized Mode (Part B, first half) (5 min)
 
-Owner: Member 3 (Ella). Presented at rehearsal by Georgia (per the cross-assignment table).
+Owner: Member 3 (Ella). Presented at rehearsal by Sarah Rae (Members 1/5 split Sections 2 and 3 between them — Sarah Rae takes this one, Calli takes Section 2 — per the team's updated cross-assignment table in Section 6 of the task file, which superseded the original per-Member-number swap once it turned out Members 1 and 5 are the same two people).
 
 **One-sentence version:** every Unsafe method in `VendingMachine.swift` does its read, its `sched_yield()`, and its write as three separate, interruptible steps — the scheduler is free to run another thread in between, and that gap is the entire bug.
 
