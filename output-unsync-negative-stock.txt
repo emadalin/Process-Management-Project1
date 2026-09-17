@@ -1,0 +1,52 @@
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'ThreadLab' complete! (0.06s)
+
+=== UNSYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[RestockDriver] started
+[CashCollector] started
+[Auditor] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=507 coinBox=48214350c cash=120900c
+[Auditor] snapshot 2: stock=515 coinBox=97150650c cash=120900c
+[Auditor] snapshot 3: stock=314 coinBox=148123350c cash=120900c
+[Auditor] snapshot 4: stock=226 coinBox=198041850c cash=120900c
+[Auditor] snapshot 5: stock=469 coinBox=246737100c cash=120900c
+[Auditor] snapshot 6: stock=473 coinBox=299955900c cash=120900c
+[Auditor] snapshot 7: stock=-3 coinBox=348987300c cash=120900c
+[Auditor] snapshot 8: stock=504 coinBox=400811550c cash=120900c
+[Auditor] snapshot 9: stock=520 coinBox=452363100c cash=120900c
+[Auditor] snapshot 10: stock=540 coinBox=502496100c cash=120900c
+[Auditor] snapshot 11: stock=0 coinBox=553974900c cash=120900c
+[Auditor] snapshot 12: stock=510 coinBox=604382250c cash=120900c
+[Auditor] snapshot 13: stock=533 coinBox=654929250c cash=120900c
+[Auditor] snapshot 14: stock=514 coinBox=703333500c cash=120900c
+[Auditor] snapshot 15: stock=529 coinBox=755800950c cash=120900c
+[Auditor] snapshot 16: stock=532 coinBox=811117200c cash=120900c
+[Auditor] snapshot 17: stock=516 coinBox=867218100c cash=120900c
+[Auditor] snapshot 18: stock=544 coinBox=917960550c cash=120900c
+[Auditor] snapshot 19: stock=507 coinBox=969474000c cash=120900c
+[Auditor] snapshot 20: stock=546 coinBox=1019320350c cash=120900c
+[Auditor] snapshot 21: stock=534 coinBox=1074778800c cash=120900c
+[RestockDriver] loaded 840849 trays of 50
+[RestockDriver] finished
+[Auditor] snapshot 22: stock=0 coinBox=1103165550c cash=120900c
+[Auditor] snapshot 23: stock=0 coinBox=1103165550c cash=120900c
+[Auditor] snapshot 24: stock=0 coinBox=1103165550c cash=120900c
+[Auditor] snapshot 25: stock=0 coinBox=1103165550c cash=120900c
+[Auditor] snapshot 26: stock=0 coinBox=1103165550c cash=120900c
+[Auditor] snapshot 27: stock=0 coinBox=1103165550c cash=120900c
+[Auditor] snapshot 28: stock=0 coinBox=1103165550c cash=120900c
+[ComboBuyer] sold 2160262 combos = 6480786 items
+[ComboBuyer] finished
+[SingleBuyer] sold 2160373 items
+[SingleBuyer] finished
+[Auditor] all workers done — final report
+  tallies: single=2160373 items, combo=2160262 purchases/6480786 items, restock=840849 passes, collections=200
+  invariant 1 (stock): SKIPPED — restock methods return Void, so 'restocked' is unknown. Needs the -> Bool/-> Int signature change.
+  invariant 2 (money): expected=1296173850c actual=1103286450c drift=-192887400c MISMATCH
+[Auditor] finished
+=== UNSYNCHRONIZED RUN COMPLETE ===

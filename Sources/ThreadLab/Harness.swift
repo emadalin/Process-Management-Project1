@@ -32,10 +32,20 @@ enum Config {
 
     // Buyers and the restocker run the same number of passes on purpose: a
     // restocker that finishes early leaves the buyers failing their stock check
-    // for the rest of the run, which makes the race boring. Re-tune these WITH
-    // Member 3 once the real methods land and we can see actual sell-through.
-    static let buyerIterations = 10_000
-    static let restockIterations = 10_000
+    // for the rest of the run, which makes the race boring.
+    //
+    // Retuned by Member 3 (from 10_000) once the real methods landed: at 10_000
+    // the whole run finished in well under one auditSnapshotInterval, so the
+    // Auditor never got to print a mid-run snapshot, and RestockDriver — same
+    // iteration count as the buyers, but each unsafe pass is cheap when it
+    // no-ops — blew through all its passes before stock ever dropped below
+    // restockThreshold, so `unsync` never restocked at all. At 4_000_000 the run
+    // takes under a second, restocking actually happens (hundreds of thousands
+    // of trays loaded), and snapshots occasionally catch itemsInStock negative
+    // (e.g. -3) from the check-then-act race. Flagging for Member 2 to confirm
+    // this doesn't fight anything else Section 2 depends on these numbers for.
+    static let buyerIterations = 4_000_000
+    static let restockIterations = 4_000_000
     static let collectorIterations = 200
 
     static let auditSnapshotInterval = 0.25 // Member 4's knob
