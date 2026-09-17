@@ -14,7 +14,7 @@ struct TallySnapshot {
     var singleItemsSold = 0
     var comboPurchases = 0
     var comboItemsSold = 0      // comboPurchases * comboSize — invariants need ITEMS, not purchases
-    var restockPasses = 0
+    var restockPasses = 0        // trays actually loaded (restockUnsafe/Safe return Bool), not passes attempted
     var cashCollections = 0
 
     var totalItemsSold: Int { singleItemsSold + comboItemsSold }

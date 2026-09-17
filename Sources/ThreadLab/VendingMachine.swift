@@ -67,11 +67,15 @@ final class VendingMachine: @unchecked Sendable {
     }
 
     /// When stock drops below restockThreshold, load a tray of restockTraySize.
-    func restockUnsafe() {
-        guard itemsInStock < restockThreshold else { return }
+    /// Returns whether a tray was actually loaded, so callers (RestockDriver)
+    /// can tally trays loaded instead of passes attempted.
+    @discardableResult
+    func restockUnsafe() -> Bool {
+        guard itemsInStock < restockThreshold else { return false }
         let currentStock = itemsInStock            // READ
         sched_yield()                              // widen the window (another restock landing here gets overwritten)
         itemsInStock = currentStock + restockTraySize  // WRITE
+        return true
     }
 
     /// Read coinBoxCents, add it to cashCollectedCents, reset the box to 0.
@@ -111,11 +115,13 @@ final class VendingMachine: @unchecked Sendable {
     }
 
     /// Safe counterpart of restockUnsafe().
-    func restockSafe() {
+    @discardableResult
+    func restockSafe() -> Bool {
         lock.lock()
         defer { lock.unlock() }
-        guard itemsInStock < restockThreshold else { return }
+        guard itemsInStock < restockThreshold else { return false }
         itemsInStock += restockTraySize
+        return true
     }
 
     /// Safe counterpart of collectCashUnsafe().

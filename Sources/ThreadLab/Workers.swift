@@ -46,24 +46,17 @@ func runComboBuyer(_ machine: VendingMachine, _ safety: Safety, _ tallies: Worke
 }
 
 func runRestockDriver(_ machine: VendingMachine, _ safety: Safety, _ tallies: WorkerTallies) {
-    var passes = 0
+    var traysLoaded = 0
     for _ in 0..<Config.restockIterations {
         if Config.realWorkerBodiesReady {
-            // BLOCKER for invariant 1: restockUnsafe()/restockSafe() return Void,
-            // so we can only count passes ATTEMPTED, not trays actually loaded —
-            // the method no-ops whenever stock is above restockThreshold.
-            // Members 3 + 4 need to agree on `-> Bool` (or `-> Int` items added),
-            // matching what buyOne/buyCombo already do. Until then the Auditor
-            // reports invariant 1 as unverifiable rather than printing a number
-            // we know is wrong.
-            if safety == .unsafe { machine.restockUnsafe() } else { machine.restockSafe() }
-            passes += 1
+            let loaded = (safety == .unsafe) ? machine.restockUnsafe() : machine.restockSafe()
+            if loaded { traysLoaded += 1 }
         } else {
             sched_yield()
         }
     }
-    tallies.publish { $0.restockPasses = passes }
-    print("[RestockDriver] ran \(passes) restock passes (trays of \(machine.restockTraySize))")
+    tallies.publish { $0.restockPasses = traysLoaded }
+    print("[RestockDriver] loaded \(traysLoaded) trays of \(machine.restockTraySize)")
 }
 
 func runCashCollector(_ machine: VendingMachine, _ safety: Safety, _ tallies: WorkerTallies) {

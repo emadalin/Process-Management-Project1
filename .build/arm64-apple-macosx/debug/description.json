@@ -24,7 +24,27 @@
       "inputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Auditor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Harness.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/PriorityTest.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Tallies.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/VendingMachine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Workers.swift"
         },
         {
           "kind" : "file",
@@ -43,7 +63,12 @@
       "moduleName" : "ThreadLab",
       "moduleOutputPath" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/Modules/ThreadLab.swiftmodule",
       "objects" : [
+        "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Auditor.swift.o",
+        "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Harness.swift.o",
+        "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/PriorityTest.swift.o",
+        "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Tallies.swift.o",
         "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o",
+        "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Workers.swift.o",
         "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/main.swift.o"
       ],
       "otherArguments" : [
@@ -99,7 +124,27 @@
       "outputs" : [
         {
           "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Auditor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Harness.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/PriorityTest.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Tallies.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Workers.swift.o"
         },
         {
           "kind" : "file",
@@ -112,7 +157,12 @@
       ],
       "prepareForIndexing" : false,
       "sources" : [
+        "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Auditor.swift",
+        "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Harness.swift",
+        "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/PriorityTest.swift",
+        "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Tallies.swift",
         "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/VendingMachine.swift",
+        "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Workers.swift",
         "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/main.swift"
       ],
       "tempsPath" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build",
@@ -130,7 +180,12 @@
       "-package-name",
       "process_management_project1",
       "-c",
+      "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Auditor.swift",
+      "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Harness.swift",
+      "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/PriorityTest.swift",
+      "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Tallies.swift",
       "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/VendingMachine.swift",
+      "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Workers.swift",
       "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/main.swift",
       "-I",
       "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/Modules",
@@ -225,7 +280,27 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Auditor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Harness.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/PriorityTest.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Tallies.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/VendingMachine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/Sources/ThreadLab/Workers.swift"
         },
         {
           "kind" : "file",
@@ -243,7 +318,27 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Auditor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Harness.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/PriorityTest.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Tallies.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/VendingMachine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/ellamadalinski/Process-Management-Project1/.build/arm64-apple-macosx/debug/ThreadLab.build/Workers.swift.o"
         },
         {
           "kind" : "file",
