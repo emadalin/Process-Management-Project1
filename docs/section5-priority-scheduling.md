@@ -70,7 +70,18 @@ Say "tends to get more work done," never "runs first."
 
 ## 7. Results
 
-*To be filled in from the official runs (plugged in, Low Power Mode off, heavy apps closed, release build). The results table also goes in the README.*
+Official clean run: Sarah Rae's Apple M2, plugged in, Low Power Mode off, heavy apps closed, release build, 5 runs per config. Every racer's `qos_class_self()` matched the QoS it requested. Full output: `output-priority-run2.txt`.
+
+**Averages (% of the fastest racer in that config):**
+
+| Machine | Config | Picker-1 | Picker-2 | Picker-3 |
+|---|---|---|---|---|
+| Apple M2 (4P / 4E) | All `.default` | 86,878,830 (98%) | 87,751,922 (99%) | 88,329,425 (100%) |
+| Apple M2 (4P / 4E) | `.userInteractive` / `.utility` / `.background` | 101,635,936 (100%) | 40,375,553 (39%) | 8,994,427 (8%) |
+
+All-`.default` racers finish within 2% of each other — no QoS difference, no advantage. Under mixed QoS, the `.userInteractive` racer keeps ~100% of the fastest pace while `.background` drops to single digits — QoS changes *how much* work gets done, not the order threads finish in.
+
+For the Apple M3 Pro comparison (Calli's machine, Low Power Mode **on**, so hardware-comparison only, not the official evidence) and the full 5-run-per-config raw numbers on both machines, see [`project1-team-task.md`, Section 5](../project1-team-task.md#5-results-table). The same table is also in the [README](../README.md#priority-results).
 
 ## 8. Limitations of this test
 

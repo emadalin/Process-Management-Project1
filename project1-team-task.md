@@ -112,9 +112,9 @@ Owns demo section 5.
 
 - [x] `swift run --sanitize=thread ThreadLab unsync` → save the data race reports *(`output-tsan-unsync.txt`: 13 warnings across all four unsafe methods, both invariants MISMATCH)*
 - [x] `swift run --sanitize=thread ThreadLab sync` → confirm clean, save that too *(first run was NOT clean: 5 races from the Auditor's mid-run snapshots reading the machine without the lock, saved as `output-tsan-sync-before-fix.txt`. Fixed by adding a locked `VendingMachine.snapshot()` for the Auditor. `output-tsan-sync.txt` is clean: 0 warnings, confirmed on 4 runs)*
-- [ ] Run both debug and `-c release`; note any difference in how often the race appears
-- [ ] Save outputs: `swift run ThreadLab unsync | tee output-unsync-run1.txt` (at least 2 runs total, more is better) *(1 of 2: Stephen saved `output-unsync-run1.txt`)*
-- [ ] Hand the priority results table to Member 1 for the README
+- [ ] Run both debug and `-c release`; note any difference in how often the race appears *(blocked on Calli's Mac as of 2026-09-17: `swift run --sanitize=thread` crashes on startup in both debug and release — segfault inside ThreadSanitizer's own initializer (`__tsan::InitializePlatform`), before the program prints anything. A plain non-TSan run works fine, and TSan itself worked earlier the same day (see `output-tsan-*.txt`), so this looks like a machine-level TSan/dyld regression, not a code issue. Needs a re-check on this Mac after a reboot, or running it on another team Mac.)*
+- [x] Save outputs: `swift run ThreadLab unsync | tee output-unsync-run1.txt` (at least 2 runs total, more is better) *(4 unsync runs saved: `output-unsync-run1.txt`, `output-unsync-ella-run1.txt`, `output-unsync-ella-run2.txt`, `output-unsync-negative-stock.txt`, plus `output-sync-run1.txt` for contrast)*
+- [x] Hand the priority results table to Member 1 for the README *(added to README's Priority results section and `docs/section5-priority-scheduling.md` Section 7)*
 
 ---
 

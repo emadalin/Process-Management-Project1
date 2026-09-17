@@ -80,14 +80,32 @@ Every captured run must record macOS version, chip, core counts, Swift version, 
 
 ## Sample output
 
+Machine column is "not recorded" where the captured file itself doesn't print which Mac ran it — only the `priority` mode banner reports machine info per run (see [Priority results](#priority-results) below).
+
 | File | Mode | Build | Mac | Result |
 |---|---|---|---|---|
-| | `unsync` | | | |
-| | `sync` | | | |
+| [`output-unsync-run1.txt`](output-unsync-run1.txt) | `unsync` | debug | not recorded | Invariant 1 off by 16,167; invariant 2 off by $2,548.50 — both MISMATCH |
+| [`output-unsync-ella-run1.txt`](output-unsync-ella-run1.txt), [`run2.txt`](output-unsync-ella-run2.txt) | `unsync` | debug | not recorded | Both invariants off by tens of millions in stock / over $1M in cents |
+| [`output-unsync-negative-stock.txt`](output-unsync-negative-stock.txt) | `unsync` | debug | not recorded | `itemsInStock` observed at **-3** mid-run (overselling) |
+| [`output-nowait-run1.txt`](output-nowait-run1.txt) | `unsync --no-wait` | debug | not recorded | Main exits before workers print `finished` — proves `group.wait()` is load-bearing |
+| [`output-sync-run1.txt`](output-sync-run1.txt) | `sync` | release | not recorded | Both invariants `OK`, drift = 0 |
+| [`output-tsan-unsync.txt`](output-tsan-unsync.txt) | `unsync` (ThreadSanitizer) | debug | not recorded | 13 data race warnings |
+| [`output-tsan-sync.txt`](output-tsan-sync.txt) | `sync` (ThreadSanitizer) | debug | not recorded | 0 warnings, confirmed on 4 runs |
 
 ## Priority results
 
-Results table from Member 5 (at least 5 runs per configuration): *to be added.*
+Results table from Member 5 (at least 5 runs per configuration). Full raw runs: [`output-priority-run1.txt`](output-priority-run1.txt) (Calli, Apple M3 Pro), [`output-priority-run2.txt`](output-priority-run2.txt) (Sarah Rae, Apple M2). Full per-run numbers are in [`project1-team-task.md`, Section 5](project1-team-task.md#5-results-table).
+
+**Averages (% of the fastest racer in that config):**
+
+| Machine | Config | Picker-1 | Picker-2 | Picker-3 |
+|---|---|---|---|---|
+| Apple M2 (4P / 4E), run 2 | All `.default` | 86,878,830 (98%) | 87,751,922 (99%) | 88,329,425 (100%) |
+| Apple M2 (4P / 4E), run 2 | `.userInteractive` / `.utility` / `.background` | 101,635,936 (100%) | 40,375,553 (39%) | 8,994,427 (8%) |
+| Apple M3 Pro (5P / 6E), run 1 | All `.default` | 97,315,196 (99%) | 97,696,332 (99%) | 97,826,963 (100%) |
+| Apple M3 Pro (5P / 6E), run 1 | `.userInteractive` / `.utility` / `.background` | 111,829,576 (100%) | 14,393,371 (12%) | 1,958,152 (1%) |
+
+The M3 Pro run (Calli's) had Low Power Mode **on**, so treat it as a hardware comparison, not the primary evidence — the M2 run (Sarah Rae's, Low Power Mode off, plugged in) is the clean official run.
 
 ---
 
@@ -106,7 +124,8 @@ Results table from Member 5 (at least 5 runs per configuration): *to be added.*
 
   | Presenter | Presents |
   |---|---|
-  | Sarah Rae & Calli | Section 2, thread creation (Stephen's) and Section 3, unsynchronized mode (Ella's) |
+  | Calli | Section 2, thread creation (Stephen's) |
+  | Sarah Rae | Section 3, unsynchronized mode (Ella's) |
   | Stephen | Section 4, synchronized mode (Georgia's) |
   | Ella | Sections 1 and 7, threading model and pros/cons (Sarah Rae & Calli's) |
   | Georgia | Section 5, priority (Sarah Rae & Calli's) |
