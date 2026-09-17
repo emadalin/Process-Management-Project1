@@ -110,8 +110,8 @@ Owns demo section 5.
 
 ## 4. Testing & Evidence (Member 5 leads, Member 3 assists)
 
-- [ ] `swift run --sanitize=thread ThreadLab unsync` → save the data race reports
-- [ ] `swift run --sanitize=thread ThreadLab sync` → confirm clean, save that too
+- [x] `swift run --sanitize=thread ThreadLab unsync` → save the data race reports *(`output-tsan-unsync.txt`: 13 warnings across all four unsafe methods, both invariants MISMATCH)*
+- [x] `swift run --sanitize=thread ThreadLab sync` → confirm clean, save that too *(first run was NOT clean: 5 races from the Auditor's mid-run snapshots reading the machine without the lock, saved as `output-tsan-sync-before-fix.txt`. Fixed by adding a locked `VendingMachine.snapshot()` for the Auditor. `output-tsan-sync.txt` is clean: 0 warnings, confirmed on 4 runs)*
 - [ ] Run both debug and `-c release`; note any difference in how often the race appears
 - [ ] Save outputs: `swift run ThreadLab unsync | tee output-unsync-run1.txt` (at least 2 runs total, more is better) *(1 of 2: Stephen saved `output-unsync-run1.txt`)*
 - [ ] Hand the priority results table to Member 1 for the README

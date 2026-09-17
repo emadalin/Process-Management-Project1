@@ -1,0 +1,93 @@
+Building for debugging...
+[0/4] Write sources
+[1/4] Write swift-version--58304C5D6DBC2206.txt
+[3/7] Compiling ThreadLab Auditor.swift
+[4/7] Compiling ThreadLab VendingMachine.swift
+[5/7] Emitting module ThreadLab
+[6/9] Compiling ThreadLab Harness.swift
+[7/9] Compiling ThreadLab Workers.swift
+[7/10] Write Objects.LinkFileList
+[8/10] Linking ThreadLab
+[9/10] Applying ThreadLab
+Build of product 'ThreadLab' complete! (0.58s)
+
+=== SYNCHRONIZED RUN ===
+[SingleBuyer] started
+[ComboBuyer] started
+[Auditor] started
+[RestockDriver] started
+[CashCollector] started
+[CashCollector] emptied the coin box 200 times
+[CashCollector] finished
+[Auditor] snapshot 1: stock=520 coinBox=40497750c cash=111750c
+[Auditor] snapshot 2: stock=529 coinBox=80898900c cash=111750c
+[Auditor] snapshot 3: stock=513 coinBox=122181300c cash=111750c
+[Auditor] snapshot 4: stock=533 coinBox=162835800c cash=111750c
+[Auditor] snapshot 5: stock=535 coinBox=199893000c cash=111750c
+[Auditor] snapshot 6: stock=503 coinBox=240870300c cash=111750c
+[Auditor] snapshot 7: stock=525 coinBox=281284500c cash=111750c
+[Auditor] snapshot 8: stock=496 coinBox=321946350c cash=111750c
+[Auditor] snapshot 9: stock=511 coinBox=361949100c cash=111750c
+[Auditor] snapshot 10: stock=508 coinBox=402127050c cash=111750c
+[Auditor] snapshot 11: stock=522 coinBox=442699950c cash=111750c
+[Auditor] snapshot 12: stock=536 coinBox=483092850c cash=111750c
+[Auditor] snapshot 13: stock=524 coinBox=523159650c cash=111750c
+[Auditor] snapshot 14: stock=536 coinBox=563522850c cash=111750c
+[Auditor] snapshot 15: stock=533 coinBox=603550800c cash=111750c
+[Auditor] snapshot 16: stock=523 coinBox=644232300c cash=111750c
+[Auditor] snapshot 17: stock=515 coinBox=684531000c cash=111750c
+[Auditor] snapshot 18: stock=524 coinBox=724812150c cash=111750c
+[Auditor] snapshot 19: stock=501 coinBox=766290600c cash=111750c
+[Auditor] snapshot 20: stock=533 coinBox=806770800c cash=111750c
+[Auditor] snapshot 21: stock=501 coinBox=847485600c cash=111750c
+[Auditor] snapshot 22: stock=527 coinBox=887951700c cash=111750c
+[Auditor] snapshot 23: stock=534 coinBox=923883150c cash=111750c
+[Auditor] snapshot 24: stock=481 coinBox=965156100c cash=111750c
+[Auditor] snapshot 25: stock=543 coinBox=1007431800c cash=111750c
+[Auditor] snapshot 26: stock=505 coinBox=1048920000c cash=111750c
+[Auditor] snapshot 27: stock=529 coinBox=1090151400c cash=111750c
+[Auditor] snapshot 28: stock=499 coinBox=1132260900c cash=111750c
+[Auditor] snapshot 29: stock=529 coinBox=1174046400c cash=111750c
+[Auditor] snapshot 30: stock=518 coinBox=1215418050c cash=111750c
+[Auditor] snapshot 31: stock=501 coinBox=1256970600c cash=111750c
+[Auditor] snapshot 32: stock=530 coinBox=1293851250c cash=111750c
+[Auditor] snapshot 33: stock=511 coinBox=1335404100c cash=111750c
+[Auditor] snapshot 34: stock=481 coinBox=1376958600c cash=111750c
+[Auditor] snapshot 35: stock=512 coinBox=1419403950c cash=111750c
+[Auditor] snapshot 36: stock=519 coinBox=1461327900c cash=111750c
+[Auditor] snapshot 37: stock=530 coinBox=1502876250c cash=111750c
+[Auditor] snapshot 38: stock=532 coinBox=1544823450c cash=111750c
+[Auditor] snapshot 39: stock=548 coinBox=1589573550c cash=111750c
+[Auditor] snapshot 40: stock=541 coinBox=1631507100c cash=111750c
+[Auditor] snapshot 41: stock=543 coinBox=1673049300c cash=111750c
+[Auditor] snapshot 42: stock=503 coinBox=1716075300c cash=111750c
+[Auditor] snapshot 43: stock=521 coinBox=1757937600c cash=111750c
+[Auditor] snapshot 44: stock=544 coinBox=1793011650c cash=111750c
+[Auditor] snapshot 45: stock=530 coinBox=1834518750c cash=111750c
+[Auditor] snapshot 46: stock=501 coinBox=1875810600c cash=111750c
+[Auditor] snapshot 47: stock=534 coinBox=1917280650c cash=111750c
+[Auditor] snapshot 48: stock=487 coinBox=1958815200c cash=111750c
+[Auditor] snapshot 49: stock=522 coinBox=2000269950c cash=111750c
+[Auditor] snapshot 50: stock=524 coinBox=2041729650c cash=111750c
+[Auditor] snapshot 51: stock=536 coinBox=2082775350c cash=111750c
+[Auditor] snapshot 52: stock=509 coinBox=2124449400c cash=111750c
+[Auditor] snapshot 53: stock=512 coinBox=2166126450c cash=111750c
+[Auditor] snapshot 54: stock=515 coinBox=2207661000c cash=111750c
+[Auditor] snapshot 55: stock=528 coinBox=2249254050c cash=111750c
+[Auditor] snapshot 56: stock=515 coinBox=2290956000c cash=111750c
+[Auditor] snapshot 57: stock=528 coinBox=2331941550c cash=111750c
+[Auditor] snapshot 58: stock=544 coinBox=2373166650c cash=111750c
+[ComboBuyer] sold 3994559 combos = 11983677 items
+[ComboBuyer] finished
+[SingleBuyer] sold 3999391 items
+[SingleBuyer] finished
+[Auditor] snapshot 59: stock=532 coinBox=2397348450c cash=111750c
+[Auditor] snapshot 60: stock=532 coinBox=2397348450c cash=111750c
+[RestockDriver] loaded 319472 trays of 50
+[RestockDriver] finished
+[Auditor] all workers done — final report
+  tallies: single=3999391 items, combo=3994559 purchases/11983677 items, restock=319472 passes, collections=200
+  invariant 1 (stock): expected=532 actual=532 drift=0 OK
+  invariant 2 (money): expected=2397460200c actual=2397460200c drift=0c OK
+[Auditor] finished
+=== SYNCHRONIZED RUN COMPLETE ===
