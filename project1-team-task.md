@@ -79,7 +79,7 @@ Owns demo section 3.
 - [x] Use read → `sched_yield()` → write to widen the timing window (be ready to say this *exposes* the bug, it does not create it)
 - [x] Write the four worker thread bodies, each with its private tally *(written by Stephen in `Workers.swift` + `Tallies.swift`)*
 - [x] Keep `print` out of the hot loops — printing slows threads and hides races
-- [ ] Capture sample output showing negative stock, lost trays, and vanished cash
+- [ ] Capture sample output showing negative stock, lost trays, and vanished cash *(partly done: `output-unsync-run1.txt` shows vanished cash (−254,850¢) and a stock mismatch (drift 16,167), but stock ended at 0 rather than negative and no trays were loaded, so there are no lost trays yet)*
 - [ ] Be ready to explain exactly where the read-modify-write gap is in each method
 
 ### Member 4 — Synchronized Mode & Auditor (Part B, second half) · `Georgia`
@@ -113,7 +113,7 @@ Owns demo section 5.
 - [ ] `swift run --sanitize=thread ThreadLab unsync` → save the data race reports
 - [ ] `swift run --sanitize=thread ThreadLab sync` → confirm clean, save that too
 - [ ] Run both debug and `-c release`; note any difference in how often the race appears
-- [ ] Save outputs: `swift run ThreadLab unsync | tee output-unsync-run1.txt` (at least 2 runs total, more is better)
+- [ ] Save outputs: `swift run ThreadLab unsync | tee output-unsync-run1.txt` (at least 2 runs total, more is better) *(1 of 2: Stephen saved `output-unsync-run1.txt`)*
 - [ ] Hand the priority results table to Member 1 for the README
 
 ---
