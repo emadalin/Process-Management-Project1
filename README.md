@@ -89,8 +89,13 @@ Machine column is "not recorded" where the captured file itself doesn't print wh
 | [`output-unsync-negative-stock.txt`](output-unsync-negative-stock.txt) | `unsync` | debug | not recorded | `itemsInStock` observed at **-3** mid-run (overselling) |
 | [`output-nowait-run1.txt`](output-nowait-run1.txt) | `unsync --no-wait` | debug | not recorded | Main exits before workers print `finished` — proves `group.wait()` is load-bearing |
 | [`output-sync-run1.txt`](output-sync-run1.txt) | `sync` | release | not recorded | Both invariants `OK`, drift = 0 |
-| [`output-tsan-unsync.txt`](output-tsan-unsync.txt) | `unsync` (ThreadSanitizer) | debug | not recorded | 13 data race warnings |
-| [`output-tsan-sync.txt`](output-tsan-sync.txt) | `sync` (ThreadSanitizer) | debug | not recorded | 0 warnings, confirmed on 4 runs |
+| [`output-tsan-unsync.txt`](output-tsan-unsync.txt) | `unsync` (ThreadSanitizer) | debug | Apple M2 (Sarah Rae) | 13 data race warnings |
+| [`output-tsan-sync-before-fix.txt`](output-tsan-sync-before-fix.txt) | `sync` (ThreadSanitizer) | debug | Apple M2 (Sarah Rae) | 5 warnings, all from the Auditor's snapshots reading without the lock (fixed with a locked `VendingMachine.snapshot()`) |
+| [`output-tsan-sync.txt`](output-tsan-sync.txt) | `sync` (ThreadSanitizer) | debug | Apple M2 (Sarah Rae) | 0 warnings after the fix, confirmed on 4 runs |
+| [`output-unsync-debug-10runs.txt`](output-unsync-debug-10runs.txt) | `unsync` ×10 | debug | Apple M2 (Sarah Rae) | Both invariants MISMATCH in 10/10 runs; avg $798,198.45 lost (6.59% of revenue) |
+| [`output-unsync-release-10runs.txt`](output-unsync-release-10runs.txt) | `unsync` ×10 | release | Apple M2 (Sarah Rae) | Both invariants MISMATCH in 10/10 runs; avg $2,173.50 lost (0.84% of revenue) |
+
+**Debug vs. release:** the race showed up in **every** run of both builds (10/10 each, both invariants), so the optimizer does not hide it. What changes is the size. In release, each run finishes in about 0.2 s instead of about 1 s, and most of the 4,000,000 loop passes find the stock empty and do nothing, so far fewer purchases actually happen (about 173K items sold per run vs. about 8.1M in debug). Fewer real read-then-write operations means fewer chances to overlap, so release lost 0.84% of revenue on average vs. 6.59% in debug. Release runs are also shorter than the Auditor's 0.25 s snapshot interval, so they print no mid-run snapshots.
 
 ## Priority results
 
