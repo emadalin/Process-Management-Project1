@@ -68,7 +68,7 @@ Owns demo section 2.
 - [x] Write the `main.swift` CLI mode switch: `unsync`, `sync`, `priority`, `all`
 - [x] Add the output banners: `=== UNSYNCHRONIZED RUN ===`, `=== SYNCHRONIZED RUN ===`, `=== PRIORITY TEST ===`
 - [x] Make sure every thread prints when it starts, what it does, and when it finishes
-- [ ] Confirm `group.wait()` on the main thread actually blocks — test by removing it and showing threads get killed when `main` exits
+- [x] Confirm `group.wait()` on the main thread actually blocks — test by removing it and showing threads get killed when `main` exits
 - [ ] Be ready to explain why `Thread` has no `join()` and how `DispatchGroup` works as a latch
 
 ### Member 3 — Unsynchronized Mode (Part B, first half) · `Ella`
