@@ -19,6 +19,6 @@ swift --version
 | Calli (1, 5) | 26.6.2 (25G83) | arm64 (Apple M3 Pro) | 11 | 5 / 6 | 6.2.3 (swiftlang-6.2.3.3.21) |
 | Stephen (2) | 26.5.2 (25F84) | arm64 (Apple M4 Max) | 16 | 12 / 4 | 6.3.2 (swiftlang-6.3.2.1.108) |
 | Ella (3) | 26.5.1 (25F80) | arm64 (Apple M5 Pro) | 18 | 6 / 12 | 6.3.3 (swiftlang-6.3.3.1.3) |
-| Georgia (4) | | | | | |
+| Georgia (4) | 26.6.2 (25G83) | arm64 (Apple M1) | 8 | 4 / 4 | 6.4.0 (swiftlang-6.4.0.34.1) |
 
 **Why this matters:** Part C results depend on core count and P-core vs. E-core layout, and race frequency in Part B varies by hardware and build type. Results from different Macs aren't directly comparable, so every saved output and every row in the priority results table should say which Mac produced it.
