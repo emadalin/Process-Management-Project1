@@ -24,7 +24,7 @@
 ### Key points to say
 
 - **Mechanism:** one `NSLock`, Foundation's mutual-exclusion lock.
-- **Where:** declared once in VendingMachine.swift (line 27) and taken in all four Safe methods (`buyOneSafe`, `buyComboSafe`, `restockSafe`, `collectCashSafe`) plus `snapshot()`, which the Auditor uses.
+- **Where:** declared once in VendingMachine.swift (line 48) and taken in all four Safe methods (`buyOneSafe`, `buyComboSafe`, `restockSafe`, `collectCashSafe`) plus `snapshot()`, which the Auditor uses.
 - **Pattern:** `lock.lock()` then `defer { lock.unlock() }` at the top of each method. The logic is the same as the Unsafe version; the `sched_yield()` is gone because there's no gap left.
 - **What it controls:** mutual exclusion. At most one thread is inside any Safe method at a time. It does **not** control order: it doesn't choose which waiting thread goes next.
 - **Why it fixes the bug:** the math was never wrong. The problem was another thread running between the read and the write. With the lock held, the whole read-change-write is one unbroken block from every other thread's point of view.
@@ -33,67 +33,75 @@
 
 ### Code to walk through
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L25-L27) · lines 25–27**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L2-L48) · lines 2–48**
 
 ```swift
-/*  25 */     // MARK: - Synchronization (Member 4 wires this up in the Safe methods below)
-/*  26 */ 
-/*  27 */     private let lock = NSLock()
+/*   2 */ 
+/*  14 */ 
+/*  48 */     private let lock = NSLock()
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
 - The one lock. It's private, so only VendingMachine's own methods can use it.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L95-L104) · lines 95–104**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L2-L142) · lines 2–142**
 
 ```swift
-/*  95 */     /// Safe counterpart of buyOneUnsafe().
-/*  96 */     @discardableResult
-/*  97 */     func buyOneSafe() -> Bool {
-/*  98 */         lock.lock()
-/*  99 */         defer { lock.unlock() }
-/* 100 */         guard itemsInStock > 0 else { return false }
-/* 101 */         itemsInStock -= 1
-/* 102 */         coinBoxCents += itemPriceCents
-/* 103 */         return true
-/* 104 */     }
+/*   2 */ 
+/*  74 */     @discardableResult
+/* 135 */     func buyOneSafe() -> Bool {
+/* 136 */         lock.lock()
+/* 137 */         defer { lock.unlock() }            // runs on every exit, including the early return
+/* 138 */         guard itemsInStock > 0 else { return false }
+/* 139 */         itemsInStock -= 1
+/* 140 */         coinBoxCents += itemPriceCents     // both counters updated in one critical section
+/* 141 */         return true
+/* 142 */     }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
-- Compare with buyOneUnsafe: same guard, same math, same return. Only lines 98 and 99 are new.
-- Line 99: `defer` runs the unlock however the function exits, including the early `return false` on line 100. Without it, that return would leave the lock held forever and every other thread would get stuck.
+- Compare with buyOneUnsafe: same guard, same math, same return. Only lines 136 and 137 are new.
+- Line 137: `defer` runs the unlock however the function exits, including the early `return false` on line 138. Without it, that return would leave the lock held forever and every other thread would get stuck.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L127-L134) · lines 127–134**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L2-L174) · lines 2–174**
 
 ```swift
-/* 127 */     /// Safe counterpart of collectCashUnsafe().
-/* 128 */     func collectCashSafe() {
-/* 129 */         lock.lock()
-/* 130 */         defer { lock.unlock() }
-/* 131 */         let collected = coinBoxCents
-/* 132 */         coinBoxCents = 0
-/* 133 */         cashCollectedCents += collected
-/* 134 */     }
+/*   2 */ 
+/* 168 */     func collectCashSafe() {
+/* 169 */         lock.lock()
+/* 170 */         defer { lock.unlock() }
+/* 171 */         let collected = coinBoxCents
+/* 172 */         coinBoxCents = 0
+/* 173 */         cashCollectedCents += collected
+/* 174 */     }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
 - The collector's read-then-reset is now one block, so no purchase can land between reading the box and zeroing it. The vanished money from Section 3 can't happen.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L136-L143) · lines 136–143**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L2-L185) · lines 2–185**
 
 ```swift
-/* 136 */     /// Reads all three counters under the lock, for the Auditor's mid-run
-/* 137 */     /// snapshots. Reading the properties directly while workers are writing
-/* 138 */     /// is itself a data race, even in sync mode (ThreadSanitizer flagged it).
-/* 139 */     func snapshot() -> (stock: Int, coinBox: Int, cash: Int) {
-/* 140 */         lock.lock()
-/* 141 */         defer { lock.unlock() }
-/* 142 */         return (itemsInStock, coinBoxCents, cashCollectedCents)
-/* 143 */     }
+/*   2 */ 
+/*  14 */ 
+/*  23 */ 
+/* 181 */     func snapshot() -> (stock: Int, coinBox: Int, cash: Int) {
+/* 182 */         lock.lock()
+/* 183 */         defer { lock.unlock() }
+/* 184 */         return (itemsInStock, coinBoxCents, cashCollectedCents)
+/* 185 */     }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
@@ -101,63 +109,67 @@
 - The fix: this locked `snapshot()`. After it, sync mode ran with 0 races on 4 runs in a row.
 - Lesson: a lock only protects data if **every** access uses it, reads included. Correct final numbers don't prove there's no race.
 
-**[`Auditor.swift`](../../Sources/ThreadLab/Auditor.swift#L10-L24) · lines 10–24**
+**[`Auditor.swift`](../../Sources/ThreadLab/Auditor.swift#L20-L37) · lines 20–37**
 
 ```swift
-/*  10 */ func runAuditor(_ machine: VendingMachine,
-/*  11 */                 tallies: WorkerTallies,
-/*  12 */                 waitingOn workerGroup: DispatchGroup) {
-/*  13 */     // wait(timeout:) instead of a bare wait() — that's what lets us snapshot
-/*  14 */     // DURING the run and still stop exactly when the workers are done.
-/*  15 */     var snapshots = 0
-/*  16 */     while workerGroup.wait(timeout: .now() + Config.auditSnapshotInterval) == .timedOut {
-/*  17 */         snapshots += 1
-/*  18 */         // Locked read: the workers are still writing, so reading the
-/*  19 */         // properties directly here would be a data race of its own.
-/*  20 */         let s = machine.snapshot()
-/*  21 */         print("[Auditor] snapshot \(snapshots): stock=\(s.stock) "
-/*  22 */               + "coinBox=\(s.coinBox)c cash=\(s.cash)c")
-/*  23 */     }
-/*  24 */ 
+/*  20 */ func runAuditor(_ machine: VendingMachine,
+/*  21 */                 tallies: WorkerTallies,
+/*  22 */                 waitingOn workerGroup: DispatchGroup) {
+/*  23 */     // wait(timeout:) instead of a bare wait() — that's what lets us snapshot
+/*  24 */     // DURING the run and still stop exactly when the workers are done. It
+/*  28 */     var snapshots = 0
+/*  29 */     while workerGroup.wait(timeout: .now() + Config.auditSnapshotInterval) == .timedOut {
+/*  30 */         snapshots += 1
+/*  31 */         // Locked read: the workers are still writing, so reading the
+/*  32 */         // properties directly here would be a data race of its own.
+/*  33 */         let s = machine.snapshot()
+/*  34 */         print("[Auditor] snapshot \(snapshots): stock=\(s.stock) "
+/*  35 */               + "coinBox=\(s.coinBox)c cash=\(s.cash)c")
+/*  36 */     }
+/*  37 */ 
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
-- Line 16: `wait(timeout:)` instead of `wait()`. It returns every 0.25 s while workers are still running, so the Auditor can print snapshots during the run, then stops exactly when they finish.
-- Line 20: the snapshot uses the locked `snapshot()` method.
+- Line 29: `wait(timeout:)` instead of `wait()`. It returns every 0.25 s while workers are still running, so the Auditor can print snapshots during the run, then stops exactly when they finish.
+- Line 33: the snapshot uses the locked `snapshot()` method.
 
-**[`Auditor.swift`](../../Sources/ThreadLab/Auditor.swift#L25-L47) · lines 25–47**
+**[`Auditor.swift`](../../Sources/ThreadLab/Auditor.swift#L39-L65) · lines 39–65**
 
 ```swift
-/*  25 */     let t = tallies.current
-/*  26 */     print("[Auditor] all workers done — final report")
-/*  27 */     print("  tallies: single=\(t.singleItemsSold) items, "
-/*  28 */           + "combo=\(t.comboPurchases) purchases/\(t.comboItemsSold) items, "
-/*  29 */           + "restock=\(t.restockPasses) passes, collections=\(t.cashCollections)")
-/*  30 */ 
-/*  31 */     // Invariant 1: itemsInStock == startingStock + restocked - sold
-/*  32 */     // restockSafe/Unsafe now return whether a tray was actually loaded, so
-/*  33 */     // t.restockPasses is trays loaded (not passes attempted) — see Workers.swift.
-/*  34 */     let restocked = t.restockPasses * machine.restockTraySize
-/*  35 */     let expectedStock = Config.startingStock + restocked - t.totalItemsSold
-/*  36 */     let actualStock = machine.itemsInStock
-/*  37 */     let stockDrift = actualStock - expectedStock
-/*  38 */     print("  invariant 1 (stock): expected=\(expectedStock) actual=\(actualStock) "
-/*  39 */           + "drift=\(stockDrift) \(stockDrift == 0 ? "OK" : "MISMATCH")")
-/*  40 */ 
-/*  41 */     // Invariant 2: itemsSold * price == coinBoxCents + cashCollectedCents
-/*  42 */     let expectedMoney = t.totalItemsSold * machine.itemPriceCents
-/*  43 */     let actualMoney = machine.coinBoxCents + machine.cashCollectedCents
-/*  44 */     let drift = actualMoney - expectedMoney
-/*  45 */     print("  invariant 2 (money): expected=\(expectedMoney)c actual=\(actualMoney)c "
-/*  46 */           + "drift=\(drift)c \(drift == 0 ? "OK" : "MISMATCH")")
-/*  47 */ }
+/*  39 */     let t = tallies.current
+/*  40 */     print("[Auditor] all workers done — final report")
+/*  41 */     print("  tallies: single=\(t.singleItemsSold) items, "
+/*  42 */           + "combo=\(t.comboPurchases) purchases/\(t.comboItemsSold) items, "
+/*  43 */           + "restock=\(t.restockPasses) passes, collections=\(t.cashCollections)")
+/*  44 */ 
+/*  45 */     // Invariant 1: itemsInStock == startingStock + restocked - sold
+/*  46 */     // Conservation of inventory. Drift means updates were lost — either sales or
+/*  47 */     // trays that the workers counted but that never landed.
+/*  50 */     let restocked = t.restockPasses * machine.restockTraySize
+/*  51 */     let expectedStock = Config.startingStock + restocked - t.totalItemsSold
+/*  52 */     let actualStock = machine.itemsInStock
+/*  53 */     let stockDrift = actualStock - expectedStock
+/*  54 */     print("  invariant 1 (stock): expected=\(expectedStock) actual=\(actualStock) "
+/*  55 */           + "drift=\(stockDrift) \(stockDrift == 0 ? "OK" : "MISMATCH")")
+/*  56 */ 
+/*  57 */     // Invariant 2: itemsSold * price == coinBoxCents + cashCollectedCents
+/*  60 */     let expectedMoney = t.totalItemsSold * machine.itemPriceCents
+/*  61 */     let actualMoney = machine.coinBoxCents + machine.cashCollectedCents
+/*  62 */     let drift = actualMoney - expectedMoney
+/*  63 */     print("  invariant 2 (money): expected=\(expectedMoney)c actual=\(actualMoney)c "
+/*  64 */           + "drift=\(drift)c \(drift == 0 ? "OK" : "MISMATCH")")
+/*  65 */ }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
 - The final report compares the tallies (what threads say they did) with the shared counters (what survived).
-- Invariant 1 (lines 31 to 39) checks stock; invariant 2 (lines 41 to 46) checks money. Drift 0 prints OK, anything else prints MISMATCH.
+- Invariant 1 (lines 45 to 55) checks stock; invariant 2 (lines 57 to 64) checks money. Drift 0 prints OK, anything else prints MISMATCH.
 
 ### Output to show
 

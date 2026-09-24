@@ -40,136 +40,145 @@
 
 ### Code to walk through
 
-**[`main.swift`](../../Sources/ThreadLab/main.swift#L20-L43) · lines 20–43**
+**[`main.swift`](../../Sources/ThreadLab/main.swift#L29-L61) · lines 29–61**
 
 ```swift
-/*  20 */ let arguments = CommandLine.arguments.dropFirst()
-/*  21 */ 
-/*  22 */ /// Demo switch for the "does group.wait() actually block?" experiment — lets us
-/*  23 */ /// show threads being killed when main exits, without editing the source live.
-/*  24 */ let skipWait = arguments.contains("--no-wait")
-/*  25 */ let mode = arguments.first(where: { !$0.hasPrefix("--") }) ?? "all"
-/*  26 */ 
-/*  27 */ warnIfWorkerBodiesNotReady(mode: mode)
-/*  28 */ 
-/*  29 */ switch mode {
-/*  30 */ case "unsync":
-/*  31 */     runUnsynchronized(skipWait: skipWait)
-/*  32 */ case "sync":
-/*  33 */     runSynchronized(skipWait: skipWait)
-/*  34 */ case "priority":
-/*  35 */     runPriorityMode()
-/*  36 */ case "all":
-/*  37 */     runUnsynchronized(skipWait: skipWait)
-/*  38 */     runSynchronized(skipWait: skipWait)
-/*  39 */     runPriorityMode()
-/*  40 */ default:
-/*  41 */     print("usage: ThreadLab [unsync|sync|priority|all] [--no-wait]")
-/*  42 */     exit(1)
-/*  43 */ }
+/*  29 */ let arguments = CommandLine.arguments.dropFirst()
+/*  30 */ 
+/*  31 */ /// Demo switch for the "does group.wait() actually block?" experiment — lets us
+/*  32 */ /// show threads being killed when main exits, without editing the source live.
+/*  35 */ let skipWait = arguments.contains("--no-wait")
+/*  39 */ let mode = arguments.first(where: { !$0.hasPrefix("--") }) ?? "all"
+/*  40 */ 
+/*  43 */ warnIfWorkerBodiesNotReady(mode: mode)
+/*  44 */ 
+/*  46 */ switch mode {
+/*  47 */ case "unsync":
+/*  48 */     runUnsynchronized(skipWait: skipWait)
+/*  49 */ case "sync":
+/*  50 */     runSynchronized(skipWait: skipWait)
+/*  51 */ case "priority":
+/*  52 */     runPriorityMode()
+/*  53 */ case "all":
+/*  55 */     runUnsynchronized(skipWait: skipWait)
+/*  56 */     runSynchronized(skipWait: skipWait)
+/*  57 */     runPriorityMode()
+/*  58 */ default:
+/*  59 */     print("usage: ThreadLab [unsync|sync|priority|all] [--no-wait]")
+/*  60 */     exit(1)   // non-zero: a mistyped mode is a failure, not a silent no-op
+/*  61 */ }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
 - This is the entry point: it reads the mode from the command line and calls the matching run function.
-- Line 24: the `--no-wait` flag, used for the "does wait() matter?" experiment.
+- Line 35: the `--no-wait` flag, used for the "does wait() matter?" experiment.
 - main.swift only holds the switch because Swift only allows top-level code in a file named main.swift.
 
-**[`Harness.swift`](../../Sources/ThreadLab/Harness.swift#L66-L87) · lines 66–87**
+**[`Harness.swift`](../../Sources/ThreadLab/Harness.swift#L73-L99) · lines 73–99**
 
 ```swift
-/*  66 */ /// Creates, names, prioritizes and starts one worker thread, and registers it
-/*  67 */ /// with `group` so the main thread can wait for it.
-/*  68 */ func startWorker(_ name: String,
-/*  69 */                  group: DispatchGroup,
-/*  70 */                  qos: QualityOfService = .default,
-/*  71 */                  task: @escaping @Sendable () -> Void) {
-/*  72 */     // enter() must happen BEFORE start(), on THIS thread. If it went inside the
-/*  73 */     // closure, main could reach wait() before the thread body ran, see a count
-/*  74 */     // of zero, and return immediately.
-/*  75 */     group.enter()
-/*  76 */ 
-/*  77 */     let thread = Thread {
-/*  78 */         print("[\(name)] started")
-/*  79 */         task()
-/*  80 */         print("[\(name)] finished")
-/*  81 */         group.leave()   // unconditional and last — a missed leave() hangs main forever
-/*  82 */     }
-/*  83 */ 
-/*  84 */     thread.name = name
-/*  85 */     thread.qualityOfService = qos   // MUST be set before start(); ignored afterwards
-/*  86 */     thread.start()
-/*  87 */ }
+/*  73 */ /// Creates, names, prioritizes and starts one worker thread, and registers it
+/*  74 */ /// with `group` so the main thread can wait for it. One helper for all five, so
+/*  75 */ /// naming, QoS and the enter/leave pairing can't be got wrong per-thread.
+/*  76 */ func startWorker(_ name: String,
+/*  77 */                  group: DispatchGroup,
+/*  78 */                  qos: QualityOfService = .default,
+/*  79 */                  task: @escaping @Sendable () -> Void) {
+/*  80 */     // enter() must happen BEFORE start(), on THIS thread. If it went inside the
+/*  81 */     // closure, main could reach wait() before the thread body ran, see a count
+/*  82 */     // of zero, and return immediately — an intermittent bug that would look like
+/*  84 */     group.enter()
+/*  85 */ 
+/*  89 */     let thread = Thread {
+/*  90 */         print("[\(name)] started")
+/*  91 */         task()
+/*  92 */         print("[\(name)] finished")
+/*  93 */         group.leave()   // unconditional and last — a missed leave() hangs main forever
+/*  94 */     }
+/*  95 */ 
+/*  96 */     thread.name = name              // Part A requirement; also shows in the debugger
+/*  97 */     thread.qualityOfService = qos   // MUST be set before start(); ignored afterwards
+/*  98 */     thread.start()
+/*  99 */ }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
-- Line 75: `group.enter()` happens **before** the thread starts, on the calling thread. If it were inside the closure, main could reach `wait()` first, see a count of 0, and return early.
-- Lines 77 to 82: the thread's body. It prints started, runs its task, prints finished, then calls `group.leave()` last, every time.
-- Line 84: every thread gets a name, which Swift's GCD and Tasks can't do.
-- Line 85: QoS is set **before** `start()`. Apple's header says it's read-only once the thread is running.
-- Line 86: `start()` is where the kernel takes over.
+- Line 84: `group.enter()` happens **before** the thread starts, on the calling thread. If it were inside the closure, main could reach `wait()` first, see a count of 0, and return early.
+- Lines 89 to 94: the thread's body. It prints started, runs its task, prints finished, then calls `group.leave()` last, every time.
+- Line 96: every thread gets a name, which Swift's GCD and Tasks can't do.
+- Line 97: QoS is set **before** `start()`. Apple's header says it's read-only once the thread is running.
+- Line 98: `start()` is where the kernel takes over.
 
-**[`Harness.swift`](../../Sources/ThreadLab/Harness.swift#L98-L121) · lines 98–121**
+**[`Harness.swift`](../../Sources/ThreadLab/Harness.swift#L108-L137) · lines 108–137**
 
 ```swift
-/*  98 */ func runVendingDemo(_ safety: Safety, skipWait: Bool) {
-/*  99 */     let machine = VendingMachine(startingStock: Config.startingStock)
-/* 100 */     let tallies = WorkerTallies()
-/* 101 */ 
-/* 102 */     // Two latches: the Auditor waits on the first, main waits on both.
-/* 103 */     let workerGroup = DispatchGroup()
-/* 104 */     let auditorGroup = DispatchGroup()
-/* 105 */ 
-/* 106 */     startWorker("SingleBuyer", group: workerGroup) { runSingleBuyer(machine, safety, tallies) }
-/* 107 */     startWorker("ComboBuyer", group: workerGroup) { runComboBuyer(machine, safety, tallies) }
-/* 108 */     startWorker("RestockDriver", group: workerGroup) { runRestockDriver(machine, safety, tallies) }
-/* 109 */     startWorker("CashCollector", group: workerGroup) { runCashCollector(machine, safety, tallies) }
-/* 110 */     startWorker("Auditor", group: auditorGroup) {
-/* 111 */         runAuditor(machine, tallies: tallies, waitingOn: workerGroup)
-/* 112 */     }
-/* 113 */ 
-/* 114 */     if skipWait {
-/* 115 */         print(">>> --no-wait: main is NOT waiting. Expect missing 'finished' lines.")
-/* 116 */         return
-/* 117 */     }
-/* 118 */ 
-/* 119 */     workerGroup.wait()
-/* 120 */     auditorGroup.wait()
-/* 121 */ }
+/* 108 */ func runVendingDemo(_ safety: Safety, skipWait: Bool) {
+/* 109 */     let machine = VendingMachine(startingStock: Config.startingStock)
+/* 110 */     let tallies = WorkerTallies()
+/* 111 */ 
+/* 112 */     // Two latches: the Auditor waits on the first, main waits on both. They must
+/* 115 */     let workerGroup = DispatchGroup()
+/* 116 */     let auditorGroup = DispatchGroup()
+/* 117 */ 
+/* 119 */     startWorker("SingleBuyer", group: workerGroup) { runSingleBuyer(machine, safety, tallies) }
+/* 120 */     startWorker("ComboBuyer", group: workerGroup) { runComboBuyer(machine, safety, tallies) }
+/* 121 */     startWorker("RestockDriver", group: workerGroup) { runRestockDriver(machine, safety, tallies) }
+/* 122 */     startWorker("CashCollector", group: workerGroup) { runCashCollector(machine, safety, tallies) }
+/* 123 */     startWorker("Auditor", group: auditorGroup) {
+/* 124 */         runAuditor(machine, tallies: tallies, waitingOn: workerGroup)
+/* 125 */     }
+/* 126 */ 
+/* 130 */     if skipWait {
+/* 131 */         print(">>> --no-wait: main is NOT waiting. Expect missing 'finished' lines.")
+/* 132 */         return
+/* 133 */     }
+/* 134 */ 
+/* 135 */     workerGroup.wait()    // until all four workers have left
+/* 136 */     auditorGroup.wait()   // then until the Auditor has reported
+/* 137 */ }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
-- Lines 99 to 100: one shared VendingMachine and one tally store, captured by every thread.
-- Lines 103 to 104: two DispatchGroups. The four workers join `workerGroup`; the Auditor joins `auditorGroup`.
-- Lines 106 to 112: the five threads are created here. The Auditor is handed `workerGroup` so it can wait for the workers before its final report.
-- Lines 119 to 120: main blocks until every thread has called `leave()`.
-- Lines 114 to 117: with `--no-wait`, main returns right away instead.
+- Lines 109 to 110: one shared VendingMachine and one tally store, captured by every thread.
+- Lines 115 to 116: two DispatchGroups. The four workers join `workerGroup`; the Auditor joins `auditorGroup`.
+- Lines 119 to 125: the five threads are created here. The Auditor is handed `workerGroup` so it can wait for the workers before its final report.
+- Lines 135 to 136: main blocks until every thread has called `leave()`.
+- Lines 130 to 133: with `--no-wait`, main returns right away instead.
 
-**[`Workers.swift`](../../Sources/ThreadLab/Workers.swift#L16-L28) · lines 16–28**
+**[`Workers.swift`](../../Sources/ThreadLab/Workers.swift#L28-L42) · lines 28–42**
 
 ```swift
-/*  16 */ func runSingleBuyer(_ machine: VendingMachine, _ safety: Safety, _ tallies: WorkerTallies) {
-/*  17 */     var itemsBought = 0
-/*  18 */     for _ in 0..<Config.buyerIterations {
-/*  19 */         if Config.realWorkerBodiesReady {
-/*  20 */             let sold = (safety == .unsafe) ? machine.buyOneUnsafe() : machine.buyOneSafe()
-/*  21 */             if sold { itemsBought += 1 }
-/*  22 */         } else {
-/*  23 */             sched_yield()
-/*  24 */         }
-/*  25 */     }
-/*  26 */     tallies.publish { $0.singleItemsSold = itemsBought }
-/*  27 */     print("[SingleBuyer] sold \(itemsBought) items")
-/*  28 */ }
+/*  28 */ func runSingleBuyer(_ machine: VendingMachine, _ safety: Safety, _ tallies: WorkerTallies) {
+/*  29 */     var itemsBought = 0
+/*  30 */     for _ in 0..<Config.buyerIterations {
+/*  31 */         if Config.realWorkerBodiesReady {
+/*  33 */             let sold = (safety == .unsafe) ? machine.buyOneUnsafe() : machine.buyOneSafe()
+/*  34 */             if sold { itemsBought += 1 }   // only count sales the machine granted
+/*  35 */         } else {
+/*  36 */             sched_yield()
+/*  37 */         }
+/*  38 */     }
+/*  40 */     tallies.publish { $0.singleItemsSold = itemsBought }
+/*  41 */     print("[SingleBuyer] sold \(itemsBought) items")
+/*  42 */ }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
 - One worker as an example: a loop of 4 million passes. `safety` picks the Unsafe (unsync) or Safe (sync) method. That's the only difference between the two modes.
-- Line 17: the tally is a local variable, so only this thread touches it during the run.
-- Line 26: it's published once at the end. Prints stay outside the loop because printing would slow threads down and hide the race.
+- Line 29: the tally is a local variable, so only this thread touches it during the run.
+- Line 40: it's published once at the end. Prints stay outside the loop because printing would slow threads down and hide the race.
 
 ### Output to show
 

@@ -6,12 +6,11 @@ import Foundation
 // Everything here is about *creating and coordinating* threads. The shared-state
 // logic lives in VendingMachine.swift (Members 3 and 4).
 //
-// This file answers Part A's four requirements in one place:
-//   - 5+ Thread objects           -> runVendingDemo starts exactly five
-//   - each one NAMED              -> startWorker sets thread.name
-//   - start / work / finish shown -> startWorker prints the bracketing lines
-//   - main WAITS for all of them  -> DispatchGroup, since Foundation's Thread
-//                                    has no join()
+// Part A's requirements, all answered in this file:
+//   5+ Thread objects       -> runVendingDemo starts five
+//   each one named          -> startWorker sets thread.name
+//   start/work/finish shown -> startWorker's bracketing prints
+//   main waits for all      -> DispatchGroup, since Thread has no join()
 //
 // Member 2 also owns main.swift, which holds nothing but the CLI mode switch —
 // top-level statements are only legal in that file, so it stays thin and calls
@@ -24,18 +23,12 @@ import Foundation
 // main.swift are implicitly @MainActor-isolated, which our Thread closures
 // cannot touch. Keeping them in an enum here sidesteps that entirely and gives
 // every member one place to tune numbers.
-//
-// `enum` with only static members is the standard Swift idiom for a namespace
-// that cannot be instantiated — there is no such thing as "a Config".
 
 enum Config {
     /// Flip to `true` once Members 3 and 4 have implemented the VendingMachine
     /// methods. Until then the workers spin without touching shared state, so
     /// the harness itself (naming, QoS, DispatchGroup) can be tested end to end
     /// without tripping their `fatalError` placeholders.
-    ///
-    /// Kept in the code as evidence of how the team worked in parallel: Part A
-    /// was testable before Part B existed.
     static let realWorkerBodiesReady = true
 
     /// VendingMachine doesn't expose its starting stock after init, and the
@@ -47,34 +40,24 @@ enum Config {
     // restocker that finishes early leaves the buyers failing their stock check
     // for the rest of the run, which makes the race boring.
     //
-    // Retuned by Member 3 (from 10_000) once the real methods landed: at 10_000
-    // the whole run finished in well under one auditSnapshotInterval, so the
-    // Auditor never got to print a mid-run snapshot, and RestockDriver — same
-    // iteration count as the buyers, but each unsafe pass is cheap when it
-    // no-ops — blew through all its passes before stock ever dropped below
-    // restockThreshold, so `unsync` never restocked at all. At 4_000_000 the run
-    // takes under a second, restocking actually happens (hundreds of thousands
-    // of trays loaded), and snapshots occasionally catch itemsInStock negative
-    // (e.g. -3) from the check-then-act race. Flagging for Member 2 to confirm
-    // this doesn't fight anything else Section 2 depends on these numbers for.
+    // Retuned by Member 3 from 10_000: at that size the run finished inside one
+    // auditSnapshotInterval (so no mid-run snapshots), and RestockDriver used up
+    // its cheap no-op passes before stock ever fell below the threshold, so
+    // `unsync` never restocked. At 4_000_000 the run still takes under a second,
+    // restocking happens, and snapshots sometimes catch stock negative.
     //
-    // Presentation point: iteration count is not cosmetic. A race needs enough
-    // overlapping attempts to be visible at all — this number IS the difference
-    // between "no drift, seems fine" and a drift of thousands.
+    // The count is not cosmetic: a race needs enough overlapping attempts to be
+    // visible at all.
     static let buyerIterations = 4_000_000
     static let restockIterations = 4_000_000
-    /// Deliberately tiny next to the buyers — see runCashCollector. A few
-    /// collections against millions of purchases is already enough to lose cash.
-    static let collectorIterations = 200
+    static let collectorIterations = 200   // deliberately tiny — see runCashCollector
 
     static let auditSnapshotInterval = 0.25 // Member 4's knob
 }
 
-/// Which set of VendingMachine methods a worker should call.
-///
-/// Passing this through as a parameter (instead of, say, compiling two binaries
-/// or flipping a global) is what lets ONE worker implementation serve both
-/// modes — and lets `all` run unsync and sync back to back in one process.
+/// Which set of VendingMachine methods a worker should call. Passing this as a
+/// parameter is what lets one worker implementation serve both modes, and lets
+/// `all` run unsync and sync back to back in one process.
 enum Safety {
     case unsafe   // unsync mode — Member 3's methods
     case safe     // sync mode   — Member 4's methods
@@ -84,45 +67,35 @@ enum Safety {
 //
 // Foundation's `Thread` has no join(), so a DispatchGroup stands in as a latch:
 // enter() increments a counter, leave() decrements it, wait() blocks until it
-// reaches zero.
-//
-// This is a genuine API difference worth naming in the demo. In C/pthreads or
-// Java you would call join() on each thread. Foundation's Thread just doesn't
-// offer it, so the standard macOS answer is a counting latch from Dispatch.
-// Same effect, different shape: we wait on a COUNT reaching zero rather than on
-// each thread individually.
+// reaches zero. Where pthreads or Java would join each thread individually, the
+// macOS answer is to wait on a count reaching zero.
 
 /// Creates, names, prioritizes and starts one worker thread, and registers it
-/// with `group` so the main thread can wait for it.
-///
-/// One function for all five threads means naming, QoS and the enter/leave
-/// pairing are written once and cannot be got wrong per-thread.
+/// with `group` so the main thread can wait for it. One helper for all five, so
+/// naming, QoS and the enter/leave pairing can't be got wrong per-thread.
 func startWorker(_ name: String,
                  group: DispatchGroup,
                  qos: QualityOfService = .default,
                  task: @escaping @Sendable () -> Void) {
     // enter() must happen BEFORE start(), on THIS thread. If it went inside the
     // closure, main could reach wait() before the thread body ran, see a count
-    // of zero, and return immediately.
-    //
-    // That is a real race in the harness itself, and a good one to mention: the
-    // bug would be intermittent and would look like "sometimes the program exits
-    // early for no reason."
+    // of zero, and return immediately — an intermittent bug that would look like
+    // "the program sometimes exits early for no reason."
     group.enter()
 
-    // `Thread { ... }` creates the thread suspended; nothing runs until start().
-    // The closure is @Sendable and captures `machine`/`tallies` by reference —
-    // that shared capture is exactly how five threads end up on one object.
+    // Thread{} creates it suspended; nothing runs until start(). The closure
+    // captures machine/tallies by reference — that shared capture is how five
+    // threads end up on one object.
     let thread = Thread {
-        print("[\(name)] started")      // Part A: prove the thread started
-        task()                          // Part A: the distinct work
-        print("[\(name)] finished")     // Part A: prove it finished
+        print("[\(name)] started")
+        task()
+        print("[\(name)] finished")
         group.leave()   // unconditional and last — a missed leave() hangs main forever
     }
 
-    thread.name = name              // Part A requirement; also what shows up in the debugger
+    thread.name = name              // Part A requirement; also shows in the debugger
     thread.qualityOfService = qos   // MUST be set before start(); ignored afterwards
-    thread.start()                  // hands the thread to the kernel scheduler
+    thread.start()
 }
 
 // MARK: - Modes
@@ -131,23 +104,18 @@ func startWorker(_ name: String,
 /// every one of them has finished. This is the shape both unsync and sync use —
 /// same threads, same coordination, only the methods they call differ.
 ///
-/// A fresh VendingMachine and fresh tallies per call, so running `all` gives the
-/// sync mode a clean slate rather than inheriting the unsync run's corruption.
+/// A fresh machine and tallies per call, so `all` gives sync a clean slate.
 func runVendingDemo(_ safety: Safety, skipWait: Bool) {
     let machine = VendingMachine(startingStock: Config.startingStock)
     let tallies = WorkerTallies()
 
-    // Two latches: the Auditor waits on the first, main waits on both.
-    //
-    // Why two and not one: the Auditor's whole job is to wait for the workers.
-    // If it were registered in the same group, that group could never reach zero
-    // while the Auditor sat waiting on it — a self-deadlock. Splitting them
-    // gives a clean two-stage finish: workers empty workerGroup, the Auditor
-    // wakes and reports, then auditorGroup empties and main returns.
+    // Two latches: the Auditor waits on the first, main waits on both. They must
+    // be separate — the Auditor's job is to wait for the workers, so if it were
+    // in their group that group could never empty. Self-deadlock.
     let workerGroup = DispatchGroup()
     let auditorGroup = DispatchGroup()
 
-    // The five threads of Part A. Four do work; the fifth observes.
+    // The five threads of Part A: four do work, the fifth observes.
     startWorker("SingleBuyer", group: workerGroup) { runSingleBuyer(machine, safety, tallies) }
     startWorker("ComboBuyer", group: workerGroup) { runComboBuyer(machine, safety, tallies) }
     startWorker("RestockDriver", group: workerGroup) { runRestockDriver(machine, safety, tallies) }
@@ -156,29 +124,26 @@ func runVendingDemo(_ safety: Safety, skipWait: Bool) {
         runAuditor(machine, tallies: tallies, waitingOn: workerGroup)
     }
 
-    // The --no-wait experiment: skip the waits and return straight out of the
-    // run function. main.swift then falls off the end and the process exits,
-    // taking every still-running thread with it — so the "[X] finished" lines
-    // never print. This is the live demonstration that wait() is doing real
-    // work, rather than us asserting that it is.
+    // Skipping the waits lets main fall off the end, exiting the process and
+    // killing the still-running threads — so the "finished" lines never print.
+    // That's the live proof that wait() is doing real work.
     if skipWait {
         print(">>> --no-wait: main is NOT waiting. Expect missing 'finished' lines.")
         return
     }
 
-    workerGroup.wait()    // block main until all four workers have left the group
-    auditorGroup.wait()   // then until the Auditor has printed its report
+    workerGroup.wait()    // until all four workers have left
+    auditorGroup.wait()   // then until the Auditor has reported
 }
 
-/// Part B, first half: the same five threads with NO locking. Expect mismatches.
+/// Part B first half: five threads, no locking. Expect MISMATCH.
 func runUnsynchronized(skipWait: Bool) {
-    print("\n=== UNSYNCHRONIZED RUN ===")   // banner required by the brief
+    print("\n=== UNSYNCHRONIZED RUN ===")
     runVendingDemo(.unsafe, skipWait: skipWait)
     print("=== UNSYNCHRONIZED RUN COMPLETE ===")
 }
 
-/// Part B, second half: identical work, every critical section under NSLock.
-/// Expect both invariants to read OK, every single time.
+/// Part B second half: identical work under NSLock. Expect OK, every time.
 func runSynchronized(skipWait: Bool) {
     print("\n=== SYNCHRONIZED RUN ===")
     runVendingDemo(.safe, skipWait: skipWait)
@@ -202,11 +167,9 @@ func warnIfWorkerBodiesNotReady(mode: String) {
 //
 // Part C itself belongs to Member 5 in PriorityTest.swift — including its own
 // thread creation, since their racers need the "never set qualityOfService at
-// all" case that startWorker can't express. (startWorker's `qos` parameter
-// defaults to .default, which is an explicit assignment; Part C specifically
-// needs to observe what a thread inherits when nothing is set.)
-//
-// This wrapper only supplies the banner pair, which is Member 2's to own.
+// all" case that startWorker can't express (its qos parameter defaults to
+// .default, which is still an explicit assignment). This wrapper only supplies
+// the banner pair, which is Member 2's to own.
 //
 // Note: --no-wait applies to unsync/sync only. PriorityTest.run() does its own
 // group.wait() internally, so there is nothing here to skip.

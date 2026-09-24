@@ -31,86 +31,88 @@
 
 ### Code to walk through (VendingMachine.swift)
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L32-L43) · lines 32–43**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L22-L31) · lines 22–31**
 
 ```swift
-/*  32 */ final class VendingMachine: @unchecked Sendable {
+/*  22 */ final class VendingMachine: @unchecked Sendable {
           …
-/*  41 */     var itemsInStock: Int          // inventory — buyers decrement, restocker increments
-/*  42 */     var coinBoxCents: Int          // money sitting in the machine, emptied by the collector
-/*  43 */     var cashCollectedCents: Int    // money already banked, only ever grows
+/*  29 */     var itemsInStock: Int          // inventory — buyers decrement, restocker increments
+/*  30 */     var coinBoxCents: Int          // money in the machine, emptied by the collector
+/*  31 */     var cashCollectedCents: Int    // money already banked
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
 - The shared resource: three counters that every worker thread reads and changes.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L102-L109) · lines 102–109**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L75-L82) · lines 75–82**
 
 ```swift
-/* 102 */     func buyOneUnsafe() -> Bool {
-/* 103 */         guard itemsInStock > 0 else { return false }
-/* 104 */         let currentStock = itemsInStock    // READ
-/* 105 */         sched_yield()                      // widen the timing window (exposes the bug, doesn't create it)
-/* 106 */         itemsInStock = currentStock - 1    // WRITE (may overwrite another thread's update)
-/* 107 */         coinBoxCents += itemPriceCents     // also not atomic
-/* 108 */         return true
-/* 109 */     }
+/*  75 */     func buyOneUnsafe() -> Bool {
+/*  76 */         guard itemsInStock > 0 else { return false }
+/*  77 */         let currentStock = itemsInStock    // READ
+/*  78 */         sched_yield()                      // widen the timing window (exposes the bug, doesn't create it)
+/*  79 */         itemsInStock = currentStock - 1    // WRITE (may overwrite another thread's update)
+/*  80 */         coinBoxCents += itemPriceCents     // also not atomic
+/*  81 */         return true
+/*  82 */     }
 ```
 
 **What to say:**
 
-- **Lost update.** Line 104 reads stock into a local copy. Line 105 yields. Line 106 writes back the copy minus 1.
-- If another thread changed the stock during the yield, line 106 overwrites their change with a stale number.
-- Line 107 has no yield but is still read-change-write with no lock, so it can lose updates too.
+- **Lost update.** Line 77 reads stock into a local copy. Line 78 yields. Line 79 writes back the copy minus 1.
+- If another thread changed the stock during the yield, line 79 overwrites their change with a stale number.
+- Line 80 has no yield but is still read-change-write with no lock, so it can lose updates too.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L118-L124) · lines 118–124**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L88-L94) · lines 88–94**
 
 ```swift
-/* 118 */     func buyComboUnsafe() -> Bool {
-/* 119 */         guard itemsInStock >= comboSize else { return false }  // CHECK
-/* 120 */         sched_yield()                                          // widen the check-then-act gap
-/* 121 */         itemsInStock -= comboSize                              // ACT (stock can go negative if another thread already passed the check)
-/* 122 */         coinBoxCents += comboSize * itemPriceCents
-/* 123 */         return true
-/* 124 */     }
+/*  88 */     func buyComboUnsafe() -> Bool {
+/*  89 */         guard itemsInStock >= comboSize else { return false }  // CHECK
+/*  90 */         sched_yield()                                          // widen the check-then-act gap
+/*  91 */         itemsInStock -= comboSize                              // ACT (stock can go negative if another thread already passed the check)
+/*  92 */         coinBoxCents += comboSize * itemPriceCents
+/*  93 */         return true
+/*  94 */     }
 ```
 
 **What to say:**
 
-- **Check-then-act**, a different bug. Line 119 checks there are at least 3 items, line 120 yields, line 121 subtracts 3.
+- **Check-then-act**, a different bug. Line 89 checks there are at least 3 items, line 90 yields, line 91 subtracts 3.
 - Two threads can both pass the check while stock is low, then both subtract, and stock goes **negative**. That's overselling.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L135-L141) · lines 135–141**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L102-L108) · lines 102–108**
 
 ```swift
-/* 135 */     func restockUnsafe() -> Bool {
-/* 136 */         guard itemsInStock < restockThreshold else { return false }
-/* 137 */         let currentStock = itemsInStock            // READ
-/* 138 */         sched_yield()                              // widen the window (another restock landing here gets overwritten)
-/* 139 */         itemsInStock = currentStock + restockTraySize  // WRITE
-/* 140 */         return true
-/* 141 */     }
+/* 102 */     func restockUnsafe() -> Bool {
+/* 103 */         guard itemsInStock < restockThreshold else { return false }
+/* 104 */         let currentStock = itemsInStock            // READ
+/* 105 */         sched_yield()                              // widen the window (another restock landing here gets overwritten)
+/* 106 */         itemsInStock = currentStock + restockTraySize  // WRITE
+/* 107 */         return true
+/* 108 */     }
 ```
 
 **What to say:**
 
 - Same read-yield-write shape as buyOneUnsafe. A buyer's sale that lands during the yield gets overwritten by old stock + 50.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L149-L154) · lines 149–154**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L113-L118) · lines 113–118**
 
 ```swift
-/* 149 */     func collectCashUnsafe() {
-/* 150 */         let collected = coinBoxCents       // READ
-/* 151 */         sched_yield()                      // widen the window (a purchase landing here gets erased below)
-/* 152 */         cashCollectedCents += collected
-/* 153 */         coinBoxCents = 0                   // RESET (wipes out anything added during the yield)
-/* 154 */     }
+/* 113 */     func collectCashUnsafe() {
+/* 114 */         let collected = coinBoxCents       // READ
+/* 115 */         sched_yield()                      // widen the window (a purchase landing here gets erased below)
+/* 116 */         cashCollectedCents += collected
+/* 117 */         coinBoxCents = 0                   // RESET (wipes out anything added during the yield)
+/* 118 */     }
 ```
 
 **What to say:**
 
-- **Read-then-reset.** Line 150 reads the coin box, line 151 yields, line 153 sets it to 0.
+- **Read-then-reset.** Line 114 reads the coin box, line 115 yields, line 117 sets it to 0.
 - Any purchase that added money during the yield is wiped out by the reset. That's where the vanished dollars come from.
 
 ### Output to show

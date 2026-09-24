@@ -35,68 +35,73 @@
 
 ### Code to walk through
 
-**[`Package.swift`](../../Package.swift#L1-L13) · lines 1–13**
+**[`Package.swift`](../../Package.swift#L1-L24) · lines 1–24**
 
 ```swift
 /*   1 */ // swift-tools-version: 6.0
-/*   2 */ import PackageDescription
-/*   3 */ 
-/*   4 */ let package = Package(
-/*   5 */     name: "ThreadLab",
-/*   6 */     platforms: [.macOS(.v13)],
-/*   7 */     targets: [
-/*   8 */         .executableTarget(
-/*   9 */             name: "ThreadLab",
-/*  10 */             path: "Sources/ThreadLab"
-/*  11 */         )
-/*  12 */     ]
-/*  13 */ )
+/*  11 */ import PackageDescription
+/*  12 */ 
+/*  13 */ let package = Package(
+/*  14 */     name: "ThreadLab",
+/*  15 */     platforms: [.macOS(.v13)],
+/*  16 */     targets: [
+/*  19 */         .executableTarget(
+/*  20 */             name: "ThreadLab",
+/*  21 */             path: "Sources/ThreadLab"
+/*  22 */         )
+/*  23 */     ]
+/*  24 */ )
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
 - Line 1: `swift-tools-version: 6.0` turns on Swift 6 language mode, which is what enforces the data-race checks.
-- Line 6: targets macOS 13 or newer, so it builds on every team Mac.
+- Line 15: targets macOS 13 or newer, so it builds on every team Mac.
 - It's one executable target, ThreadLab, and all the source files share one module.
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L1-L15) · lines 1–15**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L1-L31) · lines 1–31**
 
 ```swift
 /*   1 */ import Foundation
 /*   2 */ 
-/*   3 */ /// The shared resource for Sections 3 and 4 of the demo (Part B).
-/*   4 */ ///
-/*   5 */ /// `@unchecked Sendable`: we're telling the Swift 6 compiler "trust us, we
-/*   6 */ /// handle thread safety ourselves" so this instance can be captured by
-/*   7 */ /// multiple `Thread` closures. In `unsync` mode we deliberately don't
-/*   8 */ /// actually handle it — that's the bug we're demonstrating.
-/*   9 */ final class VendingMachine: @unchecked Sendable {
-/*  10 */ 
-/*  11 */     // MARK: - Shared state (Section 1 — the three counters everything races on)
-/*  12 */ 
-/*  13 */     var itemsInStock: Int
-/*  14 */     var coinBoxCents: Int
-/*  15 */     var cashCollectedCents: Int
+/*  15 */ /// The shared resource for Sections 3 and 4 of the demo (Part B).
+/*  16 */ ///
+/*  17 */ /// `@unchecked Sendable`: we're telling the Swift 6 compiler "trust us, we
+/*  18 */ /// handle thread safety ourselves" so this instance can be captured by
+/*  19 */ /// multiple `Thread` closures. In `unsync` mode we deliberately don't
+/*  20 */ /// actually handle it — that's the bug we're demonstrating. Swift 6 can stop us
+/*  21 */ /// writing a race by accident, not on purpose.
+/*  22 */ final class VendingMachine: @unchecked Sendable {
+/*  23 */ 
+/*  24 */     // MARK: - Shared state (Section 1 — the three counters everything races on)
+/*  25 */     //
+/*  29 */     var itemsInStock: Int          // inventory — buyers decrement, restocker increments
+/*  30 */     var coinBoxCents: Int          // money in the machine, emptied by the collector
+/*  31 */     var cashCollectedCents: Int    // money already banked
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 
-- Line 9 is the key line. A Thread's closure must be `@Sendable` (safe to share across threads). This class has `var` properties (lines 13 to 15) that several threads change, so Swift 6 refuses to compile if a thread captures it.
+- Line 20 is the key line. A Thread's closure must be `@Sendable` (safe to share across threads). This class has `var` properties (lines 24 to 31) that several threads change, so Swift 6 refuses to compile if a thread captures it.
 - `@unchecked Sendable` tells the compiler "trust us, we handle thread safety ourselves." It adds no locking and changes nothing at runtime; it only turns off the check.
 - We use it in **both** modes. Sync mode keeps the promise with NSLock. Unsync mode breaks it on purpose, which is the bug the demo shows.
 - ThreadSanitizer still catches the race at runtime even though the compiler was told not to check.
 
-**[`Harness.swift`](../../Sources/ThreadLab/Harness.swift#L14-L21) · lines 14–21**
+**[`Harness.swift`](../../Sources/ThreadLab/Harness.swift#L20-L27) · lines 20–27**
 
 ```swift
-/*  14 */ // MARK: - Configuration
-/*  15 */ //
-/*  16 */ // These live inside a type, not at file scope: in Swift 6 top-level `let`s in
-/*  17 */ // main.swift are implicitly @MainActor-isolated, which our Thread closures
-/*  18 */ // cannot touch. Keeping them in an enum here sidesteps that entirely and gives
-/*  19 */ // every member one place to tune numbers.
-/*  20 */ 
-/*  21 */ enum Config {
+/*  20 */ // MARK: - Configuration
+/*  21 */ //
+/*  22 */ // These live inside a type, not at file scope: in Swift 6 top-level `let`s in
+/*  23 */ // main.swift are implicitly @MainActor-isolated, which our Thread closures
+/*  24 */ // cannot touch. Keeping them in an enum here sidesteps that entirely and gives
+/*  25 */ // every member one place to tune numbers.
+/*  26 */ 
+/*  27 */ enum Config {
 ```
 
 **What to say:**
@@ -105,7 +110,7 @@
 - So all our settings live in `enum Config` instead, where every thread can read them.
 
 > [!TIP]
-> Optional live demo: delete `: @unchecked Sendable` on line 9 of VendingMachine.swift, run `swift build`, show the compiler error, then put it back.
+> Optional live demo: delete `: @unchecked Sendable` on line 20 of VendingMachine.swift, run `swift build`, show the compiler error, then put it back.
 
 ## Section 7 · Pros, Cons, and Limitations
 
@@ -129,20 +134,22 @@
 
 ### Code to point at
 
-**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L95-L104) · lines 95–104**
+**[`VendingMachine.swift`](../../Sources/ThreadLab/VendingMachine.swift#L2-L142) · lines 2–142**
 
 ```swift
-/*  95 */     /// Safe counterpart of buyOneUnsafe().
-/*  96 */     @discardableResult
-/*  97 */     func buyOneSafe() -> Bool {
-/*  98 */         lock.lock()
-/*  99 */         defer { lock.unlock() }
-/* 100 */         guard itemsInStock > 0 else { return false }
-/* 101 */         itemsInStock -= 1
-/* 102 */         coinBoxCents += itemPriceCents
-/* 103 */         return true
-/* 104 */     }
+/*   2 */ 
+/*  74 */     @discardableResult
+/* 135 */     func buyOneSafe() -> Bool {
+/* 136 */         lock.lock()
+/* 137 */         defer { lock.unlock() }            // runs on every exit, including the early return
+/* 138 */         guard itemsInStock > 0 else { return false }
+/* 139 */         itemsInStock -= 1
+/* 140 */         coinBoxCents += itemPriceCents     // both counters updated in one critical section
+/* 141 */         return true
+/* 142 */     }
 ```
+
+*(Comments elided for space — the line numbers above are exact.)*
 
 **What to say:**
 

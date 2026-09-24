@@ -37,150 +37,150 @@
 
 ### Code to walk through (PriorityTest.swift)
 
-**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L52-L88) · lines 52–88**
+**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L36-L61) · lines 36–61**
 
 ```swift
-/*  52 */     static let raceDuration: TimeInterval = 2.0
-/*  55 */     static let roundsPerConfig = 5
-/*  59 */     static let cooldownBetweenRaces: TimeInterval = 1.0
-/*  66 */     static let loadThreadCount = ProcessInfo.processInfo.activeProcessorCount
-/*  70 */     struct Config: Sendable {
-/*  71 */         let label: String
-/*  73 */         let racerQoS: [QualityOfService?]
-/*  74 */     }
-/*  78 */     static let configs = [
-/*  83 */         Config(label: "All `.default`", racerQoS: [nil, nil, nil]),
-/*  86 */         Config(label: "`.userInteractive` / `.utility` / `.background`",
-/*  87 */                racerQoS: [.userInteractive, .utility, .background]),
-/*  88 */     ]
+/*  36 */     static let raceDuration: TimeInterval = 2.0
+/*  38 */     static let roundsPerConfig = 5
+/*  40 */     static let cooldownBetweenRaces: TimeInterval = 1.0
+/*  44 */     static let loadThreadCount = ProcessInfo.processInfo.activeProcessorCount
+/*  46 */     struct Config: Sendable {
+/*  47 */         let label: String
+/*  49 */         let racerQoS: [QualityOfService?]
+/*  50 */     }
+/*  52 */     static let configs = [
+/*  56 */         Config(label: "All `.default`", racerQoS: [nil, nil, nil]),
+/*  59 */         Config(label: "`.userInteractive` / `.utility` / `.background`",
+/*  60 */                racerQoS: [.userInteractive, .utility, .background]),
+/*  61 */     ]
 ```
 *(Comments elided for space — the line numbers above are exact.)*
 
 
 **What to say:**
 
-- Line 52: each race lasts 2 seconds. Line 55: 5 runs per setup. Line 59: 1-second cooldown between races.
-- Line 66: one load thread per core, so busy threads outnumber cores.
-- Lines 78 to 88: the two setups. `nil` means QoS is never set, so the thread keeps macOS's default.
+- Line 36: each race lasts 2 seconds. Line 38: 5 runs per setup. Line 40: 1-second cooldown between races.
+- Line 44: one load thread per core, so busy threads outnumber cores.
+- Lines 52 to 61: the two setups. `nil` means QoS is never set, so the thread keeps macOS's default.
 
-**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L274-L288) · lines 274–288**
+**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L213-L227) · lines 213–227**
 
 ```swift
-/* 274 */     private static func startThread(named name: String,
-/* 275 */                                     qos: QualityOfService?,
-/* 276 */                                     group: DispatchGroup,
-/* 277 */                                     body: @escaping @Sendable () -> Void) {
-/* 278 */         let thread = Thread {
-/* 279 */             body()
-/* 280 */             group.leave()
-/* 281 */         }
-/* 282 */         thread.name = name
-/* 283 */         if let qos {
-/* 284 */             thread.qualityOfService = qos   // only when requested; nil leaves the inherited value alone
-/* 285 */         }
-/* 286 */         group.enter()    // before start(), for the same reason as in Harness.swift
-/* 287 */         thread.start()
-/* 288 */     }
+/* 213 */     private static func startThread(named name: String,
+/* 214 */                                     qos: QualityOfService?,
+/* 215 */                                     group: DispatchGroup,
+/* 216 */                                     body: @escaping @Sendable () -> Void) {
+/* 217 */         let thread = Thread {
+/* 218 */             body()
+/* 219 */             group.leave()
+/* 220 */         }
+/* 221 */         thread.name = name
+/* 222 */         if let qos {
+/* 223 */             thread.qualityOfService = qos   // nil leaves the inherited value alone
+/* 224 */         }
+/* 225 */         group.enter()    // before start(), as in Harness.swift
+/* 226 */         thread.start()
+/* 227 */     }
 ```
 
 **What to say:**
 
-- Line 284: QoS is set **before** `start()` on line 287. Apple's NSThread.h says qualityOfService is read-only once the thread starts.
-- Lines 286 and 280: the same DispatchGroup enter/leave pattern as Calli's startWorker, so main can wait for every racer.
+- Line 223: QoS is set **before** `start()` on line 226. Apple's NSThread.h says qualityOfService is read-only once the thread starts.
+- Lines 225 and 219: the same DispatchGroup enter/leave pattern as Calli's startWorker, so main can wait for every racer.
 
-**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L150-L185) · lines 150–185**
+**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L108-L139) · lines 108–139**
 
 ```swift
-/* 150 */     final class StartGate: @unchecked Sendable {
-/* 151 */         private let condition = NSCondition()
-/* 152 */         private var readyCount = 0
-/* 153 */         private var deadline: UInt64?   // nil = gate closed; non-nil = open, and this is the finish time
-/* 155 */         /// Called by each thread. Blocks until the gate opens, then returns the shared deadline.
-/* 156 */         func waitForStart() -> UInt64 {
-/* 157 */             condition.lock()
-/* 158 */             defer { condition.unlock() }
-/* 159 */             readyCount += 1
-/* 160 */             condition.broadcast()   // let the main thread see the new ready count
-/* 165 */             while true {
-/* 166 */                 if let deadline { return deadline }
-/* 167 */                 condition.wait()
-/* 168 */             }
-/* 169 */         }
-/* 171 */         /// Called by the main thread. Waits until every thread is at the gate, then opens it.
-/* 172 */         func openWhenReady(threadCount: Int, raceDuration: TimeInterval) {
-/* 173 */             condition.lock()
-/* 174 */             defer { condition.unlock() }
-/* 175 */             while readyCount < threadCount {
-/* 176 */                 condition.wait()
-/* 177 */             }
-/* 182 */             deadline = DispatchTime.now().uptimeNanoseconds + UInt64(raceDuration * 1_000_000_000)
-/* 183 */             condition.broadcast()   // wake every waiting thread at once, not one at a time
-/* 184 */         }
-/* 185 */     }
+/* 108 */     final class StartGate: @unchecked Sendable {
+/* 109 */         private let condition = NSCondition()
+/* 110 */         private var readyCount = 0
+/* 111 */         private var deadline: UInt64?   // nil = closed; set = open, and this is the finish time
+/* 112 */ 
+/* 114 */         func waitForStart() -> UInt64 {
+/* 115 */             condition.lock()
+/* 116 */             defer { condition.unlock() }
+/* 117 */             readyCount += 1
+/* 118 */             condition.broadcast()   // let the main thread see the new ready count
+/* 121 */             while true {
+/* 122 */                 if let deadline { return deadline }
+/* 123 */                 condition.wait()
+/* 124 */             }
+/* 125 */         }
+/* 126 */ 
+/* 128 */         func openWhenReady(threadCount: Int, raceDuration: TimeInterval) {
+/* 129 */             condition.lock()
+/* 130 */             defer { condition.unlock() }
+/* 131 */             while readyCount < threadCount {
+/* 132 */                 condition.wait()
+/* 133 */             }
+/* 136 */             deadline = DispatchTime.now().uptimeNanoseconds + UInt64(raceDuration * 1_000_000_000)
+/* 137 */             condition.broadcast()   // wake them all at once
+/* 138 */         }
+/* 139 */     }
 ```
 *(Comments elided for space — the line numbers above are exact.)*
 
 
 **What to say:**
 
-- The starting gate. Each thread calls `waitForStart()` and blocks on the condition (line 167) until the gate opens.
-- Main calls `openWhenReady()`: it waits until every thread is at the gate (lines 174 to 177), sets one shared deadline (line 182), and wakes everyone at once (line 183).
+- The starting gate. Each thread calls `waitForStart()` and blocks on the condition (line 123) until the gate opens.
+- Main calls `openWhenReady()`: it waits until every thread is at the gate (lines 130 to 133), sets one shared deadline (line 136), and wakes everyone at once (line 137).
 - This removes start-order bias: no thread gets a head start just because it was started first.
 
-**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L219-L265) · lines 219–265**
+**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L168-L207) · lines 168–207**
 
 ```swift
-/* 219 */     private static func race(_ config: Config) -> [RacerReport] {
-/* 220 */         let group = DispatchGroup()   // same latch pattern as Part A's harness
-/* 221 */         let gate = StartGate()
-/* 222 */         let store = ResultsStore()
-/* 223 */ 
-/* 224 */         for (index, qos) in config.racerQoS.enumerated() {
-/* 225 */             startThread(named: "PickerRobot\(index + 1)", qos: qos, group: group) {
-/* 229 */                 let current = Thread.current
-/* 230 */                 let reportedQoS = current.qualityOfService
-/* 231 */                 let priority = current.threadPriority
-/* 235 */                 let applied = qosClassName(qos_class_self())
-/* 239 */                 let deadline = gate.waitForStart()
-/* 240 */                 let iterations = countIterations(until: deadline)
-/* 241 */ 
-/* 242 */                 store.record(RacerReport(name: current.name ?? "?",
-/* 243 */                                          requestedQoS: qos,
-/* 244 */                                          reportedQoS: reportedQoS,
-/* 245 */                                          threadPriority: priority,
-/* 246 */                                          appliedQoSClass: applied,
-/* 247 */                                          iterations: iterations))
-/* 248 */             }
-/* 249 */         }
-/* 254 */         for index in 1...loadThreadCount {
-/* 255 */             startThread(named: "LoadThread\(index)", qos: nil, group: group) {
-/* 256 */                 _ = countIterations(until: gate.waitForStart())
-/* 257 */             }
-/* 258 */         }
-/* 262 */         gate.openWhenReady(threadCount: config.racerQoS.count + loadThreadCount, raceDuration: raceDuration)
-/* 263 */         group.wait()
-/* 264 */         return store.sortedReports()
-/* 265 */     }
+/* 168 */     private static func race(_ config: Config) -> [RacerReport] {
+/* 169 */         let group = DispatchGroup()   // same latch pattern as Part A
+/* 170 */         let gate = StartGate()
+/* 171 */         let store = ResultsStore()
+/* 172 */ 
+/* 173 */         for (index, qos) in config.racerQoS.enumerated() {
+/* 174 */             startThread(named: "PickerRobot\(index + 1)", qos: qos, group: group) {
+/* 176 */                 let current = Thread.current
+/* 177 */                 let reportedQoS = current.qualityOfService
+/* 178 */                 let priority = current.threadPriority
+/* 180 */                 let applied = qosClassName(qos_class_self())
+/* 183 */                 let deadline = gate.waitForStart()
+/* 184 */                 let iterations = countIterations(until: deadline)
+/* 185 */ 
+/* 186 */                 store.record(RacerReport(name: current.name ?? "?",
+/* 187 */                                          requestedQoS: qos,
+/* 188 */                                          reportedQoS: reportedQoS,
+/* 189 */                                          threadPriority: priority,
+/* 190 */                                          appliedQoSClass: applied,
+/* 191 */                                          iterations: iterations))
+/* 192 */             }
+/* 193 */         }
+/* 197 */         for index in 1...loadThreadCount {
+/* 198 */             startThread(named: "LoadThread\(index)", qos: nil, group: group) {
+/* 199 */                 _ = countIterations(until: gate.waitForStart())
+/* 200 */             }
+/* 201 */         }
+/* 204 */         gate.openWhenReady(threadCount: config.racerQoS.count + loadThreadCount, raceDuration: raceDuration)
+/* 205 */         group.wait()
+/* 206 */         return store.sortedReports()
+/* 207 */     }
 ```
 *(Comments elided for space — the line numbers above are exact.)*
 
 
 **What to say:**
 
-- One race: start the 3 racers (lines 224 to 249), then the load threads (lines 254 to 258), open the gate (line 262), wait for all (line 263).
-- Lines 229 to 235: inside each racer we read the QoS it reports and `qos_class_self()`, what the kernel actually applied.
+- One race: start the 3 racers (lines 173 to 193), then the load threads (lines 197 to 201), open the gate (line 204), wait for all (line 205).
+- Lines 176 to 180: inside each racer we read the QoS it reports and `qos_class_self()`, what the kernel actually applied.
 - Results go into a lock-protected store and are printed only after every thread finishes, so printing can't skew the race.
 
-**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L298-L304) · lines 298–304**
+**[`PriorityTest.swift`](../../Sources/ThreadLab/PriorityTest.swift#L234-L240) · lines 234–240**
 
 ```swift
-/* 298 */     private static func countIterations(until deadline: UInt64) -> Int {
-/* 299 */         var iterations = 0
-/* 300 */         while DispatchTime.now().uptimeNanoseconds < deadline {
-/* 301 */             iterations += 1
-/* 302 */         }
-/* 303 */         return iterations
-/* 304 */     }
+/* 234 */     private static func countIterations(until deadline: UInt64) -> Int {
+/* 235 */         var iterations = 0
+/* 236 */         while DispatchTime.now().uptimeNanoseconds < deadline {
+/* 237 */             iterations += 1
+/* 238 */         }
+/* 239 */         return iterations
+/* 240 */     }
 ```
 
 **What to say:**
