@@ -14,6 +14,17 @@ One page per presenter: the requirement checklist for their section, the key poi
 
 Everyone presents a section they didn't write, so anyone can answer questions about any part.
 
+## If the code changes
+
+The walkthroughs quote code with line numbers baked in, so editing anything in
+`Sources/ThreadLab` (even adding a comment) makes the links scroll to the wrong
+place. To put them right:
+
+```bash
+python3 "demo help/check-refs.py"          # check
+python3 "demo help/check-refs.py" --fix    # relocate them, then check
+```
+
 ## Before you start
 
 - [ ] Build once so the live runs don't compile on stage: `swift build -c release`
