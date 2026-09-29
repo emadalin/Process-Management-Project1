@@ -279,12 +279,12 @@ Task: convert every played byte into a `Float` sample and store it in `samples: 
 - Repeat runs (e.g. 5 each) and report variability. Being faster doesn't prove less memory.
 
 ### Suggested roles for this theme
-| Member | Owns |
-|---|---|
-| 1 | Memory model research, package/repo setup, `Song`/`Playlist` shared models, README, sections 1 and 7 |
-| 2 | Stack demo (merge sort + callStackSymbols + `Stack<Song>` contrast) |
-| 3 | Heap demo (leaky vs weak delegate, deinit output) |
-| 4 | Buffer demo (song files, chunked playback, boundary cases, checksums) |
-| 5 | Comparison + Instruments/Memory Graph screenshots and measurements |
+| Name | Member | Owns |
+|---|---|---|
+| Sarah Rae | 1 | Memory model research, package/repo setup, `Song`/`Playlist` shared models, README, sections 1 and 7 |
+| Ella | 2 | Stack demo (merge sort + callStackSymbols + `Stack<Song>` contrast) |
+| Stephen | 3 | Heap demo (leaky vs weak delegate, deinit output) |
+| Calli | 4 | Buffer demo (song files, chunked playback, boundary cases, checksums) |
+| Georgia | 5 | Comparison + Instruments/Memory Graph screenshots and measurements |
 
 Members 1, 3, and 4 must agree on the `Song` and `Playlist` class shape first, since everyone's code uses them.
