@@ -3,7 +3,7 @@
 **Language / OS:** Swift on macOS  **Due:** Thursday, Oct 15, 11:59 pm  **Demo:** 30 min
 **Package name:** `PlaylistStreamer`  **Reference:** `projectDebrief.md`
 
-Put your name in the blank next to the role you take. Everyone explains at least one demo section they **did not** write.
+Roles are assigned (see the table in `projectDebrief.md` section 9). Everyone explains at least one demo section they **did not** write.
 
 ---
 
@@ -17,7 +17,7 @@ Put your name in the blank next to the role you take. Everyone explains at least
 
 ---
 
-## Member 1: Memory Model, Setup & Shared Models · `________`
+## Member 1: Memory Model, Setup & Shared Models · `Sarah Rae`
 Owns demo sections **1 (language & memory model)** and **7 (pros/cons/limitations)**, plus setup.
 
 - [ ] Create the Swift package: `Package.swift`, `Sources/PlaylistStreamer/`, `.gitignore`
@@ -31,7 +31,7 @@ Owns demo sections **1 (language & memory model)** and **7 (pros/cons/limitation
 - [ ] Collect the sources list from everyone
 - [ ] Schedule the rehearsal
 
-## Member 2: Stack Demo · `________`
+## Member 2: Stack Demo · `Ella`
 Owns demo section **2**. File: `StackDemo.swift`
 
 - [ ] Recursive merge sort of the playlist (by title or duration), 8 songs
@@ -43,7 +43,7 @@ Owns demo section **2**. File: `StackDemo.swift`
 - [ ] Explain the deep-recursion risk (a one-level-per-song recursive shuffle; no recursion limit in Swift; 8 MB main / 512 KB secondary thread stacks). Do **not** crash it
 - [ ] Sample output + short "what this shows" for the README
 
-## Member 3: Heap Demo · `________`
+## Member 3: Heap Demo · `Stephen`
 Owns demo section **3**. File: `HeapDemo.swift`
 
 - [ ] `deinit` prints on `Song` and `Playlist` (in the shared models, coordinated with Member 1)
@@ -54,7 +54,7 @@ Owns demo section **3**. File: `HeapDemo.swift`
 - [ ] Explain what deinit output proves (ARC released the object) and doesn't prove (process memory went down)
 - [ ] Sample output + short "what this shows" for the README
 
-## Member 4: Buffer Demo · `________`
+## Member 4: Buffer Demo · `Calli`
 Owns demo section **4 (buffer part)**. File: `BufferDemo.swift`
 
 - [ ] Generate song files (`.raw`) at startup, or a small script that does. Sizes: **10,000 bytes**, **8,192 bytes**, **100 bytes**
@@ -66,7 +66,7 @@ Owns demo section **4 (buffer part)**. File: `BufferDemo.swift`
 - [ ] Sample output with all three boundary cases + "what this shows"
 - [ ] Help Member 5 with the comparison input (hand over the played bytes / a function that produces them)
 
-## Member 5: Comparison & IDE Tools · `________`
+## Member 5: Comparison & IDE Tools · `Georgia`
 Owns demo sections **4 (comparison part)** and **5 (IDE tools)**. File: `CompareDemo.swift`
 
 - [ ] **A:** build `samples: [Float]` by appending one at a time
@@ -96,11 +96,11 @@ Owns demo sections **4 (comparison part)** and **5 (IDE tools)**. File: `Compare
 ## Suggested demo timing (30 min)
 | Section | Presenter | Time |
 |---|---|---|
-| 1. Language & memory model | ______ | 3 min |
-| 2. Stack demo | ______ | 4 min |
-| 3. Heap demo | ______ | 5 min |
-| 4. Buffer + comparison | ______ | 6 min |
-| 5. IDE tools | ______ | 4 min |
-| 6. Code walkthrough | ______ | 4 min |
-| 7. Pros, cons, limitations | ______ | 2 min |
+| 1. Language & memory model | Sarah Rae | 3 min |
+| 2. Stack demo | Ella | 4 min |
+| 3. Heap demo | Stephen | 5 min |
+| 4. Buffer + comparison | Calli (buffer) + Georgia (comparison) | 6 min |
+| 5. IDE tools | Georgia | 4 min |
+| 6. Code walkthrough | Everyone — own file, ~45 s each | 4 min |
+| 7. Pros, cons, limitations | Sarah Rae | 2 min |
 | Questions | Everyone | 2 min |
