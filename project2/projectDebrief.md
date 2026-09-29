@@ -139,7 +139,7 @@ Tools available on our setup:
 ---
 
 ## 6. Decisions to make before we start
-1. **Project theme / scenario.** One story that ties all parts together (like the ThreadLab vending machine). *To brainstorm.*
+1. **Project theme / scenario.** ✅ DECIDED: **Music Playlist Streamer** (see section 9).
 2. **One program with modes or several small programs.** Suggestion: one Swift package with modes, e.g. `swift run MemLab stack | heap | buffer | compare | all`.
 3. **New repo or add to the Project 1 repo.**
 4. **Which heap risk to demo.** Retain cycle is the clearest in Swift.
@@ -182,3 +182,109 @@ Tools available on our setup:
 - Apple Developer Documentation / Xcode Help: "Gathering information about memory use," Memory Graph Debugger, Instruments
 - Apple Threading Programming Guide (default stack sizes)
 - `man leaks`, `man heap`, `man vmmap`, `man footprint`
+
+---
+
+## 9. Our project: Music Playlist Streamer
+
+**Due:** Thursday, Oct 15, 11:59 pm
+
+The app simulates streaming "audio" as raw bytes. No real sound is played.
+
+| Part | What we build |
+|---|---|
+| Stack | Recursively sort (or shuffle) the playlist |
+| Heap | `Song` and `Playlist` objects, with a delegate-based retain cycle and its fix |
+| Buffer | "Play" each song in fixed-size chunks; the last chunk of a song is partial |
+| Comparison | Grow a samples array one at a time vs call `reserveCapacity` first |
+
+### Suggested program shape
+One Swift package, one executable, run by mode:
+```
+swift run PlaylistStreamer stack
+swift run PlaylistStreamer heap
+swift run PlaylistStreamer buffer
+swift run -c release PlaylistStreamer compare
+swift run PlaylistStreamer all
+```
+Output labels: `STACK DEMO`, `HEAP DEMO`, `BUFFER DEMO`, `MEMORY COMPARISON`.
+
+### Stack: recursive sort
+- **Use merge sort (by title or duration)**, not only shuffle. Merge sort gives a clear enter/return pattern and depth ≈ log₂(n), so 8 songs is only ~3 levels deep and easy to read.
+- Print indented enter/return lines, e.g. `→ mergeSort(depth 2, songs 2...3)` / `← return depth 2`.
+- Print `Thread.callStackSymbols` at the deepest call, and take an Xcode breakpoint screenshot there.
+- Talking points:
+  - The `[Song]` parameter is a struct, but its elements live in a heap buffer. Each `Song` inside is a reference to a heap object.
+  - A recursive **shuffle** that recurses once per song would be depth n. That's the "deep recursion risk" example: fine for 8 songs, a stack overflow risk for millions. No recursion limit in Swift, just a crash.
+  - Also show a tiny `Stack<Song>` struct (e.g. a "recently played" history) to contrast a stack data structure with the call stack.
+
+### Heap: Song, Playlist, delegate retain cycle
+```swift
+protocol PlaybackDelegate: AnyObject {       // AnyObject is REQUIRED for `weak`
+    func songDidFinish(_ song: Song)
+}
+
+final class Playlist: PlaybackDelegate {
+    var songs: [Song] = []                     // Playlist → Song (strong)
+    deinit { print("HEAP DEMO: Playlist '\(name)' deinit") }
+}
+
+final class Song {
+    weak var delegate: PlaybackDelegate?       // Song → Playlist (weak = no cycle)
+    deinit { print("HEAP DEMO: Song '\(title)' deinit") }
+}
+```
+- **Leaky version:** a `LeakySong` class with `var delegate` (strong). Set `playlist = nil` and **no deinit prints**. Show the cycle in the Memory Graph Debugger.
+- **Fixed version:** `weak var delegate`, set `playlist = nil`, and all deinits print.
+- Gotcha: `weak` only works if the protocol is constrained to `AnyObject`. Someone will likely hit this compile error.
+- Talking point: deinit printing proves ARC released the objects; it does **not** prove the process's memory number went down.
+
+### Buffer: playing songs in chunks
+- Recommended: write each song's bytes to a `.raw` file first, then "play" it by reading with `InputStream` into one reused buffer. This makes it real file I/O and makes "input bigger than the buffer" natural.
+```swift
+var buffer = [UInt8](repeating: 0, count: 4096)          // capacity = 4096
+while true {
+    let n = stream.read(&buffer, maxLength: buffer.count) // n = valid bytes
+    if n == 0 { break }                                   // end of song
+    if n < 0 { throw stream.streamError! }                // read error
+    play(buffer[0..<n])                                   // ONLY the valid bytes
+}
+```
+- Pick song sizes that cover every boundary case:
+  | Song | Size | Chunks (4096-byte buffer) |
+  |---|---|---|
+  | Normal | 10,000 bytes | 4096, 4096, **1808 (partial)** |
+  | Exact fit | 8,192 bytes | 4096, 4096 (no partial chunk) |
+  | Tiny | 100 bytes | **100** (smaller than the buffer) |
+- Correctness check: total bytes played == file size, and a checksum of played bytes == checksum of the original bytes.
+- Key bug to avoid: processing `buffer` instead of `buffer[0..<n]` on the last chunk would "play" leftover bytes from the previous chunk.
+
+### Comparison: append one at a time vs reserveCapacity
+Task: convert every played byte into a `Float` sample and store it in `samples: [Float]`.
+- **A:** `var samples = [Float]()` then `append` each sample.
+- **B:** `samples.reserveCapacity(totalBytes)` first, then `append`.
+- Verify both arrays are equal (`samplesA == samplesB`).
+- Use a large enough input (e.g. 5–50 million samples) so the difference shows up, and build with `-c release`.
+
+**Evidence (label which is which):**
+| Claim | Measured or inferred | How |
+|---|---|---|
+| Number of reallocations | Measured | Log every time `samples.capacity` changes |
+| Final capacity vs count (wasted space) | Measured | Print both at the end |
+| Total bytes allocated / number of allocations | Measured | Instruments → Allocations |
+| Peak memory during growth is higher for A | Inferred | During each regrowth the old and new storage both exist while elements are copied |
+| Exact growth factor | Inferred / implementation detail | Swift doesn't promise a growth rule; describe what we observed |
+
+- Tradeoff to discuss: B is only better **when you know the size ahead of time**. Reserving too much wastes memory; for small arrays the difference is negligible.
+- Repeat runs (e.g. 5 each) and report variability. Being faster doesn't prove less memory.
+
+### Suggested roles for this theme
+| Member | Owns |
+|---|---|
+| 1 | Memory model research, package/repo setup, `Song`/`Playlist` shared models, README, sections 1 and 7 |
+| 2 | Stack demo (merge sort + callStackSymbols + `Stack<Song>` contrast) |
+| 3 | Heap demo (leaky vs weak delegate, deinit output) |
+| 4 | Buffer demo (song files, chunked playback, boundary cases, checksums) |
+| 5 | Comparison + Instruments/Memory Graph screenshots and measurements |
+
+Members 1, 3, and 4 must agree on the `Song` and `Playlist` class shape first, since everyone's code uses them.
