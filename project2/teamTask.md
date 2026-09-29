@@ -1,7 +1,7 @@
 # Project 2 Team Tasks: Music Playlist Streamer
 
 **Language / OS:** Swift on macOS  **Due:** Thursday, Oct 15, 11:59 pm  **Demo:** 30 min
-**Package name:** `PlaylistStreamer`  **Reference:** `docs/project2-memory-debrief.md`
+**Package name:** `PlaylistStreamer`  **Reference:** `projectDebrief.md`
 
 Put your name in the blank next to the role you take. Everyone explains at least one demo section they **did not** write.
 
