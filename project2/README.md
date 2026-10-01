@@ -112,7 +112,95 @@ ready to paste (Calli); the rest follow as each demo lands._
 _TODO — Calli_
 
 ### Stack demo
-_TODO — Ella_
+Recursive merge sort over `Playlist.sampleEight()` (8 songs, sorted by duration). Each
+`-> mergeSort depth N [songs lo...hi]` / `<- return depth N` pair brackets one stack frame's
+lifetime; the indentation mirrors the stack's actual shape — it grows while a call is waiting on
+its children and shrinks as each one returns.
+
+```
+===== STACK DEMO =====
+STACK DEMO: -> mergeSort depth 0 [songs 0...7]
+STACK DEMO:   -> mergeSort depth 1 [songs 0...3]
+STACK DEMO:     -> mergeSort depth 2 [songs 0...1]
+STACK DEMO:       -> mergeSort depth 3 [songs 0...0]
+STACK DEMO:          deepest call — Thread.callStackSymbols:
+STACK DEMO:          0   mergeSort(_:lo:hi:depth:by:) + 1660
+STACK DEMO:          1   mergeSort(_:lo:hi:depth:by:) + 808
+STACK DEMO:          2   mergeSort(_:lo:hi:depth:by:) + 808
+STACK DEMO:          3   mergeSort(_:lo:hi:depth:by:) + 808
+STACK DEMO:          4   runStackDemo() + 252
+STACK DEMO:          5   PlaylistStreamer_main + 508
+STACK DEMO:          6   start + 6992
+STACK DEMO:       <- return  depth 3
+STACK DEMO:       -> mergeSort depth 3 [songs 1...1]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:     <- return  depth 2
+       ... (symmetric recursion over songs 2...7) ...
+STACK DEMO: <- return  depth 0
+STACK DEMO: sorted by duration: ["Almanac", "Ceiling Fan", "Half Light", "Ash Wednesday", "Meridian", "Dovetail", "Blue Harbour", "Ravel"]
+```
+_(Raw memory addresses trimmed from the `callStackSymbols` lines above for readability — see the
+Xcode breakpoint screenshot in the IDE tools section for the untrimmed call stack.)_
+
+**What this shows:** 8 songs split in half every call, so every base case (one song) bottoms out
+at exactly depth 3 (`log₂8`) — visible both in the `depth 3` lines above and in the four stacked
+`mergeSort` frames (depths 3, 2, 1, 0) the Xcode screenshot shows when paused at the breakpoint.
+Each frame holds its own independent copy of `lo`, `hi`, and `depth` — confirmed in Xcode's
+variables pane, where the selected frame reads `lo = 0, hi = 0, depth = 3`. This is the call
+stack used for control flow, not data: contrast with `Stack<Song>` below, a stack we built
+ourselves to hold values on purpose.
+
+**`Stack<Song>` — a data structure we chose, not the call stack:**
+
+```
+STACK DEMO: recently played — Stack<Song>, a data structure we chose, not the call stack:
+STACK DEMO:   pushed 'Meridian' -> top is now 'Meridian'
+STACK DEMO:   pushed 'Half Light' -> top is now 'Half Light'
+       ... (pushes continue for all 8 songs, in playback order) ...
+STACK DEMO:   pushed 'Ash Wednesday' -> top is now 'Ash Wednesday'
+STACK DEMO:   popping back off, most-recently-played first:
+STACK DEMO:   popped 'Ash Wednesday'
+STACK DEMO:   popped 'Dovetail'
+       ... (pops continue in reverse push order) ...
+STACK DEMO:   popped 'Meridian'
+```
+
+**What this shows:** same LIFO shape as the call stack above — the last thing pushed is the first
+thing popped — but for a different reason and owned by different code. The call stack grows and
+shrinks automatically: the runtime pushes a frame on every call and pops it on every return, and
+we never touch its storage directly, only observe it (via `callStackSymbols` or the Xcode
+Navigator). `Stack<Song>` only moves when *our* code calls `push`/`pop` — the Swift runtime has no
+idea "recently played" history exists. We own its storage (the `elements` array inside the
+struct, a heap buffer this type wraps) the same way we own `Playlist.songs`.
+
+**Scope vs. lifetime, and three different things that look like "the array":**
+- **Scope** is where in the *source code* a name is visible — e.g. `songs`, `lo`, `hi` are only
+  nameable inside `mergeSort`'s body and its nested closures. **Lifetime** is how long the
+  *value* those names point to actually exists in memory, which is a runtime question, not a
+  source-code one. A `weak var` (see the heap demo) can be in scope while the object it refers to
+  has already been deallocated — that gap is exactly the difference between the two.
+- The `songs: [Song]` **parameter** is a value (a struct) that lives in each `mergeSort` stack
+  frame — that's the thing `lo`/`hi`/`depth` sit next to, and it disappears the instant the frame
+  pops.
+- The **heap buffer behind it** is a separate allocation that the `[Song]` struct points to and
+  manages; it's what actually holds the sequence of references, and it can be shared between
+  array copies until one of them mutates (copy-on-write).
+- Each individual **`Song` object** is yet another, independent heap allocation — the array's
+  heap buffer holds *pointers* to these, not the songs themselves. That's why passing `songs`
+  around (into `left`/`right` slices, into `Stack<Song>`) never copies a `Song`; it only copies
+  references to the same 8 underlying objects, which is why the `deinit 'Meridian'` line at the
+  very end only fires once, after every reference to it (the original array, the sorted result,
+  the stack) has gone out of scope.
+
+**The deep-recursion risk (described, not run):** merge sort recurses `log₂n` times because it
+halves the problem every call — 8 songs is only depth 3, and even a playlist of a million songs
+would only reach depth ~20. A *shuffle* that recursed once per song instead of once per halving
+would be depth **n**, not log₂n — a million-song shuffle would need a million stacked frames.
+Swift places no limit on recursion depth (unlike Python, which raises
+`RecursionError` past a few thousand); it will simply keep pushing frames until it runs off the
+end of the stack — 8 MB on the main thread, 512 KB on a secondary thread — and the process traps
+with `EXC_BAD_ACCESS`, not a catchable error. We did not implement or run that version here; it's
+included only as the point of contrast for why merge sort's `log₂n` depth is the safer shape.
 
 ### Heap demo
 _TODO — Stephen_

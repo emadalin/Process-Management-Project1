@@ -34,14 +34,14 @@ Owns demo sections **1 (language & memory model)** and **7 (pros/cons/limitation
 ## Member 2: Stack Demo · `Ella`
 Owns demo section **2**. File: `StackDemo.swift`
 
-- [ ] Recursive merge sort of the playlist (by title or duration), 8 songs
-- [ ] Indented enter/return output with depth, e.g. `→ mergeSort depth 2 [songs 2...3]` / `← return depth 2`
-- [ ] Print `Thread.callStackSymbols` at the deepest call
-- [ ] Xcode breakpoint screenshot of the call-stack view at the deepest call (hand to Member 5)
-- [ ] Small `Stack<Song>` struct ("recently played" history) to contrast with the call stack
-- [ ] Explain: call stack vs `Stack<Song>`; the `[Song]` parameter vs the heap buffer behind it vs each `Song` reference; scope vs lifetime
-- [ ] Explain the deep-recursion risk (a one-level-per-song recursive shuffle; no recursion limit in Swift; 8 MB main / 512 KB secondary thread stacks). Do **not** crash it
-- [ ] Sample output + short "what this shows" for the README
+- [x] Recursive merge sort of the playlist (by title or duration), 8 songs
+- [x] Indented enter/return output with depth, e.g. `→ mergeSort depth 2 [songs 2...3]` / `← return depth 2`
+- [x] Print `Thread.callStackSymbols` at the deepest call
+- [x] Xcode breakpoint screenshot of the call-stack view at the deepest call (hand to Member 5)
+- [x] Small `Stack<Song>` struct ("recently played" history) to contrast with the call stack
+- [x] Explain: call stack vs `Stack<Song>`; the `[Song]` parameter vs the heap buffer behind it vs each `Song` reference; scope vs lifetime
+- [x] Explain the deep-recursion risk (a one-level-per-song recursive shuffle; no recursion limit in Swift; 8 MB main / 512 KB secondary thread stacks). Do **not** crash it
+- [x] Sample output + short "what this shows" for the README
 
 ## Member 3: Heap Demo · `Stephen`
 Owns demo section **3**. File: `HeapDemo.swift`

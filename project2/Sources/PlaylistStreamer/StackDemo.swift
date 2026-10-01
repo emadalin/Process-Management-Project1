@@ -28,5 +28,101 @@ import Foundation
 
 func runStackDemo() {
     DemoLog.begin("STACK DEMO")
-    DemoLog.say("not implemented yet — Member 2 owns StackDemo.swift")
+    let songs = Playlist.sampleEight().songs
+    let sorted = mergeSort(songs, lo: 0, hi: songs.count - 1, depth: 0) {
+        $0.durationSeconds < $1.durationSeconds
+    }
+    DemoLog.say("sorted by duration: \(sorted.map(\.title))")
+
+    DemoLog.say("")
+    DemoLog.say("recently played — Stack<Song>, a data structure we chose, not the call stack:")
+    var recentlyPlayed = Stack<Song>()
+    for song in songs {
+        recentlyPlayed.push(song)
+        DemoLog.say("  pushed '\(song.title)' -> top is now '\(recentlyPlayed.top!.title)'")
+    }
+    DemoLog.say("  popping back off, most-recently-played first:")
+    while let song = recentlyPlayed.pop() {
+        DemoLog.say("  popped '\(song.title)'")
+    }
+}
+
+/// A LIFO stack of values we chose to keep, used here as "recently played"
+/// history. The contrast with the call stack above is the point of this type:
+///
+///   - The call stack grows and shrinks on its own, driven by function calls
+///     and returns; the runtime manages it and we never see its storage.
+///   - This Stack grows and shrinks only when OUR code calls push/pop. We own
+///     its storage (the `elements` array, a heap buffer this struct wraps)
+///     and decide what goes on it and when it comes off.
+///
+/// Same LIFO shape, two different reasons something ends up on top.
+struct Stack<Element> {
+    private var elements: [Element] = []
+
+    var isEmpty: Bool { elements.isEmpty }
+    var top: Element? { elements.last }
+
+    mutating func push(_ element: Element) {
+        elements.append(element)
+    }
+
+    @discardableResult
+    mutating func pop() -> Element? {
+        elements.popLast()
+    }
+}
+
+/// `nonisolated(unsafe)` for the same reason as `DemoLog.section`: this
+/// program is single-threaded, so the lack of compiler race-checking here is
+/// honest, not a shortcut.
+nonisolated(unsafe) private var didPrintDeepestStack = false
+
+/// Recursively splits `songs[lo...hi]` in half, sorts each half, and merges.
+/// Takes index bounds into the ORIGINAL array (not a sliced copy) purely so
+/// the trace output can print the real `[songs lo...hi]` range at every level.
+private func mergeSort(_ songs: [Song], lo: Int, hi: Int, depth: Int,
+                        by areInOrder: (Song, Song) -> Bool) -> [Song] {
+    let indent = String(repeating: "  ", count: depth)
+    DemoLog.say("\(indent)-> mergeSort depth \(depth) [songs \(lo)...\(hi)]")
+
+    guard hi > lo else {
+        // Base case: one song. With 8 songs this is always depth 3 (log2 8),
+        // so every leaf is equally "deepest" — print once, at whichever gets here first.
+        if !didPrintDeepestStack {
+            didPrintDeepestStack = true
+            DemoLog.say("\(indent)   deepest call — Thread.callStackSymbols:")
+            for symbol in Thread.callStackSymbols {
+                DemoLog.say("\(indent)   \(symbol)")
+            }
+        }
+        DemoLog.say("\(indent)<- return  depth \(depth)")
+        return [songs[lo]]
+    }
+
+    let mid = (lo + hi) / 2
+    let left = mergeSort(songs, lo: lo, hi: mid, depth: depth + 1, by: areInOrder)
+    let right = mergeSort(songs, lo: mid + 1, hi: hi, depth: depth + 1, by: areInOrder)
+    let merged = merge(left, right, by: areInOrder)
+
+    DemoLog.say("\(indent)<- return  depth \(depth)")
+    return merged
+}
+
+/// Standard merge-sort combine step: walk both sorted halves once, taking the
+/// smaller front element each time. O(n), and it's the only place comparisons
+/// happen outside the trivial one-element base case.
+private func merge(_ left: [Song], _ right: [Song], by areInOrder: (Song, Song) -> Bool) -> [Song] {
+    var result: [Song] = []
+    var i = 0, j = 0
+    while i < left.count && j < right.count {
+        if areInOrder(left[i], right[j]) {
+            result.append(left[i]); i += 1
+        } else {
+            result.append(right[j]); j += 1
+        }
+    }
+    result.append(contentsOf: left[i...])
+    result.append(contentsOf: right[j...])
+    return result
 }
