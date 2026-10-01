@@ -46,13 +46,13 @@ Owns demo section **2**. File: `StackDemo.swift`
 ## Member 3: Heap Demo · `Stephen`
 Owns demo section **3**. File: `HeapDemo.swift`
 
-- [ ] `deinit` prints on `Song` and `Playlist` (in the shared models, coordinated with Member 1)
-- [ ] Show allocation → use → drop the reference → deinit output
-- [ ] **Leaky version:** `LeakySong` with a strong `delegate` back to the playlist; set the playlist to `nil` and show **no** deinit prints
-- [ ] **Fixed version:** `weak var delegate`; show all deinits print
+- [x] `deinit` prints on `Song` and `Playlist` (in the shared models, coordinated with Member 1)
+- [x] Show allocation → use → drop the reference → deinit output
+- [x] **Leaky version:** `LeakySong` with a strong `delegate` back to the playlist; set the playlist to `nil` and show **no** deinit prints
+- [x] **Fixed version:** `weak var delegate`; show all deinits print
 - [ ] Explain ARC, strong/weak/unowned, why the protocol needs `AnyObject`
 - [ ] Explain what deinit output proves (ARC released the object) and doesn't prove (process memory went down)
-- [ ] Sample output + short "what this shows" for the README
+- [x] Sample output + short "what this shows" for the README
 
 ## Member 4: Buffer Demo · `Calli`
 Owns demo section **4 (buffer part)**. File: `BufferDemo.swift`

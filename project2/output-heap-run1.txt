@@ -1,0 +1,29 @@
+
+===== HEAP DEMO =====
+HEAP DEMO: --- allocation -> use -> drop the last reference ---
+HEAP DEMO: allocated 'Meridian' (10000 bytes)
+HEAP DEMO: using 'Meridian': duration 211s
+HEAP DEMO: dropping the only reference (song = nil)
+HEAP DEMO: deinit Song 'Meridian'
+HEAP DEMO: --- dropping a Playlist cascades to its Songs ---
+HEAP DEMO: playlist 'Road Trip' holds 2 songs
+HEAP DEMO: dropping the only outside reference (playlist = nil)
+HEAP DEMO: deinit Playlist 'Road Trip'
+HEAP DEMO: deinit Song 'Half Light'
+HEAP DEMO: deinit Song 'Ravel'
+HEAP DEMO: --- LEAKY version: delegate held STRONG, both directions ---
+HEAP DEMO: playlist 'Leaky Mix' holds 2 leaky songs
+HEAP DEMO: dropping the only OUTSIDE reference (leakyPlaylist = nil)
+HEAP DEMO: (silence above is the leak — no 'deinit Leaky...' line will ever print)
+HEAP DEMO: --- FIXED version: same shape, using the real weak Song/Playlist ---
+HEAP DEMO: playlist 'Fixed Mix' holds 2 songs, delegate wired
+HEAP DEMO: dropping the only outside reference (playlist = nil)
+HEAP DEMO: deinit Playlist 'Fixed Mix'
+HEAP DEMO: deinit Song 'Open Link'
+HEAP DEMO: deinit Song 'Free'
+HEAP DEMO: --- what this demo shows ---
+HEAP DEMO: ARC (Swift runtime + compiler): every class instance carries a strong-reference count. The compiler inserts retain/release calls at every assignment, and the instant that count hits 0, `deinit` runs — immediately, not on a timer or a GC pass.
+HEAP DEMO: strong (default): counts toward the total. weak (Song.delegate): does NOT count, and is automatically set back to nil when the thing it points to is freed — which is why it has to be an Optional var. unowned: also does not count, but assumes the thing it points to always outlives it and crashes if that assumption is wrong — not used here because a delegate can legitimately be freed first.
+HEAP DEMO: PlaybackDelegate is constrained `: AnyObject` because `weak` only means something for reference counting, and only classes are reference-counted. Without that constraint, `weak var delegate: PlaybackDelegate?` fails to compile: 'weak must not be applied to non-class-bound protocol.'
+HEAP DEMO: what the deinit output PROVES: ARC actually released the object. ARC is deterministic, so this moment is exact — not a guess about when a GC pass might run.
+HEAP DEMO: what it does NOT prove: that the process's memory number went down. libmalloc (Apple's allocator) usually keeps freed space around to reuse for the next allocation instead of handing it back to macOS. Section 4's RSS numbers measure THAT layer, not this one — don't conflate the two.
