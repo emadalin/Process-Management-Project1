@@ -115,7 +115,35 @@ _TODO — Calli_
 _TODO — Ella_
 
 ### Heap demo
-_TODO — Stephen_
+
+Full run: [`output-heap-run1.txt`](output-heap-run1.txt).
+
+```
+HEAP DEMO: allocated 'Meridian' (10000 bytes)
+HEAP DEMO: using 'Meridian': duration 211s
+HEAP DEMO: dropping the only reference (song = nil)
+HEAP DEMO: deinit Song 'Meridian'
+...
+HEAP DEMO: --- LEAKY version: delegate held STRONG, both directions ---
+HEAP DEMO: playlist 'Leaky Mix' holds 2 leaky songs
+HEAP DEMO: dropping the only OUTSIDE reference (leakyPlaylist = nil)
+HEAP DEMO: (silence above is the leak — no 'deinit Leaky...' line will ever print)
+HEAP DEMO: --- FIXED version: same shape, using the real weak Song/Playlist ---
+HEAP DEMO: playlist 'Fixed Mix' holds 2 songs, delegate wired
+HEAP DEMO: dropping the only outside reference (playlist = nil)
+HEAP DEMO: deinit Playlist 'Fixed Mix'
+HEAP DEMO: deinit Song 'Open Link'
+HEAP DEMO: deinit Song 'Free'
+```
+
+**What this shows:** the plain allocate → use → drop → `deinit` case proves ARC frees an
+object the instant its last strong reference goes away. The leaky case builds the same shape
+with a strong reference pointing back (`LeakySong.delegate`) — dropping the only reference from
+*outside* the cycle leaves both objects still holding each other at a strong count of 1, so
+neither `deinit` ever prints; that silence is the leak. The fixed case is identical except
+`Song.delegate` is `weak`, which doesn't count toward the reference total, so dropping the
+outside reference genuinely brings the count to 0 and every `deinit` fires. Same two-object
+cycle shape, one keyword different, opposite outcome.
 
 ### Memory comparison
 _TODO — Georgia. Include the measured/inferred table and all 5 runs per approach._
