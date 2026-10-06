@@ -1,0 +1,50 @@
+{
+    // One launch.json for both projects.
+    //
+    // VS Code reads launch.json only from the root of a workspace folder, and
+    // this repo is opened as a single folder, so a .vscode/ inside project1/ or
+    // project2/ would never be loaded. Both packages are configured here, each
+    // with its own cwd. Add a new project's configurations to this file.
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Process-Management-Project1}/project2",
+            "name": "Debug PlaylistStreamer (project2)",
+            "target": "PlaylistStreamer",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug PlaylistStreamer (project2)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Process-Management-Project1}/project2",
+            "name": "Release PlaylistStreamer (project2)",
+            "target": "PlaylistStreamer",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release PlaylistStreamer (project2)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Process-Management-Project1}/project1",
+            "name": "Debug ThreadLab (project1)",
+            "target": "ThreadLab",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug ThreadLab (project1)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Process-Management-Project1}/project1",
+            "name": "Release ThreadLab (project1)",
+            "target": "ThreadLab",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release ThreadLab (project1)"
+        }
+    ]
+}
