@@ -20,12 +20,12 @@ Roles are assigned (see the table in `projectDebrief.md` section 9). Everyone ex
 ## Member 1: Memory Model, Setup & Shared Models · `Sarah Rae`
 Owns demo sections **1 (language & memory model)** and **7 (pros/cons/limitations)**, plus setup.
 
-- [ ] Create the Swift package: `Package.swift`, `Sources/PlaylistStreamer/`, `.gitignore`
-- [ ] `main.swift` with the mode switch: `stack | heap | buffer | compare | all`, each calling a stub function the owner fills in
-- [ ] Write the shared models in `Models.swift`: `Song` (title, duration, byte count), `Playlist`, `PlaybackDelegate: AnyObject`. **Get Members 3 and 4 to agree on the shape before anyone else codes**
+- [x] Create the Swift package: `Package.swift`, `Sources/PlaylistStreamer/`, `.gitignore`
+- [x] `main.swift` with the mode switch: `stack | heap | buffer | compare | all`, each calling a stub function the owner fills in
+- [x] Write the shared models in `Models.swift`: `Song` (title, duration, byte count), `Playlist`, `PlaybackDelegate: AnyObject`. **Get Members 3 and 4 to agree on the shape before anyone else codes**
 - [ ] Confirm `swift build` and `swift run PlaylistStreamer all` work on all five Macs
-- [ ] Notes: who does what (our code / ARC + runtime / libmalloc / macOS), value vs reference types, ARC vs garbage collection
-- [ ] Pros/cons/limitations section + one improvement with more time
+- [x] Notes: who does what (our code / ARC + runtime / libmalloc / macOS), value vs reference types, ARC vs garbage collection — `docs/section1-memory-model.md`
+- [x] Pros/cons/limitations section + one improvement with more time — `docs/section7-pros-cons-limitations.md`
 - [ ] Record everyone's setup: `sw_vers`, `uname -m`, `swift --version`, Xcode version
 - [ ] Own the README (build/run instructions, how to run each mode) and the team contribution statement
 - [ ] Collect the sources list from everyone

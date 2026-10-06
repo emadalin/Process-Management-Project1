@@ -4,8 +4,9 @@ Memory management in Swift on macOS — **stacks, heaps and buffers** — demons
 program that simulates streaming audio. No sound is played: each "song" is a file of raw
 bytes, which is what makes the memory behaviour easy to watch.
 
-> **Status:** scaffolding + buffer demo done. Sections marked _TODO_ are owned by the member
-> named beside them; see [`teamTask.md`](teamTask.md).
+> **Status:** stack, heap and buffer demos implemented; the memory comparison and the IDE
+> tools investigation are outstanding. Sections marked _TODO_ are owned by the member named
+> beside them; see [`teamTask.md`](teamTask.md).
 
 ## What the program demonstrates
 
@@ -18,6 +19,9 @@ bytes, which is what makes the memory behaviour easy to watch.
 
 The one-sentence version: **the stack tracks which functions are running, the heap holds data
 that outlives a single function, and a buffer is a chunk of memory used to move data in pieces.**
+
+How the four layers divide the work — our code, ARC, libmalloc and the macOS kernel — is written
+up in [`docs/section1-memory-model.md`](docs/section1-memory-model.md).
 
 ---
 
@@ -71,6 +75,8 @@ Sources/PlaylistStreamer/
   BufferDemo.swift                 chunked playback through one reused buffer  (Calli)
   CompareDemo.swift                append vs. reserveCapacity, Instruments     (Georgia)
 docs/
+  section1-memory-model.md         who owns what, stack vs heap, value vs reference, ARC vs GC
+  section7-pros-cons-limitations.md  what the approach buys, costs, and cannot show
   machine-details.md               every team Mac's OS, chip, RAM, page size, toolchain
 projectDebrief.md                  scope, concepts, checklists, practice questions
 teamTask.md                        per-member task list and demo timing
@@ -248,12 +254,45 @@ screenshots, and — the part the rubric actually weights — what each tool can
 
 ## What we found along the way
 
-_TODO — Sarah Rae. Surprises worth reporting, e.g. the exact-fit song size that hides the
-stale-buffer bug, and why `deinit` firing does not mean the process gave memory back._
+**The exact-fit song hides the bug.** Replaying the whole buffer instead of `buffer[0..<n]`
+corrupts the 10,000- and 100-byte songs, but the 8,192-byte song's checksum still *matches* —
+because its final read fills the buffer exactly, so there are no stale bytes to replay. A test
+suite with only "nice" sizes would have passed a broken implementation.
+
+**`deinit` firing does not mean memory came back.** ARC releasing an object, libmalloc keeping
+the block on a free list, and the kernel's page count staying flat are all true at the same
+time. Most of our early confusion came from assuming those three layers move together.
+
+**A local variable is not simply "on the stack."** `let songs = playlist.songs` puts an `Array`
+struct in the stack frame, its element storage in a heap buffer, and the `Song` objects
+somewhere else on the heap again — so merge sort shuffles pointers and never copies a song.
+
+_More to add as the comparison lands — Sarah Rae._
 
 ## Pros, cons, limitations
 
-_TODO — Sarah Rae (demo section 7), plus one improvement we would make with more time._
+Full write-up: [`docs/section7-pros-cons-limitations.md`](docs/section7-pros-cons-limitations.md).
+
+**Pros.** ARC's determinism is what makes the demo provable — `deinit` lands at an exact,
+repeatable point, so the retain-cycle leak shows up as *missing output* anyone can check
+without a tool. The song sizes are chosen as test cases rather than arbitrarily, and the
+8,192-byte case is the one that hides a stale-buffer bug, so the suite catches something the
+obvious test misses. Checksums turn "the buffer logic is correct" into a number.
+
+**Cons.** ARC's retain/release traffic is real work we never measure, and `weak` has its own
+bookkeeping cost we present as free. We demonstrate exactly one heap risk, and a cycle through
+a *closure* is more common in practice than our delegate cycle. The 4096-byte buffer is
+conventional, not justified by measurement.
+
+**Limitations.** `deinit` proves ARC released the object, not that memory went back to macOS.
+Our peak-memory claim is **inferred**, not measured — we count reallocations directly but never
+sampled memory mid-copy. Process-level numbers move in 16 KB pages, not objects. All
+comparison figures come from one machine, because array growth is an unspecified
+implementation detail that can differ by toolchain.
+
+**With more time:** memory-map the file as a third strategy. It is the only addition that puts
+the *kernel* on stage — our demo currently stops at libmalloc — and it would give us an honest
+case where chunked buffering is the wrong tool.
 
 ## Team contribution statement
 
