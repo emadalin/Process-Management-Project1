@@ -2,6 +2,11 @@
 
 Owner: Member 1 (Sarah Rae).
 
+> **Provisional:** three claims in section 3 describe the comparison demo's methodology — the
+> release-build requirement, five runs per approach, and peak memory being inferred rather than
+> measured. They match what the debrief agreed, but Georgia has not implemented it yet. If her
+> method differs, re-check those three sentences. Everything else here is final.
+
 **One-sentence version:** Letting ARC and `InputStream` do the work gave us a program whose memory behaviour is observable and deterministic enough to *prove* things on stage, at the cost of hiding the allocator underneath, and most of what we show is reasoning about one machine rather than measurement of all of them.
 
 ---

@@ -1,6 +1,6 @@
 # Submission Checklist
 
-Owner: Member 1 (Sarah Rae). Due **Thursday, Oct 15, 11:59 pm**. Audited 2026-10-06.
+Owner: Member 1 (Sarah Rae). Due **Thursday, Oct 15, 11:59 pm**. Audited 2026-10-06 (updated same day).
 
 Canvas deliverables from `projectDebrief.md` section 5, against what is actually in the repo
 today. "Blocked on" names the person, not the task.
@@ -14,8 +14,8 @@ today. "Blocked on" names the person, not the task.
 | 3c | Labelled output: buffer, with boundary cases | **Done** — all three chunk cases covered | — |
 | 3d | Labelled output: **both comparison approaches** | **Not started** | Georgia |
 | 4 | IDE screenshots with explanations | **Not started** — no image committed | Georgia (Instruments, Memory Graph); Ella owes the call-stack screenshot |
-| 5 | List of documentation sources used | **Not started** — starting list is `projectDebrief.md` section 8 | everyone → Sarah |
-| 6 | Team contribution statement | **Not started** | everyone → Sarah |
+| 5 | List of documentation sources used | **Seeded** — `docs/sources.md` is built from what our code and write-ups actually cite; each member adds what is missing | everyone → Sarah |
+| 6 | Team contribution statement | **Scaffolded** — README table filled from what is committed; needs each member's own words and the presenter assignments | everyone → Sarah |
 
 ## What this says
 
@@ -23,7 +23,10 @@ today. "Blocked on" names the person, not the task.
 
 **Two of the six are collection jobs** (5 and 6) that need four short paragraphs from four
 people. They are the least work in the project and have the longest lead time, so they are the
-likeliest to be the thing still missing on the 14th.
+likeliest to be the thing still missing on the 14th. Both are now *seeded* rather than empty —
+the sources list is built from what we actually cite, and the contribution table is filled in
+from what is committed — so the remaining ask is "correct and add to this," which is a much
+smaller thing to chase than "write this."
 
 **Deliverable 4 has no owner moment scheduled.** Screenshots cannot be produced by whoever
 happens to be free — Instruments and the Memory Graph Debugger have to be driven by someone

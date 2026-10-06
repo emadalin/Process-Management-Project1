@@ -78,6 +78,7 @@ docs/
   section1-memory-model.md         who owns what, stack vs heap, value vs reference, ARC vs GC
   section7-pros-cons-limitations.md  what the approach buys, costs, and cannot show
   practice-questions.md            team answer sheet — rehearsal runs on this
+  sources.md                       documentation we actually used
   submission-checklist.md          Canvas deliverables vs. what is actually in the repo
   machine-details.md               every team Mac's OS, chip, RAM, page size, toolchain
 verify.sh                          one command: builds, runs every mode, prints your machine row
@@ -364,10 +365,35 @@ case where chunked buffering is the wrong tool.
 
 ## Team contribution statement
 
-_TODO — Sarah Rae collects 3–5 sentences from each member, plus how we made sure everyone can
-explain sections they did not write._
+| Member | Name | Area | What they built / wrote |
+|---|---|---|---|
+| 1 | Sarah Rae | Memory model, setup, shared models | Swift package, mode switch and `Models.swift` (`Song`, `Playlist`, `PlaybackDelegate`, `DemoLog`); section 1 memory-model notes; section 7 pros/cons/limitations; README; machine details and `verify.sh`; practice-question answer sheet; submission checklist |
+| 2 | Ella | Stack demo | Recursive merge sort with indented enter/return tracing; `Thread.callStackSymbols` at the deepest call; `Stack<Song>` history to contrast with the call stack; deep-recursion risk explanation |
+| 3 | Stephen | Heap demo | Allocation → use → release lifecycle; `LeakySong` retain cycle and the `weak` fix; ARC / strong / `weak` / `unowned` explanation; what `deinit` output does and does not prove |
+| 4 | Calli | Buffer demo | `.raw` song generation; chunked playback through one reused 4096-byte buffer; capacity vs. valid count per chunk; all three boundary cases with checksums; the stale-buffer bug demonstration |
+| 5 | Georgia | Comparison & IDE tools | _pending_ |
+
+_Each member: replace your row's detail with 3–5 sentences in your own words, or confirm the
+summary above is accurate. Rows are drawn from what is actually committed._
+
+**How we made sure everyone understands the whole project:**
+
+| Presenter | Presents | Written by |
+|---|---|---|
+| _tbd_ | Section 1, language & memory model | Sarah Rae |
+| _tbd_ | Section 2, stack demo | Ella |
+| _tbd_ | Section 3, heap demo | Stephen |
+| _tbd_ | Section 4, buffer & comparison | Calli & Georgia |
+| _tbd_ | Section 5, IDE tools | Georgia |
+
+_Assign at the rehearsal — nobody presents their own section._
+
+- Every member works through the answer sheet in [`docs/practice-questions.md`](docs/practice-questions.md).
+- Each member walks through code they did not write: the shared models, the recursion, the
+  cycle, and the chunk loop.
 
 ## AI tools and outside sources
 
-_TODO — Sarah Rae collects from everyone. Starting list is in
-[`projectDebrief.md`](projectDebrief.md) section 8._
+See [`docs/sources.md`](docs/sources.md), seeded from what is actually cited in our code and
+write-ups. Each member adds anything they used that is not already listed, including AI
+assistants and what they were used for.
