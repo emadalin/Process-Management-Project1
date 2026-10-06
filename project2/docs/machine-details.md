@@ -2,7 +2,15 @@
 
 Owner: Member 1 (Sarah Rae). Member 5 (Georgia) references this for every measurement run.
 
-Each person: run the commands below in Terminal and send the output to Sarah (or fill in your own row).
+Each person: run **`./verify.sh`** from the `project2` directory. It confirms the package
+builds and every mode runs on your Mac, then prints your row ready to paste back — which
+covers two of Member 1's collection items in one command.
+
+```bash
+cd project2 && ./verify.sh
+```
+
+If you would rather gather it by hand, the row comes from:
 
 ```bash
 sw_vers                                    # macOS version + build
@@ -14,9 +22,13 @@ swift --version                            # toolchain
 xcodebuild -version                        # Xcode (needed for Instruments)
 ```
 
+**Re-run it near the deadline.** These values drift — Sarah's macOS went from 15.7.4 to 15.8.1
+inside a week without anyone noticing, and the toolchain version is the one field that can
+invalidate a measurement.
+
 | Name (Member #) | macOS (`sw_vers`) | Chip | RAM | Page size | Swift | Xcode |
 |---|---|---|---|---|---|---|
-| Sarah Rae (1) | 15.7.4 (24G517) | Apple M2 (arm64) | 24 GB | 16384 B | 6.2.1 (swiftlang-6.2.1.4.8) | 26.1.1 (17B100) |
+| Sarah Rae (1) | 15.8.1 (24H32) | Apple M2 (arm64) | 24 GB | 16384 B | 6.2.1 (swiftlang-6.2.1.4.8) | 26.1.1 (17B100) |
 | Ella (2) | | | | | | |
 | Stephen (3) | | | | | | |
 | Calli (4) | | | | | | |

@@ -77,7 +77,13 @@ Sources/PlaylistStreamer/
 docs/
   section1-memory-model.md         who owns what, stack vs heap, value vs reference, ARC vs GC
   section7-pros-cons-limitations.md  what the approach buys, costs, and cannot show
+  practice-questions.md            team answer sheet — rehearsal runs on this
+  submission-checklist.md          Canvas deliverables vs. what is actually in the repo
   machine-details.md               every team Mac's OS, chip, RAM, page size, toolchain
+verify.sh                          one command: builds, runs every mode, prints your machine row
+output-stack-run1.txt              saved runs, one per mode
+output-heap-run1.txt
+output-buffer-run1.txt
 projectDebrief.md                  scope, concepts, checklists, practice questions
 teamTask.md                        per-member task list and demo timing
 ```
@@ -111,11 +117,73 @@ identical — numbers from two different Macs are not a comparison.
 
 ## Sample output
 
-_TODO — one labelled block per mode, each with a short "what this shows". Buffer output is
-ready to paste (Calli); the rest follow as each demo lands._
+One labelled block per mode, each with a short "what this shows". Saved runs are committed
+beside this file as `output-<mode>-run1.txt`. All captured on Sarah's M2 (see
+[`docs/machine-details.md`](docs/machine-details.md)); the comparison numbers, when they land,
+must all come from a single machine.
 
 ### Buffer demo
-_TODO — Calli_
+Run: `swift run PlaylistStreamer buffer` (saved as
+[`output-buffer-run1.txt`](output-buffer-run1.txt), Sarah's M2).
+
+```
+===== BUFFER DEMO =====
+BUFFER DEMO: one reused buffer, capacity 4096 bytes
+BUFFER DEMO: song files in /var/folders/qx/2_r_w58s5x53q9201lvp0s3r0000gn/T/PlaylistStreamer
+BUFFER DEMO: 
+BUFFER DEMO: ▶ 'Normal' — file is 10000 bytes
+BUFFER DEMO:   chunk 1: capacity 4096, valid n = 4096
+BUFFER DEMO:   chunk 2: capacity 4096, valid n = 4096
+BUFFER DEMO:   chunk 3: capacity 4096, valid n = 1808  ← partial: buffer[1808..<4096] is 2288 stale/unused bytes, not played
+BUFFER DEMO:   read returned 0 → end of song
+BUFFER DEMO:   played 10000 / 10000 bytes in 3 chunk(s) ✓
+BUFFER DEMO:   checksum played 0xa34dce5867b20521 vs original 0xa34dce5867b20521 ✓
+BUFFER DEMO:   buffer storage address across chunks: 0x12381a820  (one allocation, reused)
+BUFFER DEMO: 
+BUFFER DEMO: ▶ 'Exact Fit' — file is 8192 bytes
+BUFFER DEMO:   chunk 1: capacity 4096, valid n = 4096
+BUFFER DEMO:   chunk 2: capacity 4096, valid n = 4096
+BUFFER DEMO:   read returned 0 → end of song
+BUFFER DEMO:   played 8192 / 8192 bytes in 2 chunk(s) ✓
+BUFFER DEMO:   checksum played 0x9da4b2bab9d9edd1 vs original 0x9da4b2bab9d9edd1 ✓
+BUFFER DEMO:   buffer storage address across chunks: 0x12400a420  (one allocation, reused)
+BUFFER DEMO: 
+BUFFER DEMO: ▶ 'Tiny' — file is 100 bytes
+BUFFER DEMO:   chunk 1: capacity 4096, valid n = 100  ← partial: buffer[100..<4096] is 3996 stale/unused bytes, not played
+BUFFER DEMO:   read returned 0 → end of song
+BUFFER DEMO:   played 100 / 100 bytes in 1 chunk(s) ✓
+BUFFER DEMO:   checksum played 0x18ed3fbf4acf7eef vs original 0x18ed3fbf4acf7eef ✓
+BUFFER DEMO:   buffer storage address across chunks: 0x12400a420  (one allocation, reused)
+BUFFER DEMO: 
+BUFFER DEMO: ── what if we played the whole buffer instead of buffer[0..<n]? ──
+BUFFER DEMO:   'Normal': buggy version played 12288 bytes (real: 10000), checksum WRONG
+BUFFER DEMO:   'Exact Fit': buggy version played 8192 bytes (real: 8192), checksum matches — this size hides the bug
+BUFFER DEMO:   'Tiny': buggy version played 4096 bytes (real: 100), checksum WRONG
+BUFFER DEMO: 
+BUFFER DEMO: ── error case: song file missing ──
+BUFFER DEMO:   caught: read failed on chunk 1: The operation couldn’t be completed. No such file or directory — handled, not treated as end of song
+BUFFER DEMO: 
+BUFFER DEMO: all boundary cases: bytes played == file size, checksums match (measured)
+BUFFER DEMO: deinit Song 'Missing Track'
+BUFFER DEMO: deinit Playlist 'Buffer Cases'
+BUFFER DEMO: deinit Song 'Normal'
+BUFFER DEMO: deinit Song 'Exact Fit'
+BUFFER DEMO: deinit Song 'Tiny'
+```
+
+**What this shows.** One 4096-byte buffer is allocated once and refilled — the storage address
+is identical on every chunk of every song, so "reused" is observed, not asserted. Capacity
+stays 4096 while the valid count `n` varies, and only `buffer[0..<n]` is ever played, which is
+why every checksum matches.
+
+The three song sizes are the test suite. 10,000 bytes ends in a partial chunk of 1808; 8,192
+ends exactly on a boundary; 100 never fills the buffer at all. The loop stops on `n == 0`
+rather than on a short read, which is what makes the exact-fit song come out right.
+
+**The part worth pausing on:** the final block replays each song using the whole buffer instead
+of `buffer[0..<n]`. The 10,000- and 100-byte songs come out corrupted — but the 8,192-byte
+song's checksum *still matches*, because its last read filled the buffer exactly and left no
+stale bytes behind. A test suite without an exact-fit case would have passed this bug.
 
 ### Stack demo
 Recursive merge sort over `Playlist.sampleEight()` (8 songs, sorted by duration). Each

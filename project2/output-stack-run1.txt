@@ -1,0 +1,69 @@
+
+===== STACK DEMO =====
+STACK DEMO: deinit Playlist 'Road Trip'
+STACK DEMO: -> mergeSort depth 0 [songs 0...7]
+STACK DEMO:   -> mergeSort depth 1 [songs 0...3]
+STACK DEMO:     -> mergeSort depth 2 [songs 0...1]
+STACK DEMO:       -> mergeSort depth 3 [songs 0...0]
+STACK DEMO:          deepest call — Thread.callStackSymbols:
+STACK DEMO:          0   PlaylistStreamer                    0x0000000102d74964 $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 1664
+STACK DEMO:          1   PlaylistStreamer                    0x0000000102d7460c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
+STACK DEMO:          2   PlaylistStreamer                    0x0000000102d7460c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
+STACK DEMO:          3   PlaylistStreamer                    0x0000000102d7460c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
+STACK DEMO:          4   PlaylistStreamer                    0x0000000102d73ba0 $s16PlaylistStreamer12runStackDemoyyF + 312
+STACK DEMO:          5   PlaylistStreamer                    0x0000000102d75be4 PlaylistStreamer_main + 500
+STACK DEMO:          6   dyld                                0x0000000183206b98 start + 6076
+STACK DEMO:       <- return  depth 3
+STACK DEMO:       -> mergeSort depth 3 [songs 1...1]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:     <- return  depth 2
+STACK DEMO:     -> mergeSort depth 2 [songs 2...3]
+STACK DEMO:       -> mergeSort depth 3 [songs 2...2]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:       -> mergeSort depth 3 [songs 3...3]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:     <- return  depth 2
+STACK DEMO:   <- return  depth 1
+STACK DEMO:   -> mergeSort depth 1 [songs 4...7]
+STACK DEMO:     -> mergeSort depth 2 [songs 4...5]
+STACK DEMO:       -> mergeSort depth 3 [songs 4...4]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:       -> mergeSort depth 3 [songs 5...5]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:     <- return  depth 2
+STACK DEMO:     -> mergeSort depth 2 [songs 6...7]
+STACK DEMO:       -> mergeSort depth 3 [songs 6...6]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:       -> mergeSort depth 3 [songs 7...7]
+STACK DEMO:       <- return  depth 3
+STACK DEMO:     <- return  depth 2
+STACK DEMO:   <- return  depth 1
+STACK DEMO: <- return  depth 0
+STACK DEMO: sorted by duration: ["Almanac", "Ceiling Fan", "Half Light", "Ash Wednesday", "Meridian", "Dovetail", "Blue Harbour", "Ravel"]
+STACK DEMO: 
+STACK DEMO: recently played — Stack<Song>, a data structure we chose, not the call stack:
+STACK DEMO:   pushed 'Meridian' -> top is now 'Meridian'
+STACK DEMO:   pushed 'Half Light' -> top is now 'Half Light'
+STACK DEMO:   pushed 'Blue Harbour' -> top is now 'Blue Harbour'
+STACK DEMO:   pushed 'Almanac' -> top is now 'Almanac'
+STACK DEMO:   pushed 'Ravel' -> top is now 'Ravel'
+STACK DEMO:   pushed 'Ceiling Fan' -> top is now 'Ceiling Fan'
+STACK DEMO:   pushed 'Dovetail' -> top is now 'Dovetail'
+STACK DEMO:   pushed 'Ash Wednesday' -> top is now 'Ash Wednesday'
+STACK DEMO:   popping back off, most-recently-played first:
+STACK DEMO:   popped 'Ash Wednesday'
+STACK DEMO:   popped 'Dovetail'
+STACK DEMO:   popped 'Ceiling Fan'
+STACK DEMO:   popped 'Ravel'
+STACK DEMO:   popped 'Almanac'
+STACK DEMO:   popped 'Blue Harbour'
+STACK DEMO:   popped 'Half Light'
+STACK DEMO:   popped 'Meridian'
+STACK DEMO: deinit Song 'Meridian'
+STACK DEMO: deinit Song 'Half Light'
+STACK DEMO: deinit Song 'Blue Harbour'
+STACK DEMO: deinit Song 'Almanac'
+STACK DEMO: deinit Song 'Ravel'
+STACK DEMO: deinit Song 'Ceiling Fan'
+STACK DEMO: deinit Song 'Dovetail'
+STACK DEMO: deinit Song 'Ash Wednesday'
