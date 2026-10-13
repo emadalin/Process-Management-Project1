@@ -64,4 +64,4 @@ Fill this in once Member 5 starts measuring, and keep it consistent with the REA
 - **Comparison measurements (all 5 runs, A and B):** ______
 - **Instruments screenshots:** ______
 - **Memory Graph Debugger screenshots:** ______
-- **Xcode call-stack screenshot (stack demo):** ______
+- **Xcode call-stack screenshot (stack demo):** Ella's Mac — Apple M5 Pro, macOS 26.5.1, Xcode 26.6 (`docs/stack-call-stack-xcode.png`)
