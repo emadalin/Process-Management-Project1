@@ -57,14 +57,14 @@ Owns demo section **3**. File: `HeapDemo.swift`
 ## Member 4: Buffer Demo · `Calli`
 Owns demo section **4 (buffer part)**. File: `BufferDemo.swift`
 
-- [ ] Generate song files (`.raw`) at startup, or a small script that does. Sizes: **10,000 bytes**, **8,192 bytes**, **100 bytes**
-- [ ] "Play" each song with `InputStream` into **one reused** 4096-byte `[UInt8]` buffer
-- [ ] Print per chunk: chunk #, capacity, valid bytes `n`
-- [ ] Only process `buffer[0..<n]`; handle `n == 0` (end) and `n < 0` (error)
-- [ ] Verify: total bytes played == file size, and checksum played == checksum original
-- [ ] Explain where the buffer's storage lives (heap), and what happens on the last partial chunk and when input > buffer
+- [x] Generate song files (`.raw`) at startup, or a small script that does. Sizes: **10,000 bytes**, **8,192 bytes**, **100 bytes**
+- [x] "Play" each song with `InputStream` into **one reused** 4096-byte `[UInt8]` buffer
+- [x] Print per chunk: chunk #, capacity, valid bytes `n`
+- [x] Only process `buffer[0..<n]`; handle `n == 0` (end) and `n < 0` (error)
+- [x] Verify: total bytes played == file size, and checksum played == checksum original
+- [x] Explain where the buffer's storage lives (heap), and what happens on the last partial chunk and when input > buffer
 - [ ] Sample output with all three boundary cases + "what this shows"
-- [ ] Help Member 5 with the comparison input (hand over the played bytes / a function that produces them)
+- [x] Help Member 5 with the comparison input (hand over the played bytes / a function that produces them)
 
 ## Member 5: Comparison & IDE Tools · `Georgia`
 Owns demo sections **4 (comparison part)** and **5 (IDE tools)**. File: `CompareDemo.swift`
