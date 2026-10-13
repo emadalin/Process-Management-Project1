@@ -29,7 +29,7 @@ invalidate a measurement.
 | Name (Member #) | macOS (`sw_vers`) | Chip | RAM | Page size | Swift | Xcode |
 |---|---|---|---|---|---|---|
 | Sarah Rae (1) | 15.8.1 (24H32) | Apple M2 (arm64) | 24 GB | 16384 B | 6.2.1 (swiftlang-6.2.1.4.8) | 26.1.1 (17B100) |
-| Ella (2) | | | | | | |
+| Ella (2) | 26.5.1 (25F80) | Apple M5 Pro (arm64) | 48 GB | 16384 B | 6.3.3 (swiftlang-6.3.3.1.3) | 26.6 (17F113) |
 | Stephen (3) | | | | | | |
 | Calli (4) | | | | | | |
 | Georgia (5) | | | | | | |

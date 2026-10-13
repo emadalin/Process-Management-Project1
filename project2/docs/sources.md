@@ -40,12 +40,21 @@ nothing. Add your name in the "used by" column if you leaned on an entry.
 | `man footprint` | process memory footprint as macOS accounts for it |
 | `/usr/bin/time -l` | max RSS, and why it is page-granular rather than object-granular |
 
+## AI assistants
+
+Commits where an assistant helped carry a `Co-Authored-By: Claude …` line in `git log`.
+
+| Tool | Used for | Used by |
+|---|---|---|
+| Claude Code (Claude Sonnet 5) | Implementing `StackDemo.swift` — the recursive merge sort trace, the `Thread.callStackSymbols` dump, `Stack<Song>` — and drafting the stack section of the README | Ella |
+| Claude Code (Claude Opus 5.5) | Finding and fixing the early `deinit Playlist 'Road Trip'` in the stack demo, regenerating `output-stack-run1.txt`, the steps for capturing the Xcode call-stack screenshot, and committing it | Ella |
+
 ## Still to add
 
-- [ ] **Ella** — anything used for merge sort, recursion depth, or the breakpoint/call-stack view
+- [x] **Ella** — anything used for merge sort, recursion depth, or the breakpoint/call-stack view: nothing beyond Claude Code (table above) and the two Apple entries already listed
 - [ ] **Stephen** — anything used for delegate patterns or closure capture semantics
 - [ ] **Calli** — anything used for stream buffering or checksums
 - [ ] **Georgia** — Instruments and Memory Graph walkthroughs, plus whatever she uses for the
       measurement methodology; hers is the longest list and the least filled in
-- [ ] **Everyone** — AI assistants used, and for what. Project 1 disclosed this in its README
+- [ ] **Everyone** — AI assistants used, and for what (Ella's are in the table above). Project 1 disclosed this in its README
       under "AI tools and outside sources"; we should match that.
