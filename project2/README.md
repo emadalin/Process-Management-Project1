@@ -172,14 +172,16 @@ BUFFER DEMO: deinit Song 'Exact Fit'
 BUFFER DEMO: deinit Song 'Tiny'
 ```
 
-**What this shows.** One 4096-byte buffer is allocated once and refilled — the storage address
-is identical on every chunk of every song, so "reused" is observed, not asserted. Capacity
+**What this shows.** A 4096-byte buffer is allocated once per song and refilled for every
+chunk — the storage address is identical on every chunk of a song, so "reused" is observed, not
+asserted. Capacity
 stays 4096 while the valid count `n` varies, and only `buffer[0..<n]` is ever played, which is
 why every checksum matches.
 
 The three song sizes are the test suite. 10,000 bytes ends in a partial chunk of 1808; 8,192
-ends exactly on a boundary; 100 never fills the buffer at all. The loop stops on `n == 0`
-rather than on a short read, which is what makes the exact-fit song come out right.
+ends exactly on a boundary; 100 never fills the buffer at all. The loop stops only on
+`n == 0`, not on a short read, because a read may legally return fewer bytes than requested
+before the end of the stream.
 
 **The part worth pausing on:** the final block replays each song using the whole buffer instead
 of `buffer[0..<n]`. The 10,000- and 100-byte songs come out corrupted — but the 8,192-byte

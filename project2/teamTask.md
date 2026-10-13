@@ -63,7 +63,7 @@ Owns demo section **4 (buffer part)**. File: `BufferDemo.swift`
 - [x] Only process `buffer[0..<n]`; handle `n == 0` (end) and `n < 0` (error)
 - [x] Verify: total bytes played == file size, and checksum played == checksum original
 - [x] Explain where the buffer's storage lives (heap), and what happens on the last partial chunk and when input > buffer
-- [ ] Sample output with all three boundary cases + "what this shows"
+- [x] Sample output with all three boundary cases + "what this shows"
 - [x] Help Member 5 with the comparison input (hand over the played bytes / a function that produces them)
 
 ## Member 5: Comparison & IDE Tools · `Georgia`

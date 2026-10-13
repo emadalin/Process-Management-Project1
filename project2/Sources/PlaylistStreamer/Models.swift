@@ -162,9 +162,9 @@ extension Playlist {
     ///    8,192 -> 4096, 4096         exact fit, no partial chunk
     ///      100 -> 100                input smaller than the buffer
     ///
-    /// The exact-fit case is the one that catches the classic bug: code that
-    /// stops on a short read instead of on `n == 0` looks correct on the first
-    /// song and silently truncates this one.
+    /// The exact-fit case has no partial chunk, so it is the one size where
+    /// processing the whole buffer instead of `buffer[0..<n]` still passes —
+    /// which is why one size on its own isn't a test.
     static func bufferCases() -> Playlist {
         Playlist(name: "Buffer Cases", songs: [
             Song(title: "Normal",    durationSeconds: 60, byteCount: 10_000),
