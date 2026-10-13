@@ -1,18 +1,17 @@
 
 ===== STACK DEMO =====
-STACK DEMO: deinit Playlist 'Road Trip'
 STACK DEMO: -> mergeSort depth 0 [songs 0...7]
 STACK DEMO:   -> mergeSort depth 1 [songs 0...3]
 STACK DEMO:     -> mergeSort depth 2 [songs 0...1]
 STACK DEMO:       -> mergeSort depth 3 [songs 0...0]
 STACK DEMO:          deepest call — Thread.callStackSymbols:
-STACK DEMO:          0   PlaylistStreamer                    0x0000000102d74964 $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 1664
-STACK DEMO:          1   PlaylistStreamer                    0x0000000102d7460c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
-STACK DEMO:          2   PlaylistStreamer                    0x0000000102d7460c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
-STACK DEMO:          3   PlaylistStreamer                    0x0000000102d7460c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
-STACK DEMO:          4   PlaylistStreamer                    0x0000000102d73ba0 $s16PlaylistStreamer12runStackDemoyyF + 312
-STACK DEMO:          5   PlaylistStreamer                    0x0000000102d75be4 PlaylistStreamer_main + 500
-STACK DEMO:          6   dyld                                0x0000000183206b98 start + 6076
+STACK DEMO:          0   PlaylistStreamer                    0x0000000104e407f0 $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 1660
+STACK DEMO:          1   PlaylistStreamer                    0x0000000104e4049c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
+STACK DEMO:          2   PlaylistStreamer                    0x0000000104e4049c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
+STACK DEMO:          3   PlaylistStreamer                    0x0000000104e4049c $s16PlaylistStreamer9mergeSort33_BA8B157D30BF4DA0723AC92E02ABF96BLL_2lo2hi5depth2bySayAA4SongCGAJ_S3iSbAI_AItXEtF + 808
+STACK DEMO:          4   PlaylistStreamer                    0x0000000104e3f978 $s16PlaylistStreamer12runStackDemoyyF + 316
+STACK DEMO:          5   PlaylistStreamer                    0x0000000104e41a28 PlaylistStreamer_main + 508
+STACK DEMO:          6   dyld                                0x0000000180cafe00 start + 6992
 STACK DEMO:       <- return  depth 3
 STACK DEMO:       -> mergeSort depth 3 [songs 1...1]
 STACK DEMO:       <- return  depth 3
@@ -59,6 +58,9 @@ STACK DEMO:   popped 'Almanac'
 STACK DEMO:   popped 'Blue Harbour'
 STACK DEMO:   popped 'Half Light'
 STACK DEMO:   popped 'Meridian'
+STACK DEMO: 
+STACK DEMO: runStackDemo returning — 'Road Trip' and its songs lose their last references:
+STACK DEMO: deinit Playlist 'Road Trip'
 STACK DEMO: deinit Song 'Meridian'
 STACK DEMO: deinit Song 'Half Light'
 STACK DEMO: deinit Song 'Blue Harbour'

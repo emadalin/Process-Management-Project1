@@ -28,7 +28,11 @@ import Foundation
 
 func runStackDemo() {
     DemoLog.begin("STACK DEMO")
-    let songs = Playlist.sampleEight().songs
+    // Hold the Playlist in a local. `Playlist.sampleEight().songs` would make it
+    // a temporary whose last strong reference dies on this very line, printing
+    // "deinit Playlist 'Road Trip'" before the sort even starts.
+    let playlist = Playlist.sampleEight()
+    let songs = playlist.songs
     let sorted = mergeSort(songs, lo: 0, hi: songs.count - 1, depth: 0) {
         $0.durationSeconds < $1.durationSeconds
     }
@@ -45,6 +49,11 @@ func runStackDemo() {
     while let song = recentlyPlayed.pop() {
         DemoLog.say("  popped '\(song.title)'")
     }
+
+    // Reading `playlist` here is what keeps it alive this far: Swift may release
+    // a local after its last use, not at the closing brace.
+    DemoLog.say("")
+    DemoLog.say("runStackDemo returning — '\(playlist.name)' and its songs lose their last references:")
 }
 
 /// A LIFO stack of values we chose to keep, used here as "recently played"
