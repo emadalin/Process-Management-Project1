@@ -4,9 +4,9 @@ Memory management in Swift on macOS — **stacks, heaps and buffers** — demons
 program that simulates streaming audio. No sound is played: each "song" is a file of raw
 bytes, which is what makes the memory behaviour easy to watch.
 
-> **Status:** stack, heap and buffer demos implemented; the memory comparison and the IDE
-> tools investigation are outstanding. Sections marked _TODO_ are owned by the member named
-> beside them; see [`teamTask.md`](teamTask.md).
+> **Status:** all four demos implemented and measured; every section below is written. The
+> team contribution statement is the last Canvas deliverable outstanding — each member confirms
+> or rewrites their own row. See [`teamTask.md`](teamTask.md).
 
 ## What the program demonstrates
 

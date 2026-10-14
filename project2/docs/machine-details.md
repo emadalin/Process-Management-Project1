@@ -32,7 +32,7 @@ invalidate a measurement.
 | Ella (2) | 26.5.1 (25F80) | Apple M5 Pro (arm64) | 48 GB | 16384 B | 6.3.3 (swiftlang-6.3.3.1.3) | 26.6 (17F113) |
 | Stephen (3) | | | | | | |
 | Calli (4) | | | | | | |
-| Georgia (5) | | | | | | |
+| Georgia (5) | 26.6.2 (25G83) | Apple M1 (arm64) | 16 GB | 16384 B | 6.4 (swiftlang-6.4.0.34.1) | 27.0 (27A266a) |
 
 ## Why this matters for a memory project
 
@@ -59,9 +59,17 @@ someone else's live run during the demo.
 
 ## Which machine produced the report's numbers
 
-Fill this in once Member 5 starts measuring, and keep it consistent with the README:
+**Georgia's M1 is the reference machine** — Apple M1 (arm64), macOS 26.6.2 (25G83), Swift 6.4,
+Xcode 27.0 (27A266a). Every comparison number and every memory screenshot came from it, in one
+session on 2026-10-14, which is what makes the figures comparable to each other.
 
-- **Comparison measurements (all 5 runs, A and B):** ______
-- **Instruments screenshots:** ______
-- **Memory Graph Debugger screenshots:** ______
-- **Xcode call-stack screenshot (stack demo):** Ella's Mac — Apple M5 Pro, macOS 26.5.1, Xcode 26.6 (`docs/stack-call-stack-xcode.png`)
+| Artefact | Machine | Files |
+|---|---|---|
+| Comparison measurements, all 5 runs, A and B | Georgia's M1 | [`compare-results.md`](compare-results.md), `../output-compare-run1.txt` |
+| Instruments Allocations screenshots | Georgia's M1 | `instruments-alloc-a.png`, `instruments-alloc-b.png` |
+| Memory Graph Debugger screenshot | Georgia's M1 | `heap-memory-graph-leak.png` |
+| Xcode call-stack screenshot | Ella's M5 Pro, macOS 26.5.1, Xcode 26.6 | `stack-call-stack-xcode.png` |
+
+The call-stack screenshot is the one artefact from a different Mac, and that is fine: it shows
+the *shape* of the call stack, which is a property of the code, not a measurement. Nothing in
+the report compares it against a number from anywhere else.
