@@ -311,15 +311,129 @@ outside reference genuinely brings the count to 0 and every `deinit` fires. Same
 cycle shape, one keyword different, opposite outcome.
 
 ### Memory comparison
-_TODO — Georgia. Include the measured/inferred table and all 5 runs per approach._
+
+Release build, 10 million samples, on Georgia's M1 (all comparison numbers come from this one
+Mac, in one session on 2026-10-14). `swift run -c release PlaylistStreamer compare`:
+
+```
+
+===== MEMORY COMPARISON =====
+MEMORY COMPARISON: input: 10000000 samples (10000000 bytes on disk → 40000000 bytes as [Float])
+MEMORY COMPARISON: 
+MEMORY COMPARISON: ── A: append one at a time, no reserve ──
+MEMORY COMPARISON:   realloc #1: capacity 0 → 4
+MEMORY COMPARISON:   realloc #2: capacity 4 → 8
+MEMORY COMPARISON:   realloc #3: capacity 8 → 16
+MEMORY COMPARISON:   realloc #4: capacity 16 → 32
+MEMORY COMPARISON:   realloc #5: capacity 32 → 72
+MEMORY COMPARISON:   …  (realloc #6–#18 omitted; full run in output-compare-run1.txt)
+MEMORY COMPARISON:   realloc #19: capacity 786424 → 1572856
+MEMORY COMPARISON:   realloc #20: capacity 1572856 → 3145720
+MEMORY COMPARISON:   realloc #21: capacity 3145720 → 6291448
+MEMORY COMPARISON:   realloc #22: capacity 6291448 → 12582904
+MEMORY COMPARISON:   count 10000000, capacity 12582904 (50331616 bytes of storage), 22 reallocation(s), 0.076470333 seconds
+MEMORY COMPARISON: 
+MEMORY COMPARISON: ── B: reserveCapacity(10000000) first ──
+MEMORY COMPARISON:   reserved capacity 10002424 before the first append
+MEMORY COMPARISON:   count 10000000, capacity 10002424 (40009696 bytes of storage), 0 reallocation(s), 0.065567042 seconds
+MEMORY COMPARISON: 
+MEMORY COMPARISON: ── A vs B ──
+MEMORY COMPARISON:   samplesA == samplesB: ✓ identical
+MEMORY COMPARISON:   reallocations: A 22, B 0  (measured)
+MEMORY COMPARISON:   final capacity / count: A 12582904 / 10000000, B 10002424 / 10000000  (measured)
+MEMORY COMPARISON:   growth factors A went through: 2.00, 2.00, 2.00, 2.25, 2.11, 2.05, 2.03, 2.01, 2.01, 2.00, 2.40, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00  (observed, not promised by Swift)
+MEMORY COMPARISON:   time: A 0.076470333 seconds, B 0.065567042 seconds  (measured, one run — includes file reads, which both sides pay)
+MEMORY COMPARISON:   A holds 2580480 more slots than B (10321920 bytes) — doubling overshot the count  (measured)
+MEMORY COMPARISON:   A's abandoned blocks: see Instruments total bytes, not this program  (measured there, not here)
+MEMORY COMPARISON: deinit Song 'Compare Input'
+```
+
+| 10M samples | A: append | B: `reserveCapacity` first | Source |
+|---|---|---|---|
+| Reallocations | 22 | 0 | capacity log, 5/5 runs identical (**measured**) |
+| Final capacity / count | 12,582,904 / 10,000,000 | 10,002,424 / 10,000,000 | `Array.capacity` (**measured**) |
+| Total heap bytes allocated | 115.39 MiB | 57.55 MiB | Instruments Allocations (**measured**) |
+| Heap allocations | 2,073 | 1,906 | Instruments Allocations (**measured**) |
+| Peak memory footprint | 52.23 MB | 41.88 MB | `/usr/bin/time -l` (**measured**) |
+| Median time, 5 runs | 0.0686 s | 0.0611 s | `ContinuousClock` (**measured**) |
+
+**What this shows:** both approaches produce identical samples, but appending without a reserve
+made Swift move the whole array to a bigger heap block 22 times. Over the run, that cost
+**twice the heap traffic** (115 vs 58 MiB). The 57.84 MiB difference matches the sum of
+A's logged capacities to the hundredth of a MiB, so our own counter and Instruments agree. What it did
+*not* cost was a large simultaneous peak. We expected old and new blocks coexisting during each
+copy to push A's peak toward ~77 MB, but it measured 52 MB. The 10 MB it holds over B is unused
+capacity left by the last doubling. The growth factor (≈×2) is **observed, not promised** by Swift,
+and on this same Mac an earlier session gave 21 reallocations instead of 22. All 5 runs,
+the 50M results, and the session difference are in
+[`docs/compare-results.md`](docs/compare-results.md).
 
 ---
 
 ## IDE tools investigation
 
-_TODO — Georgia. Xcode version, which features are built in vs. separate (Instruments is a
-separate app bundled with Xcode), at least one tool demonstrated on our own code with
-screenshots, and — the part the rubric actually weights — what each tool cannot establish._
+**IDE:** Xcode 27.0 (27A266a), on Georgia's M1 (macOS 26.6.2). The Memory Graph Debugger and
+the breakpoint call-stack view are **built into Xcode**. **Instruments** is a **separate app**
+that ships inside Xcode (`Xcode.app/Contents/Applications/Instruments.app`), and it can also be
+driven from the terminal with `xcrun xctrace`. `leaks` and `/usr/bin/time` are macOS
+command-line tools, not part of the IDE.
+
+| Tool | Built in / separate | Used on | What it showed us | What it can't establish |
+|---|---|---|---|---|
+| Call stack at a breakpoint | Built into Xcode | Stack demo (Ella) | The four live `mergeSort` frames, depths 3 → 0, plus each frame's locals | How big each frame is, or that frames live on the stack rather than the heap. It shows *which* calls are live, not *where* their memory is |
+| Memory Graph Debugger | Built into Xcode | Heap demo, leaky mode | The retain cycle LeakyPlaylist → `songs` → LeakySong → `delegate` → LeakyPlaylist, flagged ⚠ as leaked | *When* or *why* the leak started, or that memory went up. It's one snapshot, and it only sees heap objects, not stack memory |
+| Instruments: Allocations | Separate app (bundled) | Comparison, A and B separately | Total bytes and allocation counts per side (115.39 vs 57.55 MiB) | Which allocation was "the array" without digging into each one, or what the process's page-level memory was. It counts malloc calls, not resident pages |
+| `/usr/bin/time -l` | macOS CLI | Comparison | Peak footprint per side (52.2 vs 41.9 MB) | Which object used the memory. It's one number for the whole process, in 16 KB pages |
+
+### Call stack at a breakpoint (built in)
+
+![Xcode paused at the deepest mergeSort call](docs/stack-call-stack-xcode.png)
+
+Breakpoint at the deepest call (`StackDemo.swift`, depth 3). The Debug navigator lists the live
+frames `mergeSort` ×4 → `runStackDemo` → `main`, and the Variables view shows that frame's own
+`lo`, `hi` and `depth`. Each recursive call has its own copy of those values: that's what a
+stack frame is. Captured by Ella on her M5 Pro (Xcode 26.6).
+
+### Memory Graph Debugger (built in)
+
+![Memory Graph showing the LeakyPlaylist / LeakySong retain cycle](docs/heap-memory-graph-leak.png)
+
+The heap demo's leaky mode, after `leakyPlaylist = nil`. The objects our code no longer reaches are
+still alive, marked ⚠ in the left list, and the graph shows *why*: each LeakySong's `delegate`
+points back at the playlist strongly, and the playlist's `songs` array points at the songs. That's
+the evidence behind the heap demo's silent `deinit`. **How we captured it:** Xcode's live "Debug
+Memory Graph" button failed on this command-line program ("Unable to build memory graph"), so we
+saved the graph with `leaks --atExit --outputGraph=… -- .build/debug/PlaylistStreamer heap` and opened
+the `.memgraph` file in Xcode's Memory Graph viewer. That's the same viewer, fed from a file. The
+`leaks` text output agrees: *4 leaks for 240 total leaked bytes*, one ROOT CYCLE.
+
+### Instruments: Allocations (separate app)
+
+| A: append | B: `reserveCapacity` first |
+|---|---|
+| ![Instruments Allocations, approach A](docs/instruments-alloc-a.png) | ![Instruments Allocations, approach B](docs/instruments-alloc-b.png) |
+
+Each side recorded on its own (`compare --only=a` / `--only=b`) so their allocations don't mix.
+Read the **All Heap Allocations** row: A allocated **115.39 MiB in 2,073 allocations**, B
+**57.55 MiB in 1,906**. Both end with the same 204 KiB *persistent*, so A's extra 57.84 MiB was all
+allocated and then freed: the 21 abandoned blocks from regrowth. That figure matches the sum of
+A's logged capacities exactly. **To repeat it:** Instruments can't attach to a release binary built by
+`swift build` until it's re-signed with the `get-task-allow` entitlement
+([`docs/compare-results.md`](docs/compare-results.md) has the command).
+
+### What the tools taught us they can't do
+
+- **No tool showed the stack's memory.** The call-stack view shows frames, and the Memory Graph and
+  Allocations show heap objects. That stack frames live on the stack is still **inferred** from how
+  Swift and the CPU work.
+- **A leak flag is not a memory measurement.** The Memory Graph proves objects are unreachable but
+  still alive, not how much the process's memory grew.
+- **Allocations and RSS disagree, and both are right.** Instruments counts every malloc over the
+  run (A: 2× B's bytes), while `/usr/bin/time` reports the peak of pages resident at once (A: only
+  1.25× B's). Total traffic and peak are different questions.
+- **Results depend on the allocator's state.** The same binary on the same Mac gave 21
+  reallocations in one session and 22 in another. Comparisons are only valid when A and B are
+  measured back to back.
 
 ---
 
@@ -373,7 +487,7 @@ case where chunked buffering is the wrong tool.
 | 2 | Ella | Stack demo | Recursive merge sort with indented enter/return tracing; `Thread.callStackSymbols` at the deepest call; `Stack<Song>` history to contrast with the call stack; deep-recursion risk explanation |
 | 3 | Stephen | Heap demo | Allocation → use → release lifecycle; `LeakySong` retain cycle and the `weak` fix; ARC / strong / `weak` / `unowned` explanation; what `deinit` output does and does not prove |
 | 4 | Calli | Buffer demo | `.raw` song generation; chunked playback through one reused 4096-byte buffer; capacity vs. valid count per chunk; all three boundary cases with checksums; the stale-buffer bug demonstration |
-| 5 | Georgia | Comparison & IDE tools | _pending_ |
+| 5 | Georgia | Comparison & IDE tools | `CompareDemo.swift`: the same 10M-sample array built by appending vs `reserveCapacity`, with every capacity change logged; 5 release runs per approach at 10M and 50M; Instruments Allocations on each side; Memory Graph of the heap leak; `/usr/bin/time -l` peak footprint; the IDE tools write-up and measured-vs-inferred table |
 
 _Each member: replace your row's detail with 3–5 sentences in your own words, or confirm the
 summary above is accurate. Rows are drawn from what is actually committed._

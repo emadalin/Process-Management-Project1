@@ -1,0 +1,42 @@
+
+===== MEMORY COMPARISON =====
+MEMORY COMPARISON: input: 10000000 samples (10000000 bytes on disk → 40000000 bytes as [Float])
+MEMORY COMPARISON: 
+MEMORY COMPARISON: ── A: append one at a time, no reserve ──
+MEMORY COMPARISON:   realloc #1: capacity 0 → 4
+MEMORY COMPARISON:   realloc #2: capacity 4 → 8
+MEMORY COMPARISON:   realloc #3: capacity 8 → 16
+MEMORY COMPARISON:   realloc #4: capacity 16 → 32
+MEMORY COMPARISON:   realloc #5: capacity 32 → 72
+MEMORY COMPARISON:   realloc #6: capacity 72 → 152
+MEMORY COMPARISON:   realloc #7: capacity 152 → 312
+MEMORY COMPARISON:   realloc #8: capacity 312 → 632
+MEMORY COMPARISON:   realloc #9: capacity 632 → 1272
+MEMORY COMPARISON:   realloc #10: capacity 1272 → 2552
+MEMORY COMPARISON:   realloc #11: capacity 2552 → 5112
+MEMORY COMPARISON:   realloc #12: capacity 5112 → 12280
+MEMORY COMPARISON:   realloc #13: capacity 12280 → 24568
+MEMORY COMPARISON:   realloc #14: capacity 24568 → 49144
+MEMORY COMPARISON:   realloc #15: capacity 49144 → 98296
+MEMORY COMPARISON:   realloc #16: capacity 98296 → 196600
+MEMORY COMPARISON:   realloc #17: capacity 196600 → 393208
+MEMORY COMPARISON:   realloc #18: capacity 393208 → 786424
+MEMORY COMPARISON:   realloc #19: capacity 786424 → 1572856
+MEMORY COMPARISON:   realloc #20: capacity 1572856 → 3145720
+MEMORY COMPARISON:   realloc #21: capacity 3145720 → 6291448
+MEMORY COMPARISON:   realloc #22: capacity 6291448 → 12582904
+MEMORY COMPARISON:   count 10000000, capacity 12582904 (50331616 bytes of storage), 22 reallocation(s), 0.076470333 seconds
+MEMORY COMPARISON: 
+MEMORY COMPARISON: ── B: reserveCapacity(10000000) first ──
+MEMORY COMPARISON:   reserved capacity 10002424 before the first append
+MEMORY COMPARISON:   count 10000000, capacity 10002424 (40009696 bytes of storage), 0 reallocation(s), 0.065567042 seconds
+MEMORY COMPARISON: 
+MEMORY COMPARISON: ── A vs B ──
+MEMORY COMPARISON:   samplesA == samplesB: ✓ identical
+MEMORY COMPARISON:   reallocations: A 22, B 0  (measured)
+MEMORY COMPARISON:   final capacity / count: A 12582904 / 10000000, B 10002424 / 10000000  (measured)
+MEMORY COMPARISON:   growth factors A went through: 2.00, 2.00, 2.00, 2.25, 2.11, 2.05, 2.03, 2.01, 2.01, 2.00, 2.40, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00  (observed, not promised by Swift)
+MEMORY COMPARISON:   time: A 0.076470333 seconds, B 0.065567042 seconds  (measured, one run — includes file reads, which both sides pay)
+MEMORY COMPARISON:   A holds 2580480 more slots than B (10321920 bytes) — doubling overshot the count  (measured)
+MEMORY COMPARISON:   A's abandoned blocks: see Instruments total bytes, not this program  (measured there, not here)
+MEMORY COMPARISON: deinit Song 'Compare Input'

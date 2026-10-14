@@ -69,17 +69,17 @@ Owns demo section **4 (buffer part)**. File: `BufferDemo.swift`
 ## Member 5: Comparison & IDE Tools · `Georgia`
 Owns demo sections **4 (comparison part)** and **5 (IDE tools)**. File: `CompareDemo.swift`
 
-- [ ] **A:** build `samples: [Float]` by appending one at a time
-- [ ] **B:** same task with `reserveCapacity(total)` first
-- [ ] Verify `samplesA == samplesB`
-- [ ] Log every capacity change in A (reallocation count); print final capacity vs count for both
-- [ ] Run with a large input (5–50 million samples), `swift run -c release`, **5 runs each**, record the numbers
-- [ ] Instruments → Allocations on A and B (total bytes, # of allocations), with screenshots
-- [ ] Memory Graph Debugger screenshot of the heap leak (from Member 3's leaky mode)
-- [ ] Collect Member 2's call-stack screenshot
-- [ ] Write-up: Xcode version, built-in vs separate tool (Instruments), what each shows, what each can't establish
-- [ ] Measured vs inferred table for the comparison
-- [ ] Optional: `/usr/bin/time -l` max RSS, explaining how it differs from object sizes
+- [x] **A:** build `samples: [Float]` by appending one at a time
+- [x] **B:** same task with `reserveCapacity(total)` first
+- [x] Verify `samplesA == samplesB`
+- [x] Log every capacity change in A (reallocation count); print final capacity vs count for both
+- [x] Run with a large input (5–50 million samples), `swift run -c release`, **5 runs each**, record the numbers
+- [x] Instruments → Allocations on A and B (total bytes, # of allocations), with screenshots
+- [x] Memory Graph Debugger screenshot of the heap leak (from Member 3's leaky mode)
+- [x] Collect Member 2's call-stack screenshot
+- [x] Write-up: Xcode version, built-in vs separate tool (Instruments), what each shows, what each can't establish
+- [x] Measured vs inferred table for the comparison
+- [x] Optional: `/usr/bin/time -l` max RSS, explaining how it differs from object sizes
 
 ---
 
