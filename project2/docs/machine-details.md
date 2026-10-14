@@ -30,9 +30,24 @@ invalidate a measurement.
 |---|---|---|---|---|---|---|
 | Sarah Rae (1) | 15.8.1 (24H32) | Apple M2 (arm64) | 24 GB | 16384 B | 6.2.1 (swiftlang-6.2.1.4.8) | 26.1.1 (17B100) |
 | Ella (2) | 26.5.1 (25F80) | Apple M5 Pro (arm64) | 48 GB | 16384 B | 6.3.3 (swiftlang-6.3.3.1.3) | 26.6 (17F113) |
-| Stephen (3) | | | | | | |
-| Calli (4) | | | | | | |
+| Stephen (3) | 26.5.2 (25F84) † | Apple M4 Max (arm64) † | not recorded | 16384 B ‡ | 6.3.2 (swiftlang-6.3.2.1.108) † | not recorded |
+| Calli (4) | 26.6.2 (25G83) † | Apple M3 Pro (arm64) † | not recorded | 16384 B ‡ | 6.2.3 (swiftlang-6.2.3.3.21) † | not recorded |
 | Georgia (5) | 26.6.2 (25G83) | Apple M1 (arm64) | 16 GB | 16384 B | 6.4 (swiftlang-6.4.0.34.1) | 27.0 (27A266a) |
+
+**† Carried over from project 1** (`../../project1/docs/machine-details.md`, collected
+September 2026) because Stephen and Calli did not send fresh numbers. Treat these as
+provisional: Sarah's own macOS moved from 15.7.4 to 15.8.1 between the two projects, so a
+carried-over row can be stale. Two things make these two rows credible anyway — Ella's and
+Georgia's self-reported project 2 rows match their project 1 entries exactly on macOS, chip and
+toolchain, and neither Stephen's nor Calli's machine produced any number in this report.
+
+**‡ Page size is not measured, it is architectural.** Both machines are `arm64`, and every
+Apple Silicon Mac uses 16 KB pages.
+
+**RAM and Xcode version were never collected for project 1**, so they are genuinely unknown
+here rather than carried over. Nothing in the report depends on them: RAM matters only as a
+sanity bound on the 10M/50M-sample arrays, and the Xcode version matters only for whoever drove
+Instruments, which was Georgia.
 
 ## Why this matters for a memory project
 
@@ -40,9 +55,20 @@ invalidate a measurement.
 variable is the Swift version, because the thing Member 5 measures — how `Array` grows when
 you `append` without reserving — is an *implementation detail* of the standard library. Swift
 does not promise a growth factor, so a different toolchain may legitimately produce a different
-reallocation count for identical code. In project 1 the team's toolchains spanned 6.2.1 to
-6.4.0. If that spread holds here, **every comparison number in the report must come from one
-machine**, and the README must say which. Numbers from two different Macs are not a comparison.
+reallocation count for identical code. The team's toolchains span **6.2.1 to 6.4**, so
+**every comparison number in the report comes from one machine** — Georgia's M1 — and the README
+says so.
+
+This is not hypothetical. The same `compare` code, 10 million samples, gave array A three
+different final capacities:
+
+| Where | Toolchain | A's final capacity | A's reallocations |
+|---|---|---|---|
+| Georgia's M1, earlier session | Swift 6.4 | 10,010,616 | 21 |
+| Georgia's M1, reported session | Swift 6.4 | 12,582,904 | 22 |
+| Sarah's M2 | Swift 6.2.1 | 16,777,208 | 22 |
+
+Same code, three answers. Numbers from two different Macs are not a comparison.
 
 **Page size** (16 KB on Apple Silicon, 4 KB on Intel) is the granularity at which the kernel
 hands memory to the process. It explains why process-level tools like `/usr/bin/time -l` move
