@@ -30,24 +30,25 @@ invalidate a measurement.
 |---|---|---|---|---|---|---|
 | Sarah Rae (1) | 15.8.1 (24H32) | Apple M2 (arm64) | 24 GB | 16384 B | 6.2.1 (swiftlang-6.2.1.4.8) | 26.1.1 (17B100) |
 | Ella (2) | 26.5.1 (25F80) | Apple M5 Pro (arm64) | 48 GB | 16384 B | 6.3.3 (swiftlang-6.3.3.1.3) | 26.6 (17F113) |
-| Stephen (3) | 26.5.2 (25F84) † | Apple M4 Max (arm64) † | not recorded | 16384 B ‡ | 6.3.2 (swiftlang-6.3.2.1.108) † | not recorded |
+| Stephen (3) | 26.5.2 (25F84) | Apple M4 Max (arm64) | 64 GB | 16384 B | 6.3.2 (swiftlang-6.3.2.1.108) | 26.5 (17F42) |
 | Calli (4) | 26.6.2 (25G83) † | Apple M3 Pro (arm64) † | not recorded | 16384 B ‡ | 6.2.3 (swiftlang-6.2.3.3.21) † | not recorded |
 | Georgia (5) | 26.6.2 (25G83) | Apple M1 (arm64) | 16 GB | 16384 B | 6.4 (swiftlang-6.4.0.34.1) | 27.0 (27A266a) |
 
 **† Carried over from project 1** (`../../project1/docs/machine-details.md`, collected
-September 2026) because Stephen and Calli did not send fresh numbers. Treat these as
+September 2026) because Calli did not send fresh numbers for project 2. Treat this as
 provisional: Sarah's own macOS moved from 15.7.4 to 15.8.1 between the two projects, so a
-carried-over row can be stale. Two things make these two rows credible anyway — Ella's and
-Georgia's self-reported project 2 rows match their project 1 entries exactly on macOS, chip and
-toolchain, and neither Stephen's nor Calli's machine produced any number in this report.
+carried-over row can be stale. It is credible anyway because Ella's and Georgia's self-reported
+project 2 rows match their project 1 entries exactly on macOS, chip and toolchain, and Calli's
+machine did not produce any number in this report. Stephen's row above is fresh — captured this
+session via `./verify.sh` on his actual machine, not carried over.
 
 **‡ Page size is not measured, it is architectural.** Both machines are `arm64`, and every
 Apple Silicon Mac uses 16 KB pages.
 
 **RAM and Xcode version were never collected for project 1**, so they are genuinely unknown
-here rather than carried over. Nothing in the report depends on them: RAM matters only as a
-sanity bound on the 10M/50M-sample arrays, and the Xcode version matters only for whoever drove
-Instruments, which was Georgia.
+here for Calli rather than carried over. Nothing in the report depends on them: RAM matters only
+as a sanity bound on the 10M/50M-sample arrays, and the Xcode version matters only for whoever
+drove Instruments, which was Georgia.
 
 ## Why this matters for a memory project
 
