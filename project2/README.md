@@ -483,7 +483,7 @@ case where chunked buffering is the wrong tool.
 
 | Member | Name | Area | What they built / wrote |
 |---|---|---|---|
-| 1 | Sarah Rae | Memory model, setup, shared models | Swift package, mode switch and `Models.swift` (`Song`, `Playlist`, `PlaybackDelegate`, `DemoLog`); section 1 memory-model notes; section 7 pros/cons/limitations; README; machine details and `verify.sh`; practice-question answer sheet; submission checklist |
+| 1 | Sarah Rae | Memory model, setup, shared models | Swift package, mode switch and `Models.swift` (`Song`, `Playlist`, `PlaybackDelegate`, `DemoLog`); section 1 memory-model notes; section 7 pros/cons/limitations; README; machine details and `verify.sh`; practice-question answer sheet; submission checklist. Beyond the code: set the shared-model decisions everyone else built on — `Song` and `Playlist` as classes, `PlaybackDelegate` constrained to `AnyObject` — and kept the write-ups honest. The measured-vs-inferred discipline runs through the whole report because it went into section 7 first |
 | 2 | Ella | Stack demo | Recursive merge sort with indented enter/return tracing; `Thread.callStackSymbols` at the deepest call; `Stack<Song>` history to contrast with the call stack; deep-recursion risk explanation |
 | 3 | Stephen | Heap demo | Allocation → use → release lifecycle; `LeakySong` retain cycle and the `weak` fix; ARC / strong / `weak` / `unowned` explanation; what `deinit` output does and does not prove |
 | 4 | Calli | Buffer demo | `.raw` song generation; chunked playback through one reused 4096-byte buffer; capacity vs. valid count per chunk; all three boundary cases with checksums; the stale-buffer bug demonstration |
@@ -494,15 +494,20 @@ summary above is accurate. Rows are drawn from what is actually committed._
 
 **How we made sure everyone understands the whole project:**
 
-| Presenter | Presents | Written by |
-|---|---|---|
-| _tbd_ | Section 1, language & memory model | Sarah Rae |
-| _tbd_ | Section 2, stack demo | Ella |
-| _tbd_ | Section 3, heap demo | Stephen |
-| _tbd_ | Section 4, buffer & comparison | Calli & Georgia |
-| _tbd_ | Section 5, IDE tools | Georgia |
+Each member rehearses a section they did **not** write. Everyone takes exactly one, and nobody
+takes their own:
 
-_Assign at the rehearsal — nobody presents their own section._
+| Presenter | Presents | Written by | Why this pairing |
+|---|---|---|---|
+| Stephen | Section 1, language & memory model | Sarah Rae | The most fully written-up section, and the only one that is all explanation and no code — `docs/section1-memory-model.md` has a rehearsal note for exactly this |
+| Georgia | Section 2, stack demo | Ella | The one area Georgia's own work never touched; recursion and frame layout are the furthest from array growth |
+| Calli | Section 3, heap demo | Stephen | Calli already reasoned about allocator behaviour when she corrected the buffer write-up, so ARC and libmalloc are familiar ground |
+| Sarah Rae | Section 4, buffer & comparison | Calli & Georgia | The longest and most technical slot; Sarah wrote the buffer prose and reviewed the comparison numbers, so she knows both halves |
+| Ella | Section 5, IDE tools | Georgia | Ella is the only other person who drove an Xcode tool and committed a screenshot, so she can speak to what the tooling does and does not show |
+
+_This is the rehearsal exercise, not the live running order — in the demo itself each owner
+presents their own section (see the timing table in [`teamTask.md`](teamTask.md)). Swap any
+pairing at the rehearsal if someone would rather take a different one._
 
 - Every member works through the answer sheet in [`docs/practice-questions.md`](docs/practice-questions.md).
 - Each member walks through code they did not write: the shared models, the recursion, the
