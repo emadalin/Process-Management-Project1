@@ -50,8 +50,8 @@ Owns demo section **3**. File: `HeapDemo.swift`
 - [x] Show allocation → use → drop the reference → deinit output
 - [x] **Leaky version:** `LeakySong` with a strong `delegate` back to the playlist; set the playlist to `nil` and show **no** deinit prints
 - [x] **Fixed version:** `weak var delegate`; show all deinits print
-- [ ] Explain ARC, strong/weak/unowned, why the protocol needs `AnyObject`
-- [ ] Explain what deinit output proves (ARC released the object) and doesn't prove (process memory went down)
+- [x] Explain ARC, strong/weak/unowned, why the protocol needs `AnyObject` — printed by `heap` mode, captured in `output-heap-run1.txt`
+- [x] Explain what deinit output proves (ARC released the object) and doesn't prove (process memory went down) — printed by `heap` mode, captured in `output-heap-run1.txt`
 - [x] Sample output + short "what this shows" for the README
 
 ## Member 4: Buffer Demo · `Calli`
