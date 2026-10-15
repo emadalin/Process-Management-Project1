@@ -53,6 +53,7 @@ Commits where an assistant helped carry a `Co-Authored-By: Claude …` line in `
 | Claude Code (Claude Opus 5.5) | Finding and fixing the early `deinit Playlist 'Road Trip'` in the stack demo, regenerating `output-stack-run1.txt`, the steps for capturing the Xcode call-stack screenshot, and committing it | Ella |
 | Claude Code (Claude Opus 5.5) | Recording the Instruments Allocations traces and the `leaks` memory graph, guiding the Xcode/Instruments screenshots, re-running the comparison measurements, and drafting `docs/compare-results.md` and the README comparison and IDE tools sections | Georgia |
 | Claude (claude.ai and Claude Code) | The project debrief and task split; scaffolding the Swift package and `Models.swift`; drafting the section 1 and 7 write-ups and the README; the demo slide deck; and the study and rehearsal materials | Sarah Rae |
+| Claude Code (Claude Opus 5.5) | Implementing `BufferDemo.swift` — `.raw` song generation, chunked playback through one reused 4096-byte buffer, the FNV-1a checksum, the deliberate `buffer[0..<n]` bug and the read-error case — and correcting two claims in the buffer write-up (with Sarah Rae's OK) | Calli |
 
 ## Still to add
 
