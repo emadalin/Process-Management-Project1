@@ -77,14 +77,22 @@ Sources/PlaylistStreamer/
 docs/
   section1-memory-model.md         who owns what, stack vs heap, value vs reference, ARC vs GC
   section7-pros-cons-limitations.md  what the approach buys, costs, and cannot show
-  practice-questions.md            team answer sheet — rehearsal runs on this
+  compare-results.md               all 5 runs at both sizes, Instruments, time -l, measured vs inferred
+  presentation.md                  the 30-minute demo deck (slides split on ---)
+  practice-questions.md            team answer sheet — the rehearsal runs on this
   sources.md                       documentation we actually used
   submission-checklist.md          Canvas deliverables vs. what is actually in the repo
   machine-details.md               every team Mac's OS, chip, RAM, page size, toolchain
+  stack-call-stack-xcode.png       Xcode paused at the deepest mergeSort call      (Ella)
+  heap-memory-graph-leak.png       Memory Graph: the LeakyPlaylist/LeakySong cycle (Georgia)
+  instruments-alloc-a.png          Instruments Allocations, approach A             (Georgia)
+  instruments-alloc-b.png          Instruments Allocations, approach B             (Georgia)
 verify.sh                          one command: builds, runs every mode, prints your machine row
 output-stack-run1.txt              saved runs, one per mode
 output-heap-run1.txt
 output-buffer-run1.txt
+output-compare-run1.txt
+README.md                          this file — what to run, sample output, findings, contributions
 projectDebrief.md                  scope, concepts, checklists, practice questions
 teamTask.md                        per-member task list and demo timing
 ```
