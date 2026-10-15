@@ -557,7 +557,8 @@ nothing else on this slide means anything.
 | A reallocates 22×, B 0× | **Measured** — capacity log, 5 runs |
 | `samplesA == samplesB` | **Measured** — element-wise, every run |
 | A allocates 115.39 MiB vs B's 57.55 | **Measured** — Instruments |
-| A's peak memory is higher | **Inferred** — old and new storage coexist during the copy; we never sampled mid-copy |
+| A's peak 52.2 vs 41.9 MB | **Measured** — `/usr/bin/time -l` |
+| That gap is A's unused capacity | **Inferred** |
 | The growth factor | **Not ours to claim** — Swift promises none. Observed ≈2×. |
 
 Faster ≠ less memory. We don't let a timing number stand in for an allocation
@@ -669,7 +670,9 @@ Everything else is scaffolding.
 
 <!--
 Rubric says don't explain every obvious line. Each person takes ~45 seconds on
-their own file and names the ONE decision in it.
+the block of the SECTION THEY PRESENT, not their own file, and names the ONE
+decision in it: Models Stephen, stack Georgia, heap Calli, buffer and compare
+Sarah Rae, tool evidence Ella.
 -->
 
 ---
@@ -727,7 +730,7 @@ Five of the seven things the rubric asks about, in nine lines.
 - 4096 is conventional, not justified by measurement
 
 **Limitations**
-- Peak memory is **inferred**, not sampled
+- Peak memory is **one number per run**; we never sampled mid-copy
 - Chunk counts measure calls into Foundation, **not disk reads**
 - The stack demo runs in **debug on purpose** — an optimiser may flatten
   recursion

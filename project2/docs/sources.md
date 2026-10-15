@@ -2,9 +2,9 @@
 
 Owner: Member 1 (Sarah Rae). Canvas deliverable 5.
 
-Seeded from what is actually cited in our code and write-ups, so the remaining job is for
-each member to **add anything they used that is not already here** rather than start from
-nothing. Add your name in the "used by" column if you leaned on an entry.
+Built from what is actually cited in our code and write-ups, then confirmed by each member.
+Stephen's and Calli's own entries are the only ones still outstanding; everything below is
+confirmed.
 
 ## Swift language and standard library
 
@@ -52,6 +52,7 @@ Commits where an assistant helped carry a `Co-Authored-By: Claude …` line in `
 | Claude Code (Claude Sonnet 5) | Implementing `StackDemo.swift` — the recursive merge sort trace, the `Thread.callStackSymbols` dump, `Stack<Song>` — and drafting the stack section of the README | Ella |
 | Claude Code (Claude Opus 5.5) | Finding and fixing the early `deinit Playlist 'Road Trip'` in the stack demo, regenerating `output-stack-run1.txt`, the steps for capturing the Xcode call-stack screenshot, and committing it | Ella |
 | Claude Code (Claude Opus 5.5) | Recording the Instruments Allocations traces and the `leaks` memory graph, guiding the Xcode/Instruments screenshots, re-running the comparison measurements, and drafting `docs/compare-results.md` and the README comparison and IDE tools sections | Georgia |
+| Claude (claude.ai and Claude Code) | The project debrief and task split; scaffolding the Swift package and `Models.swift`; drafting the section 1 and 7 write-ups and the README; the demo slide deck; and the study and rehearsal materials | Sarah Rae |
 
 ## Still to add
 
@@ -59,5 +60,6 @@ Commits where an assistant helped carry a `Co-Authored-By: Claude …` line in `
 - [ ] **Stephen** — anything used for delegate patterns or closure capture semantics
 - [ ] **Calli** — anything used for stream buffering or checksums
 - [x] **Georgia** — the Apple entries above plus `leaks`, `xctrace` and `codesign` man pages; Claude Code in the table above
-- [ ] **Everyone** — AI assistants used, and for what (Ella's are in the table above). Project 1 disclosed this in its README
-      under "AI tools and outside sources"; we should match that.
+- [ ] **Stephen and Calli** — AI assistants used, and for what. Everyone else's are in the table
+      above. Project 1 disclosed this in its README under "AI tools and outside sources"; we
+      should match that.

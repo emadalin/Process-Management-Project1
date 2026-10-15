@@ -96,11 +96,14 @@ Owns demo sections **4 (comparison part)** and **5 (IDE tools)**. File: `Compare
 ## Suggested demo timing (30 min)
 | Section | Presenter | Time |
 |---|---|---|
-| 1. Language & memory model | Sarah Rae | 3 min |
-| 2. Stack demo | Ella | 4 min |
-| 3. Heap demo | Stephen | 5 min |
-| 4. Buffer + comparison | Calli (buffer) + Georgia (comparison) | 6 min |
-| 5. IDE tools | Georgia | 4 min |
-| 6. Code walkthrough | Everyone — own file, ~45 s each | 4 min |
-| 7. Pros, cons, limitations | Sarah Rae | 2 min |
+| 1. Language & memory model | Stephen | 3 min |
+| 2. Stack demo | Georgia | 4 min |
+| 3. Heap demo | Calli | 5 min |
+| 4. Buffer + comparison | Sarah Rae | 6 min |
+| 5. IDE tools | Ella | 4 min |
+| 6. Code walkthrough | Everyone — each person explains the block of the section they present | 4 min |
+| 7. Pros, cons, limitations | Stephen | 2 min |
 | Questions | Everyone | 2 min |
+
+Stephen also opens and closes the demo. Nobody presents a section they wrote — see the
+running order and the reasoning for each pairing in [`README.md`](README.md).

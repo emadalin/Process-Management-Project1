@@ -4,9 +4,9 @@ Memory management in Swift on macOS — **stacks, heaps and buffers** — demons
 program that simulates streaming audio. No sound is played: each "song" is a file of raw
 bytes, which is what makes the memory behaviour easy to watch.
 
-> **Status:** all four demos implemented and measured; every section below is written. The
-> team contribution statement is the last Canvas deliverable outstanding — each member confirms
-> or rewrites their own row. See [`teamTask.md`](teamTask.md).
+> **Status:** all six Canvas deliverables are in this repo — source, build and run
+> instructions, labelled output for all four modes, IDE screenshots with explanations, the
+> sources list and the team contribution statement. See [`docs/submission-checklist.md`](docs/submission-checklist.md).
 
 ## What the program demonstrates
 
@@ -119,9 +119,9 @@ identical — numbers from two different Macs are not a comparison.
 ## Sample output
 
 One labelled block per mode, each with a short "what this shows". Saved runs are committed
-beside this file as `output-<mode>-run1.txt`. All captured on Sarah's M2 (see
-[`docs/machine-details.md`](docs/machine-details.md)); the comparison numbers, when they land,
-must all come from a single machine.
+beside this file as `output-<mode>-run1.txt`. The stack, heap and buffer runs were captured on
+Sarah's M2; all comparison numbers come from Georgia's M1 (see
+[`docs/machine-details.md`](docs/machine-details.md)).
 
 ### Buffer demo
 Run: `swift run PlaylistStreamer buffer` (saved as
@@ -452,7 +452,11 @@ time. Most of our early confusion came from assuming those three layers move tog
 struct in the stack frame, its element storage in a heap buffer, and the `Song` objects
 somewhere else on the heap again — so merge sort shuffles pointers and never copies a song.
 
-_More to add as the comparison lands — Sarah Rae._
+**The measurement corrected us.** We predicted A's peak would reach about 77 MB, reasoning that
+the old and new blocks coexist while 10 million elements are copied. `/usr/bin/time -l` measured
+52.2 MB. So the cost of appending shows up as total bytes allocated — 115.39 MiB against B's
+57.55 MiB in Instruments — and as leftover capacity, not as one big simultaneous peak. Being
+wrong in public is the most useful thing we found.
 
 ## Pros, cons, limitations
 
@@ -470,8 +474,9 @@ a *closure* is more common in practice than our delegate cycle. The 4096-byte bu
 conventional, not justified by measurement.
 
 **Limitations.** `deinit` proves ARC released the object, not that memory went back to macOS.
-Our peak-memory claim is **inferred**, not measured — we count reallocations directly but never
-sampled memory mid-copy. Process-level numbers move in 16 KB pages, not objects. All
+Peak memory is one number per run (`time -l`); we never sampled mid-copy, so why the copy didn't
+raise A's peak is still inferred — the peak itself is measured, 52.2 vs 41.9 MB, and it came in
+well under the ~77 MB we predicted. Process-level numbers move in 16 KB pages, not objects. All
 comparison figures come from one machine, because array growth is an unspecified
 implementation detail that can differ by toolchain.
 
@@ -489,25 +494,21 @@ case where chunked buffering is the wrong tool.
 | 4 | Calli | Buffer demo | `.raw` song generation; chunked playback through one reused 4096-byte buffer; capacity vs. valid count per chunk; all three boundary cases with checksums; the stale-buffer bug demonstration |
 | 5 | Georgia | Comparison & IDE tools | `CompareDemo.swift`: the same 10M-sample array built by appending vs `reserveCapacity`, with every capacity change logged; 5 release runs per approach at 10M and 50M; Instruments Allocations on each side; Memory Graph of the heap leak; `/usr/bin/time -l` peak footprint; the IDE tools write-up and measured-vs-inferred table |
 
-_Each member: replace your row's detail with 3–5 sentences in your own words, or confirm the
-summary above is accurate. Rows are drawn from what is actually committed._
-
 **How we made sure everyone understands the whole project:**
 
-Each member rehearses a section they did **not** write. Everyone takes exactly one, and nobody
-takes their own:
+### Demo running order
 
 | Presenter | Presents | Written by | Why this pairing |
 |---|---|---|---|
-| Stephen | Section 1, language & memory model | Sarah Rae | The most fully written-up section, and the only one that is all explanation and no code — `docs/section1-memory-model.md` has a rehearsal note for exactly this |
+| Stephen | Opening, Section 1 (language & memory model), Section 7 (pros, cons, limitations), closing | Sarah Rae | The most fully written-up section, and the only one that is all explanation and no code — `docs/section1-memory-model.md` has a presenter note for exactly this |
 | Georgia | Section 2, stack demo | Ella | The one area Georgia's own work never touched; recursion and frame layout are the furthest from array growth |
 | Calli | Section 3, heap demo | Stephen | Calli already reasoned about allocator behaviour when she corrected the buffer write-up, so ARC and libmalloc are familiar ground |
 | Sarah Rae | Section 4, buffer & comparison | Calli & Georgia | The longest and most technical slot; Sarah wrote the buffer prose and reviewed the comparison numbers, so she knows both halves |
 | Ella | Section 5, IDE tools | Georgia | Ella is the only other person who drove an Xcode tool and committed a screenshot, so she can speak to what the tooling does and does not show |
+| Everyone | Section 6, code walkthrough — each person explains the block of the section they present: `Models.swift` Stephen · stack Georgia · heap Calli · buffer and compare Sarah Rae · tool evidence Ella | — | Whoever presents a section walks through its code, so the explanation and the code come from the same person |
 
-_This is the rehearsal exercise, not the live running order — in the demo itself each owner
-presents their own section (see the timing table in [`teamTask.md`](teamTask.md)). Swap any
-pairing at the rehearsal if someone would rather take a different one._
+Every member presents a section they did not write, so each of us had to learn someone else's
+code well enough to explain it and answer questions on it.
 
 - Every member works through the answer sheet in [`docs/practice-questions.md`](docs/practice-questions.md).
 - Each member walks through code they did not write: the shared models, the recursion, the
@@ -515,6 +516,6 @@ pairing at the rehearsal if someone would rather take a different one._
 
 ## AI tools and outside sources
 
-See [`docs/sources.md`](docs/sources.md), seeded from what is actually cited in our code and
-write-ups. Each member adds anything they used that is not already listed, including AI
-assistants and what they were used for.
+See [`docs/sources.md`](docs/sources.md): Swift and Apple documentation, the man pages for the
+command-line tools, and an AI assistants table recording which model helped with what, for whom.
+Commits where an assistant helped carry a `Co-Authored-By` line in `git log`.

@@ -6,7 +6,7 @@ The grading is on **depth of understanding, not code that runs**, and any member
 about any part. So this sheet is deliberately not organised by who wrote what — it is the
 rehearsal script for explaining sections you did not write.
 
-Answers marked **_needs Georgia_** depend on the comparison demo and cannot be finalised yet.
+Every answer is final: the comparison demo and the tools investigation have both landed.
 
 ---
 
@@ -122,13 +122,14 @@ cannot claim anything about actual storage access.
 
 ## Comparison and tools
 
-**"What evidence supports the efficiency claim?"** — **_needs Georgia_**
-Measured: reallocation count, final capacity vs count, and Instruments' total bytes and
-allocation count. Inferred: that peak memory is higher without reserving, because old and new
-storage coexist during each copy — we reason it, we did not sample it. Unspecified: the growth
-factor itself, which Swift does not promise.
+**"What evidence supports the efficiency claim?"**
+Measured: 22 reallocations for A against B's 0; final capacity vs count; Instruments' total
+bytes (115.39 vs 57.55 MiB) and allocation counts; and the peak footprint, 52.2 vs 41.9 MB.
+Peak memory is one number per run (`time -l`); we never sampled mid-copy, so why the copy
+didn't raise A's peak is still inferred — we had predicted about 77 MB and were wrong.
+Unspecified: the growth factor itself, which Swift does not promise.
 
-**"What does this tool measure, and what can't it tell you?"** — **_needs Georgia_**
+**"What does this tool measure, and what can't it tell you?"**
 The Memory Graph Debugger shows live objects and who references them, so it finds cycles — but
 it is a snapshot, and shows nothing about stack memory or about history. Instruments Allocations
 counts allocations and bytes over time, but attributes them to call sites, not to meaning.
@@ -147,9 +148,10 @@ allocation behaviour and is measured as such.
 ## Judgement questions
 
 **"What's one limitation of your implementation?"**
-The honest one: our peak-memory claim is inferred rather than measured. Also worth naming — we
-demonstrate exactly one heap risk, and a cycle through a closure capturing `self` is more common
-in practice than our delegate cycle.
+The honest one: peak memory is one number per run (`time -l`); we never sampled mid-copy, so why
+the copy didn't raise A's peak is still inferred. Also worth naming — we demonstrate exactly one
+heap risk, and a cycle through a closure capturing `self` is more common in practice than our
+delegate cycle.
 
 **"What would you do differently with more time?"**
 Memory-map the file as a third strategy. It is the only addition that brings the **kernel** into
