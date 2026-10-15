@@ -59,7 +59,7 @@ Commits where an assistant helped carry a `Co-Authored-By: Claude …` line in `
 
 - [x] **Ella** — anything used for merge sort, recursion depth, or the breakpoint/call-stack view: nothing beyond Claude Code (table above) and the two Apple entries already listed
 - [ ] **Stephen** — anything used for delegate patterns or closure capture semantics
-- [ ] **Calli** — anything used for stream buffering or checksums
+- [x] **Calli** — anything used for stream buffering or checksums
 - [x] **Georgia** — the Apple entries above plus `leaks`, `xctrace` and `codesign` man pages; Claude Code in the table above
 - [ ] **Stephen and Calli** — AI assistants used, and for what. Everyone else's are in the table
       above. Project 1 disclosed this in its README under "AI tools and outside sources"; we
