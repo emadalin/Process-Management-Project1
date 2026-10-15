@@ -13,16 +13,15 @@ Canvas deliverables from `projectDebrief.md` section 5, against what is actually
 | 3c | Labelled output: buffer, with boundary cases | **Done** — all three chunk cases, checksums, and the stale-buffer bug |
 | 3d | Labelled output: both comparison approaches | **Done** — `output-compare-run1.txt`; all 5 runs at both sizes in [`compare-results.md`](compare-results.md) |
 | 4 | IDE screenshots with explanations | **Done** — `stack-call-stack-xcode.png`, `heap-memory-graph-leak.png`, `instruments-alloc-a.png`, `instruments-alloc-b.png`, each explained in the README *IDE tools investigation* section |
-| 5 | List of documentation sources used | **Done except Stephen's and Calli's own entries** — [`sources.md`](sources.md) |
+| 5 | List of documentation sources used | **Done** — [`sources.md`](sources.md), every member's entries confirmed |
 | 6 | Team contribution statement | **Done** — README *Team contribution statement*, with the demo running order and who presents whose section |
 
 ## Still open
 
-- [ ] **Stephen and Calli** add their own entries to [`sources.md`](sources.md) — the only gap
-      in a Canvas deliverable
 - [ ] Calli's row in [`machine-details.md`](machine-details.md) is still carried over from
       project 1 and marked **†**; four of five machines have reported fresh. Nothing in the
       report depends on it, since every measured number came from Georgia's M1
 
-Everything else is in the repo. The reference machine is recorded, every comparison figure
-comes from one session on it, and each claim is labelled measured, inferred or observed.
+All six Canvas deliverables are done. The reference machine is recorded, every comparison
+figure comes from one session on it, and each claim is labelled measured, inferred or observed.
+The one open item above does not block submission.
