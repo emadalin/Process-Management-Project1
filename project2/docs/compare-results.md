@@ -31,7 +31,7 @@ B is about **11% faster at 10M and 9% faster at 50M** by median. B's run 1 at 50
 
 Recorded with Xcode 27.0's Allocations template, one side at a time:
 `xcrun xctrace record --template Allocations --launch -- .build/release/PlaylistStreamer compare --only=a` (then `--only=b`).
-Screenshots: [`instruments-alloc-a.png`](instruments-alloc-a.png), [`instruments-alloc-b.png`](instruments-alloc-b.png). Traces: `docs/traces/`.
+Screenshots: [`instruments-alloc-a.png`](instruments-alloc-a.png), [`instruments-alloc-b.png`](instruments-alloc-b.png). The `.trace` recordings are too large to commit; the two screenshots above are the Instruments evidence.
 
 | Side | Total bytes (All Heap Allocations) | # Total allocations | # Transient (freed) | Persistent at exit |
 |---|---|---|---|---|
