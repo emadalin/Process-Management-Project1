@@ -3,8 +3,7 @@
 Owner: Member 1 (Sarah Rae). Canvas deliverable 5.
 
 Built from what is actually cited in our code and write-ups, then confirmed by each member.
-Stephen's and Calli's own entries are the only ones still outstanding; everything below is
-confirmed.
+Every entry below is confirmed.
 
 ## Swift language and standard library
 
@@ -54,13 +53,12 @@ Commits where an assistant helped carry a `Co-Authored-By: Claude …` line in `
 | Claude Code (Claude Opus 5.5) | Recording the Instruments Allocations traces and the `leaks` memory graph, guiding the Xcode/Instruments screenshots, re-running the comparison measurements, and drafting `docs/compare-results.md` and the README comparison and IDE tools sections | Georgia |
 | Claude (claude.ai and Claude Code) | The project debrief and task split; scaffolding the Swift package and `Models.swift`; drafting the section 1 and 7 write-ups and the README; the demo slide deck; and the study and rehearsal materials | Sarah Rae |
 | Claude Code (Claude Opus 5.5) | Implementing `BufferDemo.swift` — `.raw` song generation, chunked playback through one reused 4096-byte buffer, the FNV-1a checksum, the deliberate `buffer[0..<n]` bug and the read-error case — and correcting two claims in the buffer write-up (with Sarah Rae's OK) | Calli |
+| Claude Code (Claude Sonnet 5 / Claude Opus 5) | Implementing `HeapDemo.swift` — the allocation/use/drop lifecycle, the `LeakySong`/`LeakyPlaylist` retain cycle, the `weak` fix, and the printed ARC/strong-weak-unowned explanation — filling in the heap-demo section and sample output in the README, and rehearsal-prep material for Section 1 (Sarah Rae's), which Stephen presents at rehearsal | Stephen |
 
 ## Still to add
 
 - [x] **Ella** — anything used for merge sort, recursion depth, or the breakpoint/call-stack view: nothing beyond Claude Code (table above) and the two Apple entries already listed
-- [ ] **Stephen** — anything used for delegate patterns or closure capture semantics
+- [x] **Stephen** — anything used for delegate patterns or closure capture semantics: nothing beyond the ARC entry already listed above
 - [x] **Calli** — anything used for stream buffering or checksums
 - [x] **Georgia** — the Apple entries above plus `leaks`, `xctrace` and `codesign` man pages; Claude Code in the table above
-- [ ] **Stephen and Calli** — AI assistants used, and for what. Everyone else's are in the table
-      above. Project 1 disclosed this in its README under "AI tools and outside sources"; we
-      should match that.
+- [x] **Stephen and Calli** — AI assistants used, and for what: both now in the table above
