@@ -146,6 +146,11 @@ processes**, which `ps` confirms. There are **two** driver paths, not one chain:
 `appleh13camerad` for the built-in camera and `UVCAssistant.systemextension` for USB webcams.
 TCC sits beside the whole stack rather than inside it, gating whether any frame is delivered.
 
+Measured with the camera live: `appleh13camerad` goes from 0.0% to 4.5% CPU, `UVCAssistant`
+stays at 0.0% the whole time because no USB camera is attached, and quitting spikes
+`appleh13camerad` to 29.8% as the device is released. The daemons do not start on demand — they
+have been running since boot.
+
 One finding the team needs: this Mac reports **two** cameras — the FaceTime HD camera and an
 iPhone over Continuity. `AVCaptureDevice.default(for: .video)` may not pick the one you are
 looking at, so **every test record must say which camera it used**.

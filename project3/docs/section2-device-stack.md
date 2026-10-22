@@ -60,10 +60,10 @@ We create an `AVCaptureSession`, add an `AVCaptureDeviceInput` for a device, and
 `AVCaptureVideoDataOutput` with a delegate. Frames arrive as `CMSampleBuffer`. That is the whole
 of our side of the boundary; see `CameraManager.swift`.
 
-### AVFoundation → the camera service — **observed**
+### AVFoundation → the camera service — **observed, measured both ways**
 
 This is the step that surprised us: the capture work is **not** in our process. The system runs
-separate daemons for it, and they are running right now:
+separate daemons for it:
 
 ```bash
 $ ps -axo comm | grep -iE "camerad|UVCAssistant|cameracapture"
@@ -72,9 +72,44 @@ $ ps -axo comm | grep -iE "camerad|UVCAssistant|cameracapture"
 /usr/sbin/appleh13camerad
 ```
 
+**Our first guess about this was wrong, and the correction is the better finding.** We expected
+these processes to *appear* when the camera opened. They do not — PIDs 697, 698 and 699 have
+been alive since boot, whether or not any app is using a camera. What changes is not whether
+they exist but whether they are **doing anything**.
+
+So we measured CPU with the app closed, with it running and showing live video, and after
+quitting it (`top -l 2 -o cpu`, instantaneous rather than `ps`'s lifetime average):
+
+| Process | Camera off | Camera live | Quitting | After |
+|---|---|---|---|---|
+| `BoothCam` (ours) | — | **36.8%** | — | — |
+| `appleh13camerad` | 0.0% | **4.5%** | **29.8%** | 0.0% |
+| `cameracaptured` | 0.0% | 0.1% | — | 0.0% |
+| `UVCAssistant` | 0.0% | **0.0%** | 0.0% | 0.0% |
+
+Three things fall out of that table, and all three are things we could not have read in the
+documentation:
+
+1. **`appleh13camerad` is the one doing the work** — idle at 0.0%, 4.5% while frames flow.
+   That is the built-in camera's driver path, earning its keep.
+2. **`UVCAssistant` never moves.** It stays at 0.0% the entire time. That is the controlled
+   comparison we did not plan: there is no USB camera attached, so the USB driver path stays
+   asleep while the built-in path works. The two paths in the diagram are genuinely separate,
+   and this is the evidence.
+3. **Quitting costs more than running.** `appleh13camerad` spikes to **29.8%** as the app exits
+   — releasing the device is real work, briefly more expensive than streaming from it. It
+   settles back to 0.0% a second later. This is the observable half of why `stopRunning()` and
+   removing inputs matters: teardown is a thing that happens, not just a thing we hope happens.
+
 So "AVFoundation opens the camera" is shorthand. AVFoundation is a client; `cameracaptured` and
-the driver processes are where the device is actually held. That is also why the camera stays
-busy if a process does not release it — the holder is not necessarily the app you quit.
+the driver daemons are where the device is actually held. That is also why a camera can stay
+busy after you quit an app — the holder was never the app.
+
+**One number worth owning:** our own app at **36.8%** CPU is far more than the driver's 4.5%.
+That is not capture cost, it is us: `ContentView` renders four panels through `CIContext` on
+every frame. A real app would draw the `CIImage` directly rather than making four `CGImage`s a
+frame. Worth saying before someone asks why the photo booth costs eight times what the camera
+driver does.
 
 ### Two driver paths — **observed names, inferred roles**
 
@@ -184,6 +219,9 @@ explicitly rather than taking `.default`.
 | Question | How we answered it |
 |---|---|
 | Is the capture work in our process? | No — `ps` shows `cameracaptured` and the driver daemons |
+| Do the daemons start when the camera opens? | No — same PIDs since boot. Their **CPU** changes, not their existence |
+| Which driver path serves the built-in camera? | `appleh13camerad` goes 0.0% → 4.5% while `UVCAssistant` stays at 0.0% |
+| Does releasing the device cost anything? | Yes — `appleh13camerad` spikes to 29.8% on quit |
 | Which driver serves which camera? | Two separate daemons; `UVCAssistant` for USB, `appleh13camerad` for built-in |
 | Is the built-in camera a USB device? | No — `ioreg -p IOUSB` shows no camera |
 | Can something fake a camera? | Yes — the DAL plug-in directory is the documented way in |
@@ -199,9 +237,6 @@ says they are.
 
 ## Still to do
 
-- [ ] Re-run the process observation **while the camera is live** (after Stephen's section
-      lands) and record what changes — this is the strongest single observation available, and
-      right now the camera is never opened
 - [ ] Record the pixel format of a real frame
 
 ## Sources
