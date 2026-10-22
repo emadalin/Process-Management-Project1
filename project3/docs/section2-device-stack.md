@@ -203,10 +203,40 @@ says they are.
       lands) and record what changes — this is the strongest single observation available, and
       right now the camera is never opened
 - [ ] Record the pixel format of a real frame
-- [ ] Save the Apple documentation links behind each **documented** claim
 
 ## Sources
 
-_TODO — Sarah Rae: AVCaptureSession, AVCaptureVideoDataOutput, AVCaptureDevice
-authorization, Core Image Programming Guide, CoreMediaIO / DAL, Continuity Camera, and
-`man tccutil`. Each **documented** claim above needs one._
+Every URL below was fetched and confirmed to resolve on 2026-10-22 — none is from memory.
+
+### Behind the **documented** claims
+
+| Claim | Source |
+|---|---|
+| AVFoundation owns the capture graph; session coordinates inputs and outputs | [AVCaptureSession](https://developer.apple.com/documentation/avfoundation/avcapturesession) |
+| We get every frame as a `CMSampleBuffer`, which is what makes a live filter possible | [AVCaptureVideoDataOutput](https://developer.apple.com/documentation/avfoundation/avcapturevideodataoutput) |
+| Devices are enumerated and selected through one class | [AVCaptureDevice](https://developer.apple.com/documentation/avfoundation/avcapturedevice) |
+| Permission must be checked and requested before capture | [requestAccess(for:completionHandler:)](https://developer.apple.com/documentation/avfoundation/avcapturedevice/1624584-requestaccess) · [Requesting authorization to capture and save media](https://developer.apple.com/documentation/avfoundation/requesting-authorization-to-capture-and-save-media) |
+| A missing `NSCameraUsageDescription` is fatal, not an error to handle | [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription) |
+| A `CIImage` is an immutable recipe; nothing is computed until something renders it | [CIImage](https://developer.apple.com/documentation/coreimage/ciimage) |
+| CoreMediaIO is the layer below AVFoundation, and the DAL is its plug-in point | [Core Media I/O](https://developer.apple.com/documentation/coremediaio) |
+
+### Behind the **observed** claims
+
+These are commands, not documents — anyone can re-run them:
+
+| Observation | Command |
+|---|---|
+| Two cameras, including an iPhone over Continuity | `system_profiler SPCameraDataType` |
+| Capture runs in separate processes | `ps -axo comm \| grep -iE "camerad\|UVCAssistant\|cameracapture"` |
+| The built-in camera is not on the USB bus | `ioreg -p IOUSB -l -w 0` |
+| `UVCAssistant` ships as a system extension inside CoreMediaIO | `ls /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/` |
+| The third-party DAL plug-in directory exists and is empty | `cat /Library/CoreMediaIO/Plug-Ins/DAL/plugins-info.txt` |
+| Our camera entitlement reached the built app | `codesign -d --entitlements - --xml BoothCam.app` |
+| Resetting the permission decision | `tccutil reset Camera edu.samford.c335.BoothCam` (`man tccutil`) |
+
+### Not sourced on purpose
+
+`appleh13camerad` and `avconferenced` have **no documentation link**, because Apple does not
+document them. We observed the processes running and inferred their roles from their names and
+from what else was running. Section 2 says so rather than dressing an inference as a citation —
+if asked where that came from, the honest answer is "`ps`, plus reasoning."
