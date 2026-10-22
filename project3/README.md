@@ -106,6 +106,7 @@ project3/
       FrameFilter.swift              grayscale and invert                   (Calli)
       Assets.xcassets                app icon, accent colour
   docs/
+    section2-device-stack.md         the stack, documented vs observed      (Sarah Rae)
     test-record-template.md          blank; copy to test-record-<name>.md   (Ella collects)
   teamTask.md                        roles, work order, demo timing, questions
   README.md                          this file
@@ -136,9 +137,18 @@ Hit during setup, recorded so nobody loses time to them twice:
 
 ## Device stack
 
-_TODO — Sarah Rae (demo section 2). BoothCam → AVFoundation → CoreMediaIO / the macOS camera
-service and its TCC permission check → the camera driver → the physical device, with each layer
-marked **documented** or **observed**._
+Full write-up: [`docs/section2-device-stack.md`](docs/section2-device-stack.md), with every
+claim marked **documented** or **observed** and the command behind each observation.
+
+The short version: BoothCam never speaks to the webcam. It asks AVFoundation, which is a client
+of the CoreMediaIO camera service — `cameracaptured` and the driver daemons run in **separate
+processes**, which `ps` confirms. There are **two** driver paths, not one chain:
+`appleh13camerad` for the built-in camera and `UVCAssistant.systemextension` for USB webcams.
+TCC sits beside the whole stack rather than inside it, gating whether any frame is delivered.
+
+One finding the team needs: this Mac reports **two** cameras — the FaceTime HD camera and an
+iPhone over Continuity. `AVCaptureDevice.default(for: .video)` may not pick the one you are
+looking at, so **every test record must say which camera it used**.
 
 ## Test records
 

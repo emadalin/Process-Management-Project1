@@ -31,14 +31,14 @@
 ## Member 1: Setup, Device Stack & README · `Sarah Rae`
 Owns demo section **2 (device stack & library selection)**.
 
-- [ ] Create the Xcode macOS App project in `project3/` (SwiftUI), add `.gitignore`
-- [ ] Add `NSCameraUsageDescription` to Info.plist; if App Sandbox is on, enable **Camera** (`com.apple.security.device.camera`)
-- [ ] Stub files so everyone can work in parallel: `CameraManager.swift`, `FrameFilter.swift`, `ContentView.swift`
-- [ ] Research why AVFoundation (vs. older/other options) and why Core Image; save the doc links
-- [ ] Build the **device-stack diagram**: BoothCam → AVFoundation (`AVCaptureSession`) → CoreMediaIO / macOS camera service (+ TCC permission check) → camera driver (built-in camera driver, or Apple's UVC driver/`UVCAssistant` for USB webcams) → physical webcam (internal or USB)
-- [ ] Mark each layer documented vs observed. Observation ideas: `system_profiler SPCameraDataType`, `ioreg -p IOUSB` (USB cams), `UVCAssistant` in Activity Monitor while the camera is on
-- [ ] Explain what's hidden by the library and what we could still determine about it
-- [ ] Own the README: setup/run instructions, dependencies + versions, permissions, device selection, controls
+- [x] Create the Xcode macOS App project in `project3/` (SwiftUI), add `.gitignore` — `BoothCam/BoothCam.xcodeproj`, builds clean
+- [x] Add `NSCameraUsageDescription` to Info.plist; if App Sandbox is on, enable **Camera** (`com.apple.security.device.camera`) — both are build settings in Xcode 26, not a `.entitlements` file; verified with `codesign -d --entitlements`
+- [x] Stub files so everyone can work in parallel: `CameraManager.swift`, `FrameFilter.swift`, `ContentView.swift` — each carries its owner's checklist
+- [x] Research why AVFoundation (vs. older/other options) and why Core Image; save the doc links — `docs/section2-device-stack.md` §4 (links still to collect)
+- [x] Build the **device-stack diagram** — `docs/section2-device-stack.md` §1; two driver paths, not one chain: BoothCam → AVFoundation (`AVCaptureSession`) → CoreMediaIO / macOS camera service (+ TCC permission check) → camera driver (built-in camera driver, or Apple's UVC driver/`UVCAssistant` for USB webcams) → physical webcam (internal or USB)
+- [x] Mark each layer documented vs observed — every claim labelled; re-run with the camera live once Stephen's code lands. Observation ideas: `system_profiler SPCameraDataType`, `ioreg -p IOUSB` (USB cams), `UVCAssistant` in Activity Monitor while the camera is on
+- [x] Explain what's hidden by the library and what we could still determine about it — `docs/section2-device-stack.md` §5
+- [x] Own the README: setup/run instructions, dependencies + versions, permissions, device selection, controls — `README.md`; the device-selection detail fills in once Stephen's code picks a device
 - [ ] Collect sources and contribution statements from everyone; schedule the rehearsal
 
 ## Member 2: Camera Connection & Live Video · `Stephen`
