@@ -11,6 +11,12 @@
 ## Ground rules (everyone)
 - The app must run on **all five Macs**, set up on each person's own machine. No copying a working build over, help each other install and fix it
 - Everyone must be able to explain the **whole app**, not just their part
+- **Write it so someone else can present it.** Any of us may be asked about any part, and we
+  each present a section we did not write — so the simplest version that works beats the clever
+  one. In practice: plain `if`/`for` over chained one-liners, a named variable over a nested
+  expression, one obvious way over a shortcut, and a comment on anything that would make a
+  teammate stop and reread. If explaining your code takes longer than the code saved you,
+  simplify it
 - Log every setup problem as it happens: symptom → what you checked → what fixed it → how you confirmed it
 - Label every device-stack claim as **documented** (from Apple docs) or **observed** (we saw it ourselves)
 - Note any source or AI suggestion you used, and what you checked or changed
