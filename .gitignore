@@ -1,2 +1,16 @@
 .build
 .swiftpm
+
+# macOS
+.DS_Store
+
+# Submission bundles (the repo is the source, not the zip)
+*.zip
+
+# Xcode per-user state — would conflict across five people
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+build/
+DerivedData/
