@@ -41,7 +41,7 @@ Owns demo section **2 (device stack & library selection)**.
 - [ ] Own the README: setup/run instructions, dependencies + versions, permissions, device selection, controls
 - [ ] Collect sources and contribution statements from everyone; schedule the rehearsal
 
-## Member 2: Camera Connection & Live Video · `________`
+## Member 2: Camera Connection & Live Video · `Stephen`
 Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `CameraManager.swift`
 
 - [ ] Check/request permission with `AVCaptureDevice.authorizationStatus(for: .video)` / `requestAccess`
