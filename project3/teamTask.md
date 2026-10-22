@@ -28,7 +28,7 @@
 
 ---
 
-## Member 1: Setup, Device Stack & README · `________`
+## Member 1: Setup, Device Stack & README · `Sarah Rae`
 Owns demo section **2 (device stack & library selection)**.
 
 - [ ] Create the Xcode macOS App project in `project3/` (SwiftUI), add `.gitignore`
@@ -54,7 +54,7 @@ Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `
 - [ ] **Cleanup:** `stopRunning()`, remove inputs/outputs on quit and window close; explain why it matters (camera light stays on, device stays locked)
 - [ ] Explain the important parameters (session preset, queue, discard late frames)
 
-## Member 3: Still Capture · `________`
+## Member 3: Still Capture · `Georgia`
 Owns demo section **3b (snap)**. Works in `CameraManager.swift` + `ContentView.swift`
 
 - [ ] "Snap" button + **Space** key shortcut
@@ -64,7 +64,7 @@ Owns demo section **3b (snap)**. Works in `CameraManager.swift` + `ContentView.s
 - [ ] Handle "snap before any frame arrived" (message, no crash)
 - [ ] Optional: save to file (`NSSavePanel` + PNG)
 
-## Member 4: Filters & Comparison · `________`
+## Member 4: Filters & Comparison · `Calli`
 Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 
 - [ ] `func grayscale(_ image: CIImage) -> CIImage` using `CIPhotoEffectMono` or `CIColorControls` (saturation 0)
@@ -76,7 +76,7 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 - [ ] Explain where it runs: in Core Image (library, usually on the GPU), called from our code, not a camera setting
 - [ ] Note any effect on responsiveness or quality (check frame rate with filter on/off)
 
-## Member 5: Testing, Troubleshooting & Research Record · `________`
+## Member 5: Testing, Troubleshooting & Research Record · `Ella`
 Owns demo section **4 (research & problem solving)**.
 
 - [ ] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in
@@ -102,11 +102,15 @@ Owns demo section **4 (research & problem solving)**.
 | Section | Presenter | Time |
 |---|---|---|
 | 1. Working app on each Mac (~2 min each) | Everyone | 10 min |
-| 2. Device stack & library selection | ______ | 5 min |
-| 3. Code walkthrough (camera, snap, filter, errors, cleanup) | ______ | 7 min |
-| 4. Research & troubleshooting | ______ | 4 min |
-| 5. Collaboration, tradeoffs, limitations | ______ | 2 min |
+| 2. Device stack & library selection | Sarah Rae | 5 min |
+| 3. Code walkthrough (camera, snap, filter, errors, cleanup) | Stephen (3a camera) · Georgia (3b snap) · Calli (3c filter) | 7 min |
+| 4. Research & troubleshooting | Ella | 4 min |
+| 5. Collaboration, tradeoffs, limitations | Ella | 2 min |
 | Questions | Everyone | 2 min |
+
+Presenters above are the section owners. Work-order step 8 also has each person explain a
+section they did **not** write — those pairings get assigned at the rehearsal, and if we run the
+demo that way instead (project 2 did), this table gets updated to match.
 
 ## Practice questions (everyone should be able to answer)
 - Which call opens the camera, and what does its result tell you?
