@@ -44,14 +44,14 @@ Owns demo section **2 (device stack & library selection)**.
 ## Member 2: Camera Connection & Live Video · `Stephen`
 Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `CameraManager.swift`
 
-- [ ] Check/request permission with `AVCaptureDevice.authorizationStatus(for: .video)` / `requestAccess`
-- [ ] Pick the device (`AVCaptureDevice.default(for: .video)`), create `AVCaptureDeviceInput`, add to `AVCaptureSession`
-- [ ] Add `AVCaptureVideoDataOutput` with a delegate on a background `DispatchQueue`; set `alwaysDiscardsLateVideoFrames = true`
-- [ ] In `captureOutput(_:didOutput:from:)`: sample buffer → `CVPixelBuffer` → `CIImage` → publish latest frame to the UI on the main thread
-- [ ] Start/stop the session off the main thread
-- [ ] **Errors:** no camera found, permission denied, `canAddInput` fails, `AVCaptureSession.runtimeError` notification, dropped frames → show a clear message, no crash
-- [ ] Test failure: deny permission (`tccutil reset Camera <bundle id>` then click Don't Allow), and one more case. Write down how you tested
-- [ ] **Cleanup:** `stopRunning()`, remove inputs/outputs on quit and window close; explain why it matters (camera light stays on, device stays locked)
+- [x] Check/request permission with `AVCaptureDevice.authorizationStatus(for: .video)` / `requestAccess`
+- [x] Pick the device (`AVCaptureDevice.default(for: .video)`), create `AVCaptureDeviceInput`, add to `AVCaptureSession`
+- [x] Add `AVCaptureVideoDataOutput` with a delegate on a background `DispatchQueue`; set `alwaysDiscardsLateVideoFrames = true`
+- [x] In `captureOutput(_:didOutput:from:)`: sample buffer → `CVPixelBuffer` → `CIImage` → publish latest frame to the UI on the main thread
+- [x] Start/stop the session off the main thread
+- [x] **Errors:** no camera found, permission denied, `canAddInput` fails, `AVCaptureSession.runtimeError` notification, dropped frames → show a clear message, no crash
+- [ ] Test failure: deny permission (`tccutil reset Camera <bundle id>` then click Don't Allow), and one more case. Write down how you tested — **needs a human click on the system dialog, can't be scripted**
+- [x] **Cleanup:** `stopRunning()`, remove inputs/outputs on quit and window close; explain why it matters (camera light stays on, device stays locked)
 - [ ] Explain the important parameters (session preset, queue, discard late frames)
 
 ## Member 3: Still Capture · `Georgia`
