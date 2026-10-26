@@ -1,39 +1,45 @@
 # Readiness Tracker
 
-Everyone needs a ✅ in **every** box before demo day. The professor draws presenters at random,
-so an empty box is a section someone could be asked to present without being ready.
+The professor draws presenters at random, so an empty box is a section someone could be asked to
+present cold. Everyone needs all five.
 
-**A box is only checked when a teammate — not you — heard you explain it with no notes and
-answer a "what if" question.** Write who signed you off and the date: `✅ Calli 10/30`.
+**A box is ticked by a teammate, not by you** — they heard you explain it with no notes and
+answer a "what if" question. Write who and when: `✅ Calli 10/30`.
 
 | Section | Sarah | Stephen | Georgia | Calli | Ella |
 |---|---|---|---|---|---|
-| 1. Running the app on my Mac | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 2. Device stack & library selection | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 3a. Camera, live frames, errors, cleanup | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 3b. Snap / copy vs. reference | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 3c. Grayscale filter & comparison | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 4. Research, troubleshooting & AI use | ☐ | ☐ | ☐ | ☐ | ☐ |
-| 5. Collaboration, tradeoffs, limitations | ☐ | ☐ | ☐ | ☐ | ☐ |
-| All 10 practice questions | ☐ | ☐ | ☐ | ☐ | ☐ |
+| 2. Device stack *(Sarah built)* | — | ☐ | ☐ | ☐ | ☐ |
+| 3a. Camera & cleanup *(Stephen built)* | ☐ | — | ☐ | ☐ | ☐ |
+| 3b. Snap *(Georgia built)* | ☐ | ☐ | — | ☐ | ☐ |
+| 3c. Filter *(Calli built)* | ☐ | ☐ | ☐ | — | ☐ |
+| 4. Testing, troubleshooting & AI *(Ella built)* | ☐ | ☐ | ☐ | ☐ | — |
 
-## The 4 check questions
+`—` is your own section: you built it, no sign-off needed. That leaves **four boxes each**.
 
-A sign-off means they answered all four, not just the first two:
+## The four questions a sign-off means
 
-1. **What** does this code do? (point to the lines)
+1. **What** does this do? (point at the lines)
 2. **How** does it work, step by step?
-3. **Why** is it done this way, and what OS concept is behind it?
-4. **What if** it went wrong or were done differently?
+3. **Why** this way — what OS concept is behind it?
+4. **What if** it were done differently, or went wrong?
 
-Question 4 is the one that proves real understanding. Examples: *What if we didn't stop the
-session? What if snap kept a reference instead of a copy? What if the filter ran on the CPU?*
+Q4 is the one that counts. *What if we never stopped the session? What if snap kept a reference
+instead of a copy?*
 
-## Sections that need another pass
+## The meeting
 
-Log anything someone struggled with, so it gets reviewed before the next drill rather than
-forgotten.
+One 60-minute session once the app works. Ten minutes each: five walking your own part, five
+answering questions on it. Everyone writes two sentences per section in their own log as it
+happens — that's the record, there's nothing to write up afterwards.
 
-| Date | Who | Section | What was shaky | Reviewed? |
-|---|---|---|---|---|
-| | | | | |
+**Date held:** ___  **Who was there:** ___
+
+## The drill
+
+15 minutes of the rehearsal: draw a name and a section from a hat, present cold.
+
+**Date:** ___
+
+| Drawn | Section | How it went | Needs another look? |
+|---|---|---|---|
+| | | | |

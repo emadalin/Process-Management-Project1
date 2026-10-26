@@ -1,38 +1,28 @@
 # Team Reflection — Project 3
 
-Written together at the end, about one page. **Everyone contributes at least one paragraph in
-their own words** — say who wrote which part, or sign your paragraphs.
+One page, written together at the end. **One paragraph each, in your own words** — sign them.
 
-Write this after testing is done, so the answers come from what actually happened rather than
-what we planned.
+Write it after testing, so the answers come from what happened rather than what we planned.
 
 ---
 
-## 1. What did we learn about how an application reaches a physical device?
+**1. What did we learn about how an application reaches a physical device?**
 
-## 2. How did we make sure every member understood every part, knowing presenters would be random?
+**2. How did we make sure everyone could present any section? What worked, what wouldn't we do again?**
 
-What worked, and what would we do differently?
+**3. One moment where a teammate's explanation changed how someone else understood it.**
 
-## 3. Where did a teammate's explanation change how someone else understood the system?
+Be specific — a named moment reads far better than a general claim.
 
-A specific moment, not a general statement. The more concrete, the better it reads.
+**4. How did AI help, and where did we have to correct it?**
 
-## 4. How did AI help, where did we have to correct it, and how did we keep it from replacing our learning?
+See [`ai-use-log.md`](ai-use-log.md). The rows where it was **wrong** are the useful ones.
 
-See [`ai-use-log.md`](ai-use-log.md) — the entries where AI was **wrong** are the most useful
-material here.
+**5. One thing we're still unsure about.**
 
-## 5. How does this project connect to threads (Project 1) and memory (Project 2)?
-
-Frames arrive on a **background queue** (Project 1) into **reused buffers** (Project 2), and snap
-exists because those buffers get recycled.
-
-## 6. One thing we're still unsure about.
-
-Name something real. A team that claims to understand everything is less convincing than one
-that can point at the edge of what it checked.
+Name something real. A team that can point at the edge of what it checked is more convincing
+than one claiming to understand everything.
 
 ---
 
-**Contributors:** Sarah Rae · Stephen · Georgia · Calli · Ella
+*Sarah Rae · Stephen · Georgia · Calli · Ella*

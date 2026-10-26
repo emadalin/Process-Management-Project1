@@ -1,87 +1,57 @@
 # Ella — Project 3 Learning Log
 
-**You built:** Testing, troubleshooting & research record (section 4)
-**You must be able to present:** all five sections — the professor draws at random.
+**I built:** testing and the research record (section 4)
+**I may be asked to present:** any of the five sections.
 
-> Write this in your own words, in short entries, **as you go**. 3–5 sentences per entry is
-> plenty. AI can help you understand a concept, but it does not write this file. If AI explained
-> something to you, say so in the AI use section.
-
----
-
-## Before we started
-
-- What I already knew about how apps talk to hardware:
-
-- What I expected to be hardest:
+> Your own words, short. Two sentences per answer is fine. AI can explain a concept to you; it
+> does not write this. If it helped, say so at the bottom.
 
 ---
 
-## Entries
+## My part
 
-<!-- Copy this block for each working session. Date them. -->
+**What I built, and the OS concept behind it** — not what the code does, but what it shows about
+how the operating system works:
 
-### [Date] — [What I worked on]
-
-- What I learned about the OS (not just Swift):
-
-- Something that surprised me or that I got wrong at first:
-
-- How I figured it out (docs, testing, a teammate, AI):
+**One thing I got wrong at first, and how I found out:**
 
 ---
 
-## Learning every other section
+## Everyone else's parts
 
-One or two sentences each, after that person teaches it. The goal is the **OS concept**, not a
-description of the code.
+Two sentences each, written during or right after the team meeting. Aim for the **concept**, not
+a description of the code.
 
-- **Device stack** — I/O layers, abstraction *(Sarah teaches)*:
+- **Device stack** — I/O layers, abstraction *(Sarah)*:
 
-- **Camera & cleanup** — device access, TCC permissions, resource release, background queues *(Stephen teaches)*:
+- **Camera & cleanup** — permissions, resource release, background queues *(Stephen)*:
 
-- **Snap** — copying data vs. holding a reference to a reused buffer pool *(Georgia teaches)*:
+- **Snap** — copying vs. holding a reference to a reused buffer *(Georgia)*:
 
-- **Filter** — how pixels are stored, where the work runs *(Calli teaches)*:
+- **Filter** — how pixels are stored, where the work runs *(Calli)*:
 
-- **Testing & troubleshooting** — how OS versions, permissions and hardware change behaviour *(Ella teaches)*:
+- **Testing** — how OS version, permissions and hardware change behaviour *(Ella)*:
 
-- The section that was hardest for me to learn, and how I got there:
-
----
-
-## Helping teammates understand my part
-
-- How I taught it to the team:
-
-- What people found confusing, and how I explained it differently:
+**The section that took me longest to get, and what made it click:**
 
 ---
 
-## Random drills
+## The drill
 
-- Section I got drawn, and how it went:
-
-- What I had to go back and study afterwards:
+**Section I was drawn for, and how it went:**
 
 ---
 
-## AI use (if any)
+## AI use
 
-Significant uses only. Also add them to the shared [`ai-use-log.md`](ai-use-log.md).
+**What I asked, what I checked, and what was wrong or missing:**
 
-- What I asked AI and why:
-
-- What I checked or changed in its answer:
-
-- What I learned from it that I could now explain without it:
+(Also add a row to [`ai-use-log.md`](ai-use-log.md).)
 
 ---
 
-## End of project
+## Looking back
 
-- The OS concept I understand much better now, and how I'd explain it to someone:
+**The OS concept I understand much better now:**
 
-- How this connects to Projects 1 and 2:
-
-- What I'd still like to understand better:
+**How this connects to threads (Project 1) and memory (Project 2):**

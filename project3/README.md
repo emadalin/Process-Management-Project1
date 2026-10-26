@@ -111,8 +111,7 @@ project3/
     test-record-template.md          blank; copy to test-record-<name>.md   (Ella collects)
     reflections/
       sarah.md · stephen.md · georgia.md · calli.md · ella.md   personal learning logs
-      readiness-tracker.md           who has signed off on which sections
-      teach-back-log.md              the five teaching sessions and the drills
+      readiness-tracker.md           sign-off grid, the meeting and the drill
       ai-use-log.md                  what AI suggested, what we checked
       team-reflection.md             written together at the end
   teamTask.md                        roles, work order, demo timing, questions
@@ -189,16 +188,16 @@ The professor draws presenters at random on the day, so every member has to be a
 every section. [`docs/learning-reflection-plan.md`](docs/learning-reflection-plan.md) sets out
 how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
 
-| File | What it is |
-|---|---|
-| `sarah.md`, `stephen.md`, `georgia.md`, `calli.md`, `ella.md` | Personal learning logs, each in that person's own words |
-| [`readiness-tracker.md`](docs/reflections/readiness-tracker.md) | Who has been signed off on which section, by whom, and when |
-| [`teach-back-log.md`](docs/reflections/teach-back-log.md) | The five teaching sessions, partner explain-backs, and the random drills |
-| [`ai-use-log.md`](docs/reflections/ai-use-log.md) | What AI suggested, what we checked, and where it was wrong |
-| [`team-reflection.md`](docs/reflections/team-reflection.md) | One shared reflection, written together at the end |
+| File | What it is | Effort |
+|---|---|---|
+| `sarah.md`, `stephen.md`, `georgia.md`, `calli.md`, `ella.md` | Personal learning log, each in that person's own words | one page |
+| [`readiness-tracker.md`](docs/reflections/readiness-tracker.md) | Sign-off grid, plus the meeting and the drill | four boxes each |
+| [`ai-use-log.md`](docs/reflections/ai-use-log.md) | What AI suggested, what we checked, where it was wrong | one row |
+| [`team-reflection.md`](docs/reflections/team-reflection.md) | One shared reflection at the end | one paragraph each |
 
-A readiness box is only checked when a **teammate** heard you explain the section with no notes
-and answer a "what if" question.
+A readiness box is only ticked by a **teammate** who heard you explain the section with no notes
+and answer a "what if" question. Total cost per person is about **75 minutes**, most of it a
+60-minute team meeting we need anyway.
 
 ## Team contribution statement
 
