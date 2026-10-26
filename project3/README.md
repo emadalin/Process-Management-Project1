@@ -109,6 +109,12 @@ project3/
     section2-device-stack.md         the stack, documented vs observed      (Sarah Rae)
     learning-reflection-plan.md      how we make the learning visible       (everyone)
     test-record-template.md          blank; copy to test-record-<name>.md   (Ella collects)
+    reflections/
+      sarah.md · stephen.md · georgia.md · calli.md · ella.md   personal learning logs
+      readiness-tracker.md           who has signed off on which sections
+      teach-back-log.md              the five teaching sessions and the drills
+      ai-use-log.md                  what AI suggested, what we checked
+      team-reflection.md             written together at the end
   teamTask.md                        roles, work order, demo timing, questions
   README.md                          this file
 ```
@@ -176,6 +182,23 @@ AI use with how we checked it._
 ## Strengths, limitations, and one improvement
 
 _TODO — Ella (demo section 5)._
+
+## Learning & reflection
+
+The professor draws presenters at random on the day, so every member has to be able to present
+every section. [`docs/learning-reflection-plan.md`](docs/learning-reflection-plan.md) sets out
+how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
+
+| File | What it is |
+|---|---|
+| `sarah.md`, `stephen.md`, `georgia.md`, `calli.md`, `ella.md` | Personal learning logs, each in that person's own words |
+| [`readiness-tracker.md`](docs/reflections/readiness-tracker.md) | Who has been signed off on which section, by whom, and when |
+| [`teach-back-log.md`](docs/reflections/teach-back-log.md) | The five teaching sessions, partner explain-backs, and the random drills |
+| [`ai-use-log.md`](docs/reflections/ai-use-log.md) | What AI suggested, what we checked, and where it was wrong |
+| [`team-reflection.md`](docs/reflections/team-reflection.md) | One shared reflection, written together at the end |
+
+A readiness box is only checked when a **teammate** heard you explain the section with no notes
+and answer a "what if" question.
 
 ## Team contribution statement
 

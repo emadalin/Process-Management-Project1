@@ -195,18 +195,8 @@ One shared file, about one page. Everyone contributes at least one paragraph in 
 
 ---
 
-## 7. Apply it to Projects 1 and 2 too
-Since those grades are still being updated, each person writes a **short reflection** (half a page) for each earlier project:
-- What I learned about threads/scheduling (P1) or memory (P2) that I didn't know before
-- One part a teammate built that I can explain, and what it shows
-- How we used AI and what we checked
-
-Send these to the professor or add them to the repo under `project1/docs/reflections/` and `project2/docs/reflections/`.
-
----
-
 ## Checklist
-- [ ] Create the `docs/reflections/` folder and files, including `readiness-tracker.md`
+- [x] Create the `docs/reflections/` folder and files, including `readiness-tracker.md` — all nine exist as skeletons
 - [ ] Each person starts their learning log this week (the "Before we started" section)
 - [ ] Round 1: all 5 whole-team teaching sessions, as soon as each section works
 - [ ] Round 2: partner explain-backs for every section you didn't build
@@ -214,5 +204,4 @@ Send these to the professor or add them to the repo under `project1/docs/reflect
 - [ ] Every box in the readiness tracker checked for every person before demo day
 - [ ] Log AI uses as they happen
 - [ ] Write the team reflection after testing is done
-- [ ] Each person writes short P1 and P2 reflections
 - [ ] Mention all reflection files in the README and include them in the Canvas submission
