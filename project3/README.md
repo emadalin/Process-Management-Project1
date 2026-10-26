@@ -107,6 +107,7 @@ project3/
       Assets.xcassets                app icon, accent colour
   docs/
     section2-device-stack.md         the stack, documented vs observed      (Sarah Rae)
+    learning-reflection-plan.md      how we make the learning visible       (everyone)
     test-record-template.md          blank; copy to test-record-<name>.md   (Ella collects)
   teamTask.md                        roles, work order, demo timing, questions
   README.md                          this file
