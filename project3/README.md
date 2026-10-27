@@ -246,6 +246,14 @@ and answer a "what if" question. Total cost per person is about **75 minutes**, 
 _TODO — Sarah Rae collects. 3–5 sentences from each member, plus how we made sure everyone can
 explain the whole app._
 
+**Ella Madalinski (Member 5)** owns testing, troubleshooting and the research record, and
+presents demo sections 4 and 5. I built and ran BoothCam on my own Mac and completed its test
+record: all five feature checks, the permission prompt, and the permission-denied error case,
+with screenshots. I'm collecting the test records from all five Macs and running the app with
+each teammate to sort any setup problems by type. I'm also writing the research and
+troubleshooting record, including how the team used AI and how we checked it. I used Claude
+Code to help fill in my test record, and I confirmed every result on my own machine.
+
 ## Sources
 
 _TODO — Sarah Rae collects, including AI assistants and what each was used for, matching how
