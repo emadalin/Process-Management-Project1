@@ -13,7 +13,7 @@
 **What I built, and the OS concept behind it** — not what the code does, but what it shows about
 how the operating system works: I was in charge of the testing. The OS concept is that an app never talks to the camera directly. The OS sits between the two and acts as a gate that decides what the app is allowed to use. For example, the camera permissions is the first thing to pop up when you build and run BoothCam because BoothCam wasn't on MacOS's list of apps that are allowed to use the camera. The popup was from MacOS, but the line saying "BoothCam shows your webcam..." is the only part provided by BoothCam. If the user clicks don't allow, then the OS doesn't allow BoothCam to access the camera, so the app had to adjust with the line that said why the camera wasn't working and how to change the permissions in settings. Additionally, the Mac listed two cameras: the built-in one and your iPhone through Continuity Camera. BoothCam asked for the default camera, so macOS picked the built-in one. The app didn't search for the hardware itself; the OS is in charge of the list of devices. Finally, when the user presses command-Q, the app released the camera and the OS took it back, so the green light by the camera went off. 
 
-**One thing I got wrong at first, and how I found out:**
+**One thing I got wrong at first, and how I found out:** I was confused between the pop-up permissions message that comes from MacOS and the error messgae on BoothCam that was the app's response when the OS didn't give camera permissions. I figured it out when Claude pointed out they were different, so I reset the permission and saw the macOS pop-up.
 
 ---
 
