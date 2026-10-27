@@ -63,12 +63,12 @@ Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `
 ## Member 3: Still Capture · `Georgia`
 Owns demo section **3b (snap)**. Works in `CameraManager.swift` + `ContentView.swift`
 
-- [ ] "Snap" button + **Space** key shortcut
-- [ ] On snap, **render the current frame into a new `CGImage`** with `CIContext` (a real copy, not a reference to the live pixel buffer)
-- [ ] Display it in a separate **CAPTURED** panel that stays put while the live feed changes
-- [ ] Explain copy vs reference: the live pixel buffers come from a pool that gets reused, so holding a reference could change or hold up frames; rendering to a `CGImage` gives the capture its own memory
-- [ ] Handle "snap before any frame arrived" (message, no crash)
-- [ ] Optional: save to file (`NSSavePanel` + PNG)
+- [x] "Snap" button + **Space** key shortcut — `ContentView.swift`: `Button("Snap")` with `.keyboardShortcut(.space)`
+- [x] On snap, **render the current frame into a new `CGImage`** with `CIContext` (a real copy, not a reference to the live pixel buffer) — `Self.ciContext.createCGImage(frame, from: frame.extent)`
+- [x] Display it in a separate **CAPTURED** panel that stays put while the live feed changes — proved by waving after a snap; `docs/screenshots/sarah-window-all-four-panels.png` shows LIVE neutral and CAPTURED smiling in one frame
+- [x] Explain copy vs reference: the live pixel buffers come from a pool that gets reused, so holding a reference could change or hold up frames; rendering to a `CGImage` gives the capture its own memory — written up in the `snap()` doc comment
+- [x] Handle "snap before any frame arrived" (message, no crash) — `guard let frame` sets *"No frame yet"*; seen in `docs/screenshots/sarah-permission-denied.png`
+- [ ] Optional: save to file (`NSSavePanel` + PNG) — not implemented; it was optional
 
 ## Member 4: Filters & Comparison · `Calli`
 Owns demo section **3c (filter)**. File: `FrameFilter.swift`
@@ -78,31 +78,39 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 - [x] Apply the same function to the live frame **and** the captured still — both columns go through `ContentView.filter(_:)`; the still side shows once Georgia's snap lands
 - [x] Layout: **LIVE ORIGINAL | LIVE FILTERED** on top, **CAPTURED ORIGINAL | CAPTURED FILTERED** below (or a toggle with **F**) — grid from Sarah Rae's `ContentView` skeleton, **F** toggles the filter, **I** switches to invert
 - [x] Keep the originals untouched; filtering always creates a new image — checked on a solid red test image: original still (255, 0, 0) after filtering
-- [ ] Explain what changes in the data: RGB → one brightness value (≈ 0.3R + 0.59G + 0.11B); invert = 1 − each channel (255 − value in 8-bit)
+- [x] Explain what changes in the data: RGB → one brightness value (≈ 0.3R + 0.59G + 0.11B); invert = 1 − each channel (255 − value in 8-bit) — in the `FrameFilter` doc comments, **with a measured correction**: pure red comes out 132, not 77, because Core Image works in linear light and PhotoEffectMono adds a contrast curve
 - [ ] Explain where it runs: in Core Image (library, usually on the GPU), called from our code, not a camera setting
 - [ ] Note any effect on responsiveness or quality (check frame rate with filter on/off)
 
 ## Member 5: Testing, Troubleshooting & Research Record · `Ella`
 Owns demo section **4 (research & problem solving)**.
 
-- [ ] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in
+- [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs one clean redo
 - [ ] Run the app on every Mac with that person as early as possible, help diagnose problems together
 - [ ] Sort each problem by type: install, permissions, device selection, frame acquisition, display/image format
 - [ ] Write the **research & troubleshooting record**: sources, what we adapted, problems + fixes, AI use and how we checked it (or "no AI used")
-- [ ] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name
+- [ ] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name — in so far: Sarah (2), Calli (1), Ella (4). **Still needed: Stephen, Georgia**
 - [ ] Write the strengths, limitations, and one improvement with more time (demo section 5)
 
 ---
 
 ## Work order
-1. **Member 1** creates the project with Info.plist permission and stubs, pushes it (day 1)
-2. **Everyone** pulls and gets a blank build running on their own Mac (catch setup problems early)
-3. **Member 2** gets live video working first; nothing else can be tested until this works
-4. **Members 3 and 4** build snap and filters on top (Member 4 can start filter code with a test `CIImage` before then)
-5. **Member 5** runs the full app on all five Macs with each person, collects test records and screenshots
-6. Everyone adds their explanations and sources to the README / records
+
+Steps 1–4 are done: the app is feature-complete and four of five Macs pass every check.
+
+1. ~~**Member 1** creates the project with Info.plist permission and stubs~~ — done
+2. ~~**Everyone** pulls and gets a blank build running on their own Mac~~ — done, all five
+3. ~~**Member 2** gets live video working~~ — done
+4. ~~**Members 3 and 4** build snap and filters on top~~ — done
+5. **Member 5** collects the remaining test records and screenshots — four of five records are
+   complete; **Stephen needs a clean redo of checks 3–5**, and Stephen and Georgia still owe
+   screenshots
+6. Everyone adds their explanations and sources to the README / records — the write-ups are now
+   the whole of what is left
 7. **Member 1** finishes the README, diagram, sources, and contribution statement
-8. **Rehearsal:** each person explains a section they didn't write, then goes through the instructor questions below
+8. **The learning rounds** — one 60-minute teaching meeting and one random drill at the
+   rehearsal. See [`docs/learning-reflection-plan.md`](docs/learning-reflection-plan.md). This
+   can start now: the app works, so there is nothing left to wait for
 
 ## Suggested demo timing (30 min)
 | Section | Presenter | Time |
