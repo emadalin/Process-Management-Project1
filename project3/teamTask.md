@@ -90,8 +90,8 @@ Owns demo section **4 (research & problem solving)**.
 
 - [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-records/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs one clean redo
 - [ ] Run the app on every Mac with that person as early as possible, help diagnose problems together
-- [ ] Sort each problem by type: install, permissions, device selection, frame acquisition, display/image format
-- [ ] Write the **research & troubleshooting record**: sources, what we adapted, problems + fixes, AI use and how we checked it (or "no AI used")
+- [x] Sort each problem by type: install, permissions, device selection, frame acquisition, display/image format — README, *Problems by category*
+- [x] Write the **research & troubleshooting record**: sources, what we adapted, problems + fixes, AI use and how we checked it (or "no AI used") — README, *Research & troubleshooting record*
 - [ ] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name — in so far: Sarah (2), Calli (1), Ella (4). **Still needed: Stephen, Georgia**
 - [ ] Write the strengths, limitations, and one improvement with more time (demo section 5)
 
