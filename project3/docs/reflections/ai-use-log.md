@@ -11,6 +11,7 @@ one that matters**.
 | 10-22 | Sarah | (noticed in `git status`) | Was told to add `.DS_Store`, `*.zip`, `xcuserdata/` to `.gitignore`. They stayed staged — `.gitignore` does nothing once a file is in the index. Needed `git rm --cached`, or we'd have committed a 7.5 MB zip | |
 | 10-22 | Sarah | What does the camera stack look like under AVFoundation? | Was told the camera daemons would *appear* when the camera opened. They don't — PIDs 697–699 are alive since boot. What changes is CPU: `appleh13camerad` 0% → 4.5% live, 29.8% on quit. `UVCAssistant` stayed 0% because no USB camera was attached | |
 | 10-22 | Sarah | Measure the daemons' CPU | Was given `ps`, which reports a decaying lifetime average — on processes up since boot it showed 0.0% → 0.1% and looked like nothing. `top -l 2` showed the real 4.5% and 29.8% | |
+| 10-27 | Ella | Claude Code: pull changes, gather my Mac's environment info, fill in my test record from what I reported | Ran every feature check myself and watched the camera light go off on quit. Claude had ticked the quit check before I'd confirmed the light. I mistook the app's "permission denied" message for the system prompt; Claude caught it, and I reset permission and confirmed the real prompt wording from a screenshot | |
 | | | | | |
 
 > **The five rows above are drafts.** The facts are what actually happened during setup — Sarah
