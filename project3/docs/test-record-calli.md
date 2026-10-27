@@ -107,7 +107,7 @@ At least one, more if you hit them. Record what you did and what the app did.
 |---|---|---|---|
 | Permission denied | `tccutil reset Camera edu.samford.c335.BoothCam`, then click **Don't Allow** | | |
 | No camera available | e.g. unplug the USB cam, or Screen Sharing holding it | | |
-| Snap before any frame | press Space immediately on launch | | |
+| Snap before any frame | press Space immediately on launch, before the live feed appears | showed "No frame yet - wait for the live feed, then snap." | no |
 | | | | |
 
 A clear message is a pass. A crash is a fail, even if the feature works otherwise.
