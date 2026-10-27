@@ -50,9 +50,9 @@ Tick only what you saw with your own eyes on your own Mac.
 | # | Check | Pass | Notes |
 |---|---|---|---|
 | 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☑ | FaceTime HD Camera (the only camera on this Mac) |
-| 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☐ | not checked yet |
+| 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☑ | shows grayscale |
 | 3 | **Snap** — pressing Space captures a still | ☑ | |
-| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☐ | Wave test passed: CAPTURED ORIGINAL stayed still while LIVE ORIGINAL kept moving. CAPTURED FILTERED not checked yet |
+| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☑ | Wave test passed: CAPTURED ORIGINAL stayed still while LIVE ORIGINAL kept moving. CAPTURED FILTERED shows the snap in grayscale |
 | 5 | **Normal quit** — ⌘Q closes the app and the camera indicator light goes **off** | ☑ | camera light went off |
 
 Check 4 is the one that catches the copy-vs-reference bug: wave at the camera after snapping.
