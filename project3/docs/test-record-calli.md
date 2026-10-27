@@ -127,12 +127,14 @@ Four per person, labelled, with your name in the filename:
 `-captured-filtered`. One window shot with all four panels visible also works — say which you
 did.
 
+One window shot with all four panels visible, grayscale mode, filter on.
+
 | Screenshot | Committed | Filename |
 |---|---|---|
-| Live original | ☐ | |
-| Live filtered | ☐ | |
-| Captured original | ☐ | |
-| Captured filtered | ☐ | |
+| Live original | ☑ | `screenshots/calli-all-panels.png` (top left) |
+| Live filtered | ☑ | `screenshots/calli-all-panels.png` (top right) |
+| Captured original | ☑ | `screenshots/calli-all-panels.png` (bottom left) |
+| Captured filtered | ☑ | `screenshots/calli-all-panels.png` (bottom right) |
 
 ## 7. Limitations you noticed on this Mac
 
