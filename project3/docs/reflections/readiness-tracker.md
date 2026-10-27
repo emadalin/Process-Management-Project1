@@ -26,19 +26,19 @@ answer a "what if" question. Write who and when: `✅ Calli 10/30`.
 Q4 is the one that counts. *What if we never stopped the session? What if snap kept a reference
 instead of a copy?*
 
-## The meeting
+## The meeting — **Thursday 29 October, 9:35–10:55, in class**
 
-One 60-minute session once the app works. Ten minutes each: five walking your own part, five
-answering questions on it. Everyone writes two sentences per section in their own log as it
-happens — that's the record, there's nothing to write up afterwards.
+Ten minutes each: five walking your own part, five answering questions on it. Everyone writes
+two sentences per section in their own log as it happens — that's the record, there's nothing to
+write up afterwards.
 
-**Date held:** ___  **Who was there:** ___
+Order: Sarah → Stephen → Georgia → Calli → Ella, starting 9:40.
 
-## The drill
+**Who was there:** ___
 
-15 minutes of the rehearsal: draw a name and a section from a hat, present cold.
+## The drill — **same session, 10:30**
 
-**Date:** ___
+The last 15 minutes: draw a name and a section from a hat, present cold.
 
 | Drawn | Section | How it went | Needs another look? |
 |---|---|---|---|

@@ -231,6 +231,9 @@ how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
 | [`ai-use-log.md`](docs/reflections/ai-use-log.md) | What AI suggested, what we checked, where it was wrong | one row |
 | [`team-reflection.md`](docs/reflections/team-reflection.md) | One shared reflection at the end | one paragraph each |
 
+**Booked: Thursday 29 October, 9:35–10:55, in class** — the teaching session and the random
+drill both fit in that slot. Agenda is in the plan.
+
 A readiness box is only ticked by a **teammate** who heard you explain the section with no notes
 and answer a "what if" question. Total cost per person is about **75 minutes**, most of it a
 60-minute team meeting we need anyway.

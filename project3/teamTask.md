@@ -45,7 +45,7 @@ Owns demo section **2 (device stack & library selection)**.
 - [x] Mark each layer documented vs observed — every claim labelled; re-run with the camera live once Stephen's code lands. Observation ideas: `system_profiler SPCameraDataType`, `ioreg -p IOUSB` (USB cams), `UVCAssistant` in Activity Monitor while the camera is on
 - [x] Explain what's hidden by the library and what we could still determine about it — `docs/section2-device-stack.md` §5
 - [x] Own the README: setup/run instructions, dependencies + versions, permissions, device selection, controls — `README.md`; the device-selection detail fills in once Stephen's code picks a device
-- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal
+- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal — **learning session + drill booked: Thursday 29 Oct, 9:35–10:55 in class**. Sources and contribution statements still to collect
 
 ## Member 2: Camera Connection & Live Video · `Stephen`
 Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `CameraManager.swift`
