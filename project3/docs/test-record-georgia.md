@@ -39,7 +39,7 @@ system_profiler SPCameraDataType     # the camera itself
 |---|---|
 | Prompt appeared on first camera use | yes — clicked Allow |
 | Exact wording shown in the prompt | Standard macOS camera prompt; exact wording not recorded. The usage string the app sets is "BoothCam shows your webcam so you can take and filter photos." (`INFOPLIST_KEY_NSCameraUsageDescription`) |
-| Listed under System Settings → Privacy & Security → Camera | not checked yet |
+| Listed under System Settings → Privacy & Security → Camera | yes |
 
 If no prompt appeared, say what you saw instead — that is a finding, not a failure.
 
