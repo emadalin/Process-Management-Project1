@@ -4,7 +4,10 @@
 **Environment:** Swift on macOS (same as Projects 1 and 2)
 **Stack:** AVFoundation (camera), Core Image (filters), SwiftUI (window/UI)
 **Filters:** Grayscale (main) + Color Invert (optional second toggle)
-**Demo:** 30 min · **Estimated effort:** ~6 hours
+**Demo:** 30 min, in class · **Due: Thursday 5 November** · **Estimated effort:** ~6 hours
+
+**Learning session + random drill: Thursday 29 October, 9:35–10:55 in class** — a week before
+the demo, which is the point: the drill has to leave time to fix whatever it exposes.
 
 ---
 
@@ -45,7 +48,7 @@ Owns demo section **2 (device stack & library selection)**.
 - [x] Mark each layer documented vs observed — every claim labelled; re-run with the camera live once Stephen's code lands. Observation ideas: `system_profiler SPCameraDataType`, `ioreg -p IOUSB` (USB cams), `UVCAssistant` in Activity Monitor while the camera is on
 - [x] Explain what's hidden by the library and what we could still determine about it — `docs/section2-device-stack.md` §5
 - [x] Own the README: setup/run instructions, dependencies + versions, permissions, device selection, controls — `README.md`; the device-selection detail fills in once Stephen's code picks a device
-- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal
+- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal — **learning session + drill booked: Thursday 29 Oct, 9:35–10:55 in class**. Sources and contribution statements still to collect
 
 ## Member 2: Camera Connection & Live Video · `Stephen`
 Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `CameraManager.swift`
@@ -63,12 +66,12 @@ Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `
 ## Member 3: Still Capture · `Georgia`
 Owns demo section **3b (snap)**. Works in `CameraManager.swift` + `ContentView.swift`
 
-- [ ] "Snap" button + **Space** key shortcut
-- [ ] On snap, **render the current frame into a new `CGImage`** with `CIContext` (a real copy, not a reference to the live pixel buffer)
-- [ ] Display it in a separate **CAPTURED** panel that stays put while the live feed changes
-- [ ] Explain copy vs reference: the live pixel buffers come from a pool that gets reused, so holding a reference could change or hold up frames; rendering to a `CGImage` gives the capture its own memory
-- [ ] Handle "snap before any frame arrived" (message, no crash)
-- [ ] Optional: save to file (`NSSavePanel` + PNG)
+- [x] "Snap" button + **Space** key shortcut — `ContentView.swift`: `Button("Snap")` with `.keyboardShortcut(.space)`
+- [x] On snap, **render the current frame into a new `CGImage`** with `CIContext` (a real copy, not a reference to the live pixel buffer) — `Self.ciContext.createCGImage(frame, from: frame.extent)`
+- [x] Display it in a separate **CAPTURED** panel that stays put while the live feed changes — proved by waving after a snap; `docs/screenshots/sarah-window-all-four-panels.png` shows LIVE neutral and CAPTURED smiling in one frame
+- [x] Explain copy vs reference: the live pixel buffers come from a pool that gets reused, so holding a reference could change or hold up frames; rendering to a `CGImage` gives the capture its own memory — written up in the `snap()` doc comment
+- [x] Handle "snap before any frame arrived" (message, no crash) — `guard let frame` sets *"No frame yet"*; seen in `docs/screenshots/sarah-permission-denied.png`
+- [ ] Optional: save to file (`NSSavePanel` + PNG) — not implemented; it was optional
 
 ## Member 4: Filters & Comparison · `Calli`
 Owns demo section **3c (filter)**. File: `FrameFilter.swift`
@@ -78,31 +81,39 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 - [x] Apply the same function to the live frame **and** the captured still — both columns go through `ContentView.filter(_:)`; the still side shows once Georgia's snap lands
 - [x] Layout: **LIVE ORIGINAL | LIVE FILTERED** on top, **CAPTURED ORIGINAL | CAPTURED FILTERED** below (or a toggle with **F**) — grid from Sarah Rae's `ContentView` skeleton, **F** toggles the filter, **I** switches to invert
 - [x] Keep the originals untouched; filtering always creates a new image — checked on a solid red test image: original still (255, 0, 0) after filtering
-- [ ] Explain what changes in the data: RGB → one brightness value (≈ 0.3R + 0.59G + 0.11B); invert = 1 − each channel (255 − value in 8-bit)
+- [x] Explain what changes in the data: RGB → one brightness value (≈ 0.3R + 0.59G + 0.11B); invert = 1 − each channel (255 − value in 8-bit) — in the `FrameFilter` doc comments, **with a measured correction**: pure red comes out 132, not 77, because Core Image works in linear light and PhotoEffectMono adds a contrast curve
 - [ ] Explain where it runs: in Core Image (library, usually on the GPU), called from our code, not a camera setting
 - [ ] Note any effect on responsiveness or quality (check frame rate with filter on/off)
 
 ## Member 5: Testing, Troubleshooting & Research Record · `Ella`
 Owns demo section **4 (research & problem solving)**.
 
-- [ ] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in
+- [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-records/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs one clean redo
 - [ ] Run the app on every Mac with that person as early as possible, help diagnose problems together
 - [ ] Sort each problem by type: install, permissions, device selection, frame acquisition, display/image format
 - [ ] Write the **research & troubleshooting record**: sources, what we adapted, problems + fixes, AI use and how we checked it (or "no AI used")
-- [ ] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name
+- [ ] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name — in so far: Sarah (2), Calli (1), Ella (4). **Still needed: Stephen, Georgia**
 - [ ] Write the strengths, limitations, and one improvement with more time (demo section 5)
 
 ---
 
 ## Work order
-1. **Member 1** creates the project with Info.plist permission and stubs, pushes it (day 1)
-2. **Everyone** pulls and gets a blank build running on their own Mac (catch setup problems early)
-3. **Member 2** gets live video working first; nothing else can be tested until this works
-4. **Members 3 and 4** build snap and filters on top (Member 4 can start filter code with a test `CIImage` before then)
-5. **Member 5** runs the full app on all five Macs with each person, collects test records and screenshots
-6. Everyone adds their explanations and sources to the README / records
+
+Steps 1–4 are done: the app is feature-complete and four of five Macs pass every check.
+
+1. ~~**Member 1** creates the project with Info.plist permission and stubs~~ — done
+2. ~~**Everyone** pulls and gets a blank build running on their own Mac~~ — done, all five
+3. ~~**Member 2** gets live video working~~ — done
+4. ~~**Members 3 and 4** build snap and filters on top~~ — done
+5. **Member 5** collects the remaining test records and screenshots — four of five records are
+   complete; **Stephen needs a clean redo of checks 3–5**, and Stephen and Georgia still owe
+   screenshots
+6. Everyone adds their explanations and sources to the README / records — the write-ups are now
+   the whole of what is left
 7. **Member 1** finishes the README, diagram, sources, and contribution statement
-8. **Rehearsal:** each person explains a section they didn't write, then goes through the instructor questions below
+8. **The learning rounds** — one 60-minute teaching meeting and one random drill at the
+   rehearsal. See [`docs/learning-reflection-plan.md`](docs/learning-reflection-plan.md). This
+   can start now: the app works, so there is nothing left to wait for
 
 ## Suggested demo timing (30 min)
 | Section | Presenter | Time |
@@ -130,13 +141,26 @@ demo that way instead (project 2 did), this table gets updated to match.
 - What problem happened on your Mac, and how did you help solve it?
 - Which source or AI suggestion did we adapt, test, or correct?
 
-## Submission checklist (Canvas)
-- [ ] Source code + Xcode project and assets
-- [ ] Setup & run instructions (versions, permissions, device selection, controls)
-- [ ] Test record for each of the 5 Macs, with labeled screenshots
-- [ ] Device-stack diagram with references
-- [ ] Research & troubleshooting record (incl. AI use)
-- [ ] Team contribution statement
+## Submission checklist (Canvas) — due Thursday 5 November
+
+- [x] **Source code + Xcode project and assets** — `BoothCam/`, builds clean from a fresh clone
+- [x] **Setup & run instructions** (versions, permissions, device selection, controls) — `README.md`
+- [ ] **Test record for each of the 5 Macs, with labeled screenshots** — four of five records
+      complete. **Stephen** needs a clean redo of checks 3–5; **Stephen and Georgia** owe
+      screenshots
+- [x] **Device-stack diagram with references** — `docs/section2-device-stack.md`, every claim
+      marked documented or observed, with the command or the Apple link behind it
+- [ ] **Research & troubleshooting record (incl. AI use)** — Ella (demo section 4). The AI half
+      is seeded in `docs/reflections/ai-use-log.md`; five entries need their "what we learned"
+      line
+- [ ] **Team contribution statement** — 0 of 5 collected. Thursday's session is the moment to
+      ask in person
+
+### Not on the Canvas list, but the professor said it matters
+
+- [ ] Everyone's learning log — only Ella has written hers
+- [ ] Readiness tracker — 1 tick of 20; filled in at Thursday's session
+- [ ] Team reflection — written together after testing
 
 ## Controls
 | Key | Action |

@@ -2,8 +2,8 @@
 
 Owner of the collected records: Member 5 (Ella). One filled-in copy per Mac, five in total.
 
-**How to use this:** copy this file to `docs/test-record-<yourname>.md`, fill it in on your own
-machine, commit it. Do not edit this template — it is the blank.
+**How to use this:** copy this file to `docs/test-records/test-record-<yourname>.md`, fill it
+in on your own machine, commit it. Do not edit this template — it is the blank.
 
 Fill it in **as you go**, not afterwards. The troubleshooting section is worth more than the
 checkmarks, and nobody remembers the fix two days later.

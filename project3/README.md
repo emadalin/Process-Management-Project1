@@ -4,9 +4,13 @@ A Photo Booth–style macOS app: live webcam feed, a filter applied to it, and a
 snap and compare. Built to show how an app reaches a physical device through the operating
 system, and what each layer in between is responsible for.
 
-> **Status:** project scaffolded and building; camera permission and entitlement declared.
-> Live video, snap and the filters are stubs — see the owner named in each file. Sections
-> marked _TODO_ below name whose they are.
+> **Due: Thursday 5 November, in class.** Learning session and random drill: Thursday 29 October,
+> 9:35–10:55.
+>
+> **Status:** the app is feature-complete — live video, filter, snap and the filtered still all
+> work, and four of five Macs pass every check. What remains is write-up: the research record,
+> the sources list, and the contribution statement. Sections marked _TODO_ below name whose they
+> are.
 
 **Stack:** AVFoundation (capture) · Core Image (filters) · SwiftUI (window and UI)
 
@@ -68,9 +72,18 @@ Granted permission is also visible in **System Settings → Privacy & Security �
 
 ## Device selection
 
-`AVCaptureDevice.default(for: .video)` takes whatever macOS considers the default camera. On a
-laptop with a USB webcam plugged in, that may not be the one you expect — note which camera your
-test record used. _TODO — Stephen: say what the code does when there is more than one._
+`CameraManager` calls `AVCaptureDevice.default(for: .video)` and takes whatever macOS considers
+the default. **We do not enumerate or choose** — if no device comes back the app reports
+*"no camera found"* and stops, and if the input cannot be created it reports which device failed
+and why.
+
+Every Mac on the team that listed its cameras found **two** — a built-in camera and an iPhone
+over Continuity — and on all of them `.default` returned the built-in one. So the behaviour is
+consistent across five machines, but it is the system's choice rather than ours. An iPhone
+waking nearby could change it, and the app would follow without saying so.
+
+Letting the user pick from `AVCaptureDevice.DiscoverySession` is the obvious improvement and the
+one we would make first.
 
 ## Controls
 
@@ -108,7 +121,9 @@ project3/
   docs/
     section2-device-stack.md         the stack, documented vs observed      (Sarah Rae)
     learning-reflection-plan.md      how we make the learning visible       (everyone)
-    test-record-template.md          blank; copy to test-record-<name>.md   (Ella collects)
+    test-records/
+      test-record-template.md        blank; copy to test-record-<name>.md
+      test-record-sarah.md · -stephen.md · -georgia.md · -calli.md · -ella.md   one per Mac
     reflections/
       sarah.md · stephen.md · georgia.md · calli.md · ella.md   personal learning logs
       readiness-tracker.md           sign-off grid, the meeting and the drill
@@ -163,15 +178,39 @@ looking at, so **every test record must say which camera it used**.
 
 ## Test records
 
-One per Mac, five in total. Template: [`docs/test-record-template.md`](docs/test-record-template.md).
+One per Mac, five in total. Template: [`docs/test-record-template.md`](docs/test-records/test-record-template.md).
 
-| Member | Record | Live | Filter | Snap | Filtered still | Quit releases camera |
-|---|---|---|---|---|---|---|
-| Sarah Rae | _TODO_ | | | | | |
-| Stephen | _TODO_ | | | | | |
-| Georgia | _TODO_ | | | | | |
-| Calli | _TODO_ | | | | | |
-| Ella | _TODO_ | | | | | |
+**Four of five Macs pass all checks.** Every machine ran the app from its own build — nobody
+copied a working binary across.
+
+| Member | Record | macOS | Live | Filter | Snap | Filtered still | Quit releases camera |
+|---|---|---|---|---|---|---|---|
+| Sarah Rae | [record](docs/test-records/test-record-sarah.md) | 15.8.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Stephen | [record](docs/test-records/test-record-stephen.md) | 26.5.2 | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
+| Georgia | [record](docs/test-records/test-record-georgia.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Calli | [record](docs/test-records/test-record-calli.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Ella | [record](docs/test-records/test-record-ella.md) | 26.5.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Stephen's three blanks are honest rather than missing: he tested before Georgia's snap landed,
+and his quit test got tangled with a debugger-attached process. Needs one clean redo.
+
+**macOS spread: 15.8.1 to 26.6.2.** Sarah's is the oldest, which is why the deployment target is
+15.8 — the oldest Mac sets the floor and it blocks nobody.
+
+**Every Mac that reported its cameras found two** — a built-in camera and an iPhone over
+Continuity — and on every one of them `AVCaptureDevice.default(for: .video)` chose the built-in.
+Worth knowing before the demo: an iPhone waking nearby can change what `.default` returns.
+
+### Screenshots
+
+All four panels, per person: [`docs/screenshots/`](docs/screenshots/).
+
+| Member | Files |
+|---|---|
+| Sarah Rae | `sarah-window-all-four-panels.png`, `sarah-permission-denied.png` |
+| Calli | `calli-all-panels.png` |
+| Ella | `ella-window-1.png` … `ella-window-4.png` |
+| Stephen, Georgia | _not yet committed_ |
 
 ## Research & troubleshooting record
 
@@ -194,6 +233,9 @@ how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
 | [`readiness-tracker.md`](docs/reflections/readiness-tracker.md) | Sign-off grid, plus the meeting and the drill | four boxes each |
 | [`ai-use-log.md`](docs/reflections/ai-use-log.md) | What AI suggested, what we checked, where it was wrong | one row |
 | [`team-reflection.md`](docs/reflections/team-reflection.md) | One shared reflection at the end | one paragraph each |
+
+**Booked: Thursday 29 October, 9:35–10:55, in class** — the teaching session and the random
+drill both fit in that slot. Agenda is in the plan.
 
 A readiness box is only ticked by a **teammate** who heard you explain the section with no notes
 and answer a "what if" question. Total cost per person is about **75 minutes**, most of it a

@@ -17,18 +17,31 @@ it does not write this. If it helped, say so.
 
 ---
 
+## 📅 Booked: Thursday 29 October, 9:35–10:55, in class
+
+**A week before the demo on Thursday 5 November** — deliberately, so the drill leaves time to
+fix whatever it exposes. **Eighty minutes — the whole thing fits in that one slot.** Bring your laptop with the app
+building, and have your own log open in a second window.
+
+| Time | What |
+|---|---|
+| 9:35–9:40 | Everyone opens BoothCam and their own `reflections/<name>.md` |
+| 9:40–10:30 | **Five sections, 10 minutes each** — 5 min walking your part, 5 min answering questions on it |
+| 10:30–10:45 | **The random drill** — draw a name and a section, present cold |
+| 10:45–10:55 | Finish your log entries, tick the readiness tracker for each other |
+
+Order: Sarah (device stack) → Stephen (camera) → Georgia (snap) → Calli (filter) → Ella (testing).
+
+**You write your two sentences per section as each person speaks.** That is the whole record —
+there is nothing to write up afterwards, and nothing to catch up on if you do it live.
+
+Come having already added your AI rows to [`reflections/ai-use-log.md`](reflections/ai-use-log.md);
+that is the one thing that does not work well as a group activity.
+
 ## What this costs you
 
-Honest total, per person: **about 75 minutes**, and most of it is a meeting we need anyway.
-
-| What | When | Your time |
-|---|---|---|
-| One team meeting — everyone walks their section | Once, when the app works | 60 min (together) |
-| Fill in your own log | Right after that meeting | 15 min |
-| One random drill | At the rehearsal we're already having | 0 extra |
-| Add your AI rows | As you go | 5 min |
-
-That's it. There is no second round, no separate partner exercise, no per-session write-up.
+Per person: **the 80-minute class slot, plus about 5 minutes** adding your AI rows beforehand.
+There is no second round, no separate partner exercise, and no per-session write-up.
 
 ---
 
@@ -48,9 +61,9 @@ what's being graded, not a description of the code.
 Links back: frames arrive on a **background queue** (Project 1) into **reused buffers**
 (Project 2) — which is the whole reason snap has to copy.
 
-## 2. The one meeting
+## 2. The one meeting — Thursday 29 Oct, 9:35 in class
 
-Book 60 minutes once the app works. Each person takes **10 minutes**:
+Each person takes **10 minutes**:
 
 - 5 min walking their own code or diagram
 - 5 min answering the four questions below, asked by whoever hasn't spoken yet
@@ -72,11 +85,10 @@ Whoever answers a section's questions well gets ticked off for it in
 [`reflections/readiness-tracker.md`](reflections/readiness-tracker.md) — by someone else, not
 themselves.
 
-## 3. One drill, at the rehearsal
+## 3. One drill — same session, 10:30
 
-We're rehearsing anyway. Spend 15 minutes of it drawing names and sections from a hat and
-presenting cold, exactly like the real thing. Log anything shaky in the tracker and review it
-before the demo.
+The last 15 minutes of Thursday's slot. Draw a name and a section from a hat and present cold,
+exactly like the real thing. Log anything shaky in the tracker and review it before the demo.
 
 ## 4. The files
 
@@ -98,8 +110,8 @@ present any section, that proves more than any document does.
 ## Checklist
 
 - [x] Skeletons exist in `docs/reflections/`
-- [ ] Book the 60-minute meeting (needs the app working — so Georgia and Calli first)
+- [x] Book the meeting — **Thursday 29 October, 9:35–10:55, in class**
 - [ ] Everyone fills in their own log straight after it
-- [ ] 15-minute random drill at the rehearsal
+- [ ] 15-minute random drill — same session, 10:30
 - [ ] Readiness tracker complete before demo day
 - [ ] Team reflection, one paragraph each
