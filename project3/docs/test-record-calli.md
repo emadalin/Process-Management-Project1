@@ -78,7 +78,7 @@ gave **BUILD SUCCEEDED** with no errors, on the scaffold at commit `3011dda`.
 |---|---|
 | Prompt appeared on first camera use | yes / no |
 | Exact wording shown in the prompt | |
-| Listed under System Settings → Privacy & Security → Camera | yes / no |
+| Listed under System Settings → Privacy & Security → Camera | yes |
 
 If no prompt appeared, say what you saw instead — that is a finding, not a failure.
 
@@ -88,11 +88,11 @@ Tick only what you saw with your own eyes on your own Mac.
 
 | # | Check | Pass | Notes |
 |---|---|---|---|
-| 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☐ | |
-| 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☐ | |
-| 3 | **Snap** — pressing Space captures a still | ☐ | |
-| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☐ | |
-| 5 | **Normal quit** — ⌘Q closes the app and the camera indicator light goes **off** | ☐ | |
+| 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☑ | |
+| 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☑ | |
+| 3 | **Snap** — pressing Space captures a still | ☑ | |
+| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☑ | |
+| 5 | **Normal quit** — ⌘Q closes the app and the camera indicator light goes **off** | ☑ | |
 
 Check 4 is the one that catches the copy-vs-reference bug: wave at the camera after snapping.
 If the captured panel moves, the still is holding the live buffer instead of its own copy.
