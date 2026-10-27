@@ -88,7 +88,7 @@ Tick only what you saw with your own eyes on your own Mac.
 
 | # | Check | Pass | Notes |
 |---|---|---|---|
-| 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☑ | |
+| 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☑ | FaceTime HD Camera (built-in), picked over the iPhone Continuity Camera that macOS also lists |
 | 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☑ | |
 | 3 | **Snap** — pressing Space captures a still | ☑ | |
 | 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☑ | |
