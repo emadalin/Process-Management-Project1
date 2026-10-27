@@ -214,12 +214,95 @@ All four panels, per person: [`docs/screenshots/`](docs/screenshots/).
 
 ## Research & troubleshooting record
 
-_TODO — Ella (demo section 4). Sources, what we adapted, problems by category with fixes, and
-AI use with how we checked it._
+Drawn from the five test records and [`ai-use-log.md`](docs/reflections/ai-use-log.md). The
+full detail for each problem is in the record named next to it.
+
+### Sources
+
+Apple's developer documentation, every link fetched and confirmed on 2026-10-22. The full table,
+with which claim each one supports, is in
+[`section2-device-stack.md`](docs/section2-device-stack.md#sources).
+
+| Source | Used for |
+|---|---|
+| [AVCaptureSession](https://developer.apple.com/documentation/avfoundation/avcapturesession), [AVCaptureDevice](https://developer.apple.com/documentation/avfoundation/avcapturedevice), [AVCaptureVideoDataOutput](https://developer.apple.com/documentation/avfoundation/avcapturevideodataoutput) | Opening the camera, picking the device, getting each frame |
+| [Requesting authorization to capture and save media](https://developer.apple.com/documentation/avfoundation/requesting-authorization-to-capture-and-save-media), [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription) | The permission check and the prompt text |
+| [CIImage](https://developer.apple.com/documentation/coreimage/ciimage) | Filters, and why the still has to be rendered to get its own copy |
+| [Core Media I/O](https://developer.apple.com/documentation/coremediaio) | The layer under AVFoundation, for the device-stack diagram |
+
+### What we adapted
+
+- **Permission setup.** The usual advice is to edit `Info.plist` and a `.entitlements` file.
+  Neither file exists in Xcode 26, so we used the matching build settings instead and checked the
+  result with `codesign` (Sarah, Problem 2).
+- **AI-written camera code.** The first `CameraManager` from Claude Code did not compile until we
+  added `import Combine` (Sarah, Problem 1).
+- **Measuring the camera daemons.** `ps` was suggested first but hides short bursts of CPU, so we
+  switched to `top -l 2` (Sarah, Problem 4).
+
+### Problems by category
+
+| Category | Problem | Fix | Record |
+|---|---|---|---|
+| Install | `.gitignore` did not stop Xcode's auto-staged files | `git rm --cached` on each file | Sarah, 3 |
+| Install | `xcodebuild` failed in Terminal: the active developer directory was the Command Line Tools, not Xcode | Point `DEVELOPER_DIR` (or `xcode-select -s`) at Xcode.app | Georgia, 1 |
+| Install | `@Published` would not compile, and the error never mentioned it | `import Combine` | Sarah, 1 |
+| Install | App stopped responding and survived `kill -9` because Xcode's debugger still held it | Stop it from inside Xcode (⌘.) | Stephen, 2 |
+| Permissions | No `Info.plist` or `.entitlements` file to put the camera key in | Build settings `INFOPLIST_KEY_NSCameraUsageDescription` and `ENABLE_RESOURCE_ACCESS_CAMERA` | Sarah, 2 |
+| Permissions | `tccutil reset` did not bring the prompt back on Stephen's Mac (it did on Ella's) | Turn the permission off in System Settings instead | Stephen, 1 |
+| Device selection | Every Mac sees two cameras (built-in and an iPhone over Continuity) and the app cannot choose | No fix needed so far: every Mac got the built-in camera. Note which camera each test used | All |
+| Frame acquisition | `ps` made the camera daemons look idle while frames were flowing | Measure with `top -l 2` | Sarah, 4 |
+| Display / image format | None hit | | |
+
+Calli and Ella needed no special fixes. Every problem we hit was in setup or tooling, not in the
+app itself.
+
+### Error cases tested
+
+| Case | Result | Tested on |
+|---|---|---|
+| Permission denied | Clear message naming the fix, no crash | Sarah, Ella |
+| Snap before any frame | *"No frame yet — wait for the live feed, then snap."*, no crash | Sarah, Georgia, Calli |
+| No camera available | Not tested on any Mac | |
+
+### AI use
+
+Claude Code was used by Sarah (project setup and the device-stack research), Stephen and
+Georgia (diagnosing setup problems), and Ella (gathering environment info and filling in the
+test record). Each row in [`ai-use-log.md`](docs/reflections/ai-use-log.md) says what was
+suggested and how we checked it. It was wrong or incomplete five times: the missing
+`import Combine`, files that do not exist in Xcode 26, `.gitignore` advice that did not unstage
+files, camera daemons it said would start on demand (they run from boot), and `ps` as a
+measuring tool. Every claim was checked by building, running, or measuring on our own Macs.
 
 ## Strengths, limitations, and one improvement
 
-_TODO — Ella (demo section 5)._
+**Strengths**
+- Built from source and run on all five Macs, macOS 15.8.1 to 26.6.2. Nobody copied a working
+  build across.
+- The errors we tested fail cleanly. A denied permission and a snap before any frame both show a
+  message that says what is wrong, and the app stays open.
+- The captured still really is a copy. When we waved at the camera after snapping, the captured
+  panels stayed still, and every screenshot shows the captured panels at a different moment from
+  the live ones.
+- Quitting releases the camera: the indicator light goes off on ⌘Q.
+
+**Limitations**
+- **We don't choose the camera.** `AVCaptureDevice.default(for: .video)` lets macOS pick.
+  It picked the built-in camera on every Mac, but an iPhone nearby could change that without the
+  app noticing.
+- **The app uses about ten times the CPU the camera does** (about 41% against 4.4% on Sarah's Mac),
+  because `ContentView` renders four separate images every frame.
+- **Capture sometimes stopped when the window was fully covered** (seen once on Sarah's Mac).
+  Our guess is that macOS slows down hidden windows, but we haven't tested it on purpose.
+- **Snap's message is wrong when permission is denied.** It says to wait for the live feed,
+  which will never arrive.
+- **Not fully tested.** Nobody tested "no camera available", and Stephen's snap and quit checks
+  still need a clean redo.
+
+**One improvement with more time:** let the user pick the camera from a list built with
+`AVCaptureDevice.DiscoverySession`, and show the chosen camera's name in the window. That fixes
+the biggest gap above: right now the system picks the camera without telling the user.
 
 ## Learning & reflection
 
