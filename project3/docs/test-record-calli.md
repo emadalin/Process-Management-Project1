@@ -117,21 +117,8 @@ A clear message is a pass. A crash is a fail, even if the feature works otherwis
 One entry per problem, however small. "No special fixes needed" is a valid whole section, but
 say so explicitly rather than leaving it blank.
 
-### Problem 1
-- **Symptom:** what you saw, verbatim if there was an error message
-- **Category:** install / permissions / device selection / frame acquisition / display or image format
-- **What you checked:** including the things that turned out not to be it
-- **What fixed it:**
-- **How you confirmed the fix:**
-- **Who helped:**
-
-### Problem 2
-- **Symptom:**
-- **Category:**
-- **What you checked:**
-- **What fixed it:**
-- **How you confirmed the fix:**
-- **Who helped:**
+No special fixes needed. The project built and ran first time on this Mac, with no install,
+permission, device or display problems.
 
 ## 6. Screenshots
 
