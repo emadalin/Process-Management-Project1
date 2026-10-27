@@ -31,15 +31,15 @@ system_profiler SPCameraDataType     # the camera itself
 | Xcode | 27.1 (27A9275) |
 | Camera model (from `SPCameraDataType`) | FaceTime HD Camera |
 | Built-in or USB | Built-in |
-| Date tested | 2026-10-22 |
+| Date tested | 2026-10-22 (setup), 2026-10-27 (feature checks) |
 
 ## 2. Permission
 
 | Step | Result |
 |---|---|
-| Prompt appeared on first camera use | yes / no |
-| Exact wording shown in the prompt | |
-| Listed under System Settings → Privacy & Security → Camera | yes / no |
+| Prompt appeared on first camera use | yes — clicked Allow |
+| Exact wording shown in the prompt | Standard macOS camera prompt; exact wording not recorded. The usage string the app sets is "BoothCam shows your webcam so you can take and filter photos." (`INFOPLIST_KEY_NSCameraUsageDescription`) |
+| Listed under System Settings → Privacy & Security → Camera | not checked yet |
 
 If no prompt appeared, say what you saw instead — that is a finding, not a failure.
 
@@ -49,11 +49,11 @@ Tick only what you saw with your own eyes on your own Mac.
 
 | # | Check | Pass | Notes |
 |---|---|---|---|
-| 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☐ | |
-| 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☐ | |
-| 3 | **Snap** — pressing Space captures a still | ☐ | |
-| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☐ | |
-| 5 | **Normal quit** — ⌘Q closes the app and the camera indicator light goes **off** | ☐ | |
+| 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☑ | FaceTime HD Camera (the only camera on this Mac) |
+| 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☐ | not checked yet |
+| 3 | **Snap** — pressing Space captures a still | ☑ | |
+| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☐ | Wave test passed: CAPTURED ORIGINAL stayed still while LIVE ORIGINAL kept moving. CAPTURED FILTERED not checked yet |
+| 5 | **Normal quit** — ⌘Q closes the app and the camera indicator light goes **off** | ☑ | camera light went off |
 
 Check 4 is the one that catches the copy-vs-reference bug: wave at the camera after snapping.
 If the captured panel moves, the still is holding the live buffer instead of its own copy.
@@ -68,7 +68,7 @@ At least one, more if you hit them. Record what you did and what the app did.
 |---|---|---|---|
 | Permission denied | `tccutil reset Camera edu.samford.c335.BoothCam`, then click **Don't Allow** | | |
 | No camera available | e.g. unplug the USB cam, or Screen Sharing holding it | | |
-| Snap before any frame | press Space immediately on launch | | |
+| Snap before any frame | press Space immediately on launch | showed "No frame yet" message | no |
 | | | | |
 
 A clear message is a pass. A crash is a fail, even if the feature works otherwise.

@@ -114,21 +114,23 @@ struct ContentView: View {
 
     // MARK: - Actions
 
-    /// Member 3 (Georgia) owns this. Checklist (teamTask.md):
+    /// Member 3 (Georgia). Copies the current live frame into the CAPTURED panels.
     ///
-    ///   [ ] Render the current frame into a NEW CGImage with CIContext —
-    ///       a real copy, not a reference to the live pixel buffer
-    ///   [ ] Show it in the CAPTURED panel so it stays put as the feed moves
-    ///   [ ] Handle "snap before any frame arrived" with a message, not a crash
-    ///   [ ] Optional: save to file with NSSavePanel + PNG
-    ///
-    /// The shape it wants:
-    ///
-    ///     guard let frame = camera.latestFrame else { message = "No frame yet"; return }
-    ///     captured = Self.ciContext.createCGImage(frame, from: frame.extent)
-    ///
+    /// `latestFrame` is a `CIImage` wrapping a `CVPixelBuffer` from the capture
+    /// session's pool, which the session reuses for later frames. Rendering it
+    /// with `createCGImage` copies the pixels into new memory the still owns,
+    /// so the session gets its buffer back and the still never changes.
     private func snap() {
-        message = "Snap not implemented yet — Member 3 (Georgia) owns this."
+        guard let frame = camera.latestFrame else {
+            message = "No frame yet — wait for the live feed, then snap."
+            return
+        }
+        guard let still = Self.ciContext.createCGImage(frame, from: frame.extent) else {
+            message = "Could not copy the frame — try snapping again."
+            return
+        }
+        captured = still
+        message = nil
     }
 
     /// The single filter call both columns go through, so "the same filter is
