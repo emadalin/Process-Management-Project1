@@ -76,8 +76,8 @@ gave **BUILD SUCCEEDED** with no errors, on the scaffold at commit `3011dda`.
 
 | Step | Result |
 |---|---|
-| Prompt appeared on first camera use | yes / no |
-| Exact wording shown in the prompt | |
+| Prompt appeared on first camera use | yes |
+| Exact wording shown in the prompt | Title: "“BoothCam” would like to access the Camera." Body: "BoothCam shows your webcam so you can take and filter photos." (the body is our `INFOPLIST_KEY_NSCameraUsageDescription` string) |
 | Listed under System Settings → Privacy & Security → Camera | yes |
 
 If no prompt appeared, say what you saw instead — that is a finding, not a failure.
