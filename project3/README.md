@@ -118,7 +118,9 @@ project3/
   docs/
     section2-device-stack.md         the stack, documented vs observed      (Sarah Rae)
     learning-reflection-plan.md      how we make the learning visible       (everyone)
-    test-record-template.md          blank; copy to test-record-<name>.md   (Ella collects)
+    test-records/
+      test-record-template.md        blank; copy to test-record-<name>.md
+      test-record-sarah.md · -stephen.md · -georgia.md · -calli.md · -ella.md   one per Mac
     reflections/
       sarah.md · stephen.md · georgia.md · calli.md · ella.md   personal learning logs
       readiness-tracker.md           sign-off grid, the meeting and the drill
@@ -173,18 +175,18 @@ looking at, so **every test record must say which camera it used**.
 
 ## Test records
 
-One per Mac, five in total. Template: [`docs/test-record-template.md`](docs/test-record-template.md).
+One per Mac, five in total. Template: [`docs/test-record-template.md`](docs/test-records/test-record-template.md).
 
 **Four of five Macs pass all checks.** Every machine ran the app from its own build — nobody
 copied a working binary across.
 
 | Member | Record | macOS | Live | Filter | Snap | Filtered still | Quit releases camera |
 |---|---|---|---|---|---|---|---|
-| Sarah Rae | [record](docs/test-record-sarah.md) | 15.8.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Stephen | [record](docs/test-record-stephen.md) | 26.5.2 | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
-| Georgia | [record](docs/test-record-georgia.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Calli | [record](docs/test-record-calli.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Ella | [record](docs/test-record-ella.md) | 26.5.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Sarah Rae | [record](docs/test-records/test-record-sarah.md) | 15.8.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Stephen | [record](docs/test-records/test-record-stephen.md) | 26.5.2 | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
+| Georgia | [record](docs/test-records/test-record-georgia.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Calli | [record](docs/test-records/test-record-calli.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Ella | [record](docs/test-records/test-record-ella.md) | 26.5.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 Stephen's three blanks are honest rather than missing: he tested before Georgia's snap landed,
 and his quit test got tangled with a debugger-attached process. Needs one clean redo.

@@ -85,7 +85,7 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 ## Member 5: Testing, Troubleshooting & Research Record · `Ella`
 Owns demo section **4 (research & problem solving)**.
 
-- [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs one clean redo
+- [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-records/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs one clean redo
 - [ ] Run the app on every Mac with that person as early as possible, help diagnose problems together
 - [ ] Sort each problem by type: install, permissions, device selection, frame acquisition, display/image format
 - [ ] Write the **research & troubleshooting record**: sources, what we adapted, problems + fixes, AI use and how we checked it (or "no AI used")

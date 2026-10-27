@@ -75,7 +75,7 @@ At least one, more if you hit them. Record what you did and what the app did.
 | Snap before any frame | pressed Space while permission was denied, so no frame had ever arrived | Red message: *"No frame yet — wait for the live feed, then snap."* The capture was refused rather than attempted | **No** |
 | No camera available | not tested | | |
 
-Screenshot: [`screenshots/sarah-permission-denied.png`](screenshots/sarah-permission-denied.png)
+Screenshot: [`screenshots/sarah-permission-denied.png`](../screenshots/sarah-permission-denied.png)
 
 **One thing worth improving.** With permission denied, the snap message says *"wait for the live
 feed, then snap"* — but the live feed is never going to arrive, because the camera was refused.
@@ -88,7 +88,7 @@ A clear message is a pass. A crash is a fail, even if the feature works otherwis
 ## 5. Troubleshooting log
 
 Four problems hit while setting the project up. All four are also in
-[`reflections/ai-use-log.md`](reflections/ai-use-log.md), since AI was involved in each.
+[`reflections/ai-use-log.md`](../reflections/ai-use-log.md), since AI was involved in each.
 
 ### Problem 1 — `@Published` would not compile
 
@@ -158,7 +158,7 @@ Four per person, labelled, with your name in the filename:
 did.
 
 One window shot covering all four panels:
-[`screenshots/sarah-window-all-four-panels.png`](screenshots/sarah-window-all-four-panels.png)
+[`screenshots/sarah-window-all-four-panels.png`](../screenshots/sarah-window-all-four-panels.png)
 
 | Screenshot | Committed | Filename |
 |---|---|---|
@@ -208,7 +208,7 @@ takes seconds to warm up, resolution differences. Say whether it is **observed**
 > **Not filled in yet — deliberately.** These are honest self-assessments, and the team teaching
 > meeting has not happened. Ticking them now would defeat the point of the readiness tracker.
 > To be completed after the meeting; see
-> [`learning-reflection-plan.md`](learning-reflection-plan.md).
+> [`learning-reflection-plan.md`](../learning-reflection-plan.md).
 
 
 The ground rule is that anyone can be asked about any part. Tick honestly — an untick here is

@@ -47,7 +47,7 @@ a description of the code.
 **What I asked, what I checked, and what was wrong or missing:**
 
 10-27: used Claude Code to pull changes, collect my Mac's version and camera info, and fill in
-`test-record-ella.md` from what I reported. I ran every check myself, including watching the
+`../test-records/test-record-ella.md` from what I reported. I ran every check myself, including watching the
 camera light go off on quit, which Claude had ticked before I confirmed it. I first gave the
 app's "permission denied" message as the prompt wording; I reset permission with `tccutil` and
 confirmed the real system prompt from a screenshot.
