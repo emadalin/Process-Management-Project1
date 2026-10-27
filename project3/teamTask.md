@@ -4,7 +4,10 @@
 **Environment:** Swift on macOS (same as Projects 1 and 2)
 **Stack:** AVFoundation (camera), Core Image (filters), SwiftUI (window/UI)
 **Filters:** Grayscale (main) + Color Invert (optional second toggle)
-**Demo:** 30 min · **Estimated effort:** ~6 hours
+**Demo:** 30 min, in class · **Due: Thursday 5 November** · **Estimated effort:** ~6 hours
+
+**Learning session + random drill: Thursday 29 October, 9:35–10:55 in class** — a week before
+the demo, which is the point: the drill has to leave time to fix whatever it exposes.
 
 ---
 
@@ -138,13 +141,26 @@ demo that way instead (project 2 did), this table gets updated to match.
 - What problem happened on your Mac, and how did you help solve it?
 - Which source or AI suggestion did we adapt, test, or correct?
 
-## Submission checklist (Canvas)
-- [ ] Source code + Xcode project and assets
-- [ ] Setup & run instructions (versions, permissions, device selection, controls)
-- [ ] Test record for each of the 5 Macs, with labeled screenshots
-- [ ] Device-stack diagram with references
-- [ ] Research & troubleshooting record (incl. AI use)
-- [ ] Team contribution statement
+## Submission checklist (Canvas) — due Thursday 5 November
+
+- [x] **Source code + Xcode project and assets** — `BoothCam/`, builds clean from a fresh clone
+- [x] **Setup & run instructions** (versions, permissions, device selection, controls) — `README.md`
+- [ ] **Test record for each of the 5 Macs, with labeled screenshots** — four of five records
+      complete. **Stephen** needs a clean redo of checks 3–5; **Stephen and Georgia** owe
+      screenshots
+- [x] **Device-stack diagram with references** — `docs/section2-device-stack.md`, every claim
+      marked documented or observed, with the command or the Apple link behind it
+- [ ] **Research & troubleshooting record (incl. AI use)** — Ella (demo section 4). The AI half
+      is seeded in `docs/reflections/ai-use-log.md`; five entries need their "what we learned"
+      line
+- [ ] **Team contribution statement** — 0 of 5 collected. Thursday's session is the moment to
+      ask in person
+
+### Not on the Canvas list, but the professor said it matters
+
+- [ ] Everyone's learning log — only Ella has written hers
+- [ ] Readiness tracker — 1 tick of 20; filled in at Thursday's session
+- [ ] Team reflection — written together after testing
 
 ## Controls
 | Key | Action |

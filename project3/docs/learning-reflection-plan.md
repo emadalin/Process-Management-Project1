@@ -19,7 +19,8 @@ it does not write this. If it helped, say so.
 
 ## 📅 Booked: Thursday 29 October, 9:35–10:55, in class
 
-**Eighty minutes — the whole thing fits in that one slot.** Bring your laptop with the app
+**A week before the demo on Thursday 5 November** — deliberately, so the drill leaves time to
+fix whatever it exposes. **Eighty minutes — the whole thing fits in that one slot.** Bring your laptop with the app
 building, and have your own log open in a second window.
 
 | Time | What |

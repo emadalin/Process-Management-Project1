@@ -4,6 +4,9 @@ A Photo Booth–style macOS app: live webcam feed, a filter applied to it, and a
 snap and compare. Built to show how an app reaches a physical device through the operating
 system, and what each layer in between is responsible for.
 
+> **Due: Thursday 5 November, in class.** Learning session and random drill: Thursday 29 October,
+> 9:35–10:55.
+>
 > **Status:** the app is feature-complete — live video, filter, snap and the filtered still all
 > work, and four of five Macs pass every check. What remains is write-up: the research record,
 > the sources list, and the contribution statement. Sections marked _TODO_ below name whose they
