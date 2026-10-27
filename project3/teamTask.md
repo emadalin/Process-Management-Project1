@@ -73,11 +73,11 @@ Owns demo section **3b (snap)**. Works in `CameraManager.swift` + `ContentView.s
 ## Member 4: Filters & Comparison · `Calli`
 Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 
-- [ ] `func grayscale(_ image: CIImage) -> CIImage` using `CIPhotoEffectMono` or `CIColorControls` (saturation 0)
-- [ ] Optional `func invert(_:)` using `CIColorInvert`
-- [ ] Apply the same function to the live frame **and** the captured still
-- [ ] Layout: **LIVE ORIGINAL | LIVE FILTERED** on top, **CAPTURED ORIGINAL | CAPTURED FILTERED** below (or a toggle with **F**)
-- [ ] Keep the originals untouched; filtering always creates a new image
+- [x] `func grayscale(_ image: CIImage) -> CIImage` using `CIPhotoEffectMono` or `CIColorControls` (saturation 0) — `CIPhotoEffectMono`; builds clean
+- [x] Optional `func invert(_:)` using `CIColorInvert`
+- [x] Apply the same function to the live frame **and** the captured still — both columns go through `ContentView.filter(_:)`; the still side shows once Georgia's snap lands
+- [x] Layout: **LIVE ORIGINAL | LIVE FILTERED** on top, **CAPTURED ORIGINAL | CAPTURED FILTERED** below (or a toggle with **F**) — grid from Sarah Rae's `ContentView` skeleton, **F** toggles the filter, **I** switches to invert
+- [x] Keep the originals untouched; filtering always creates a new image — checked on a solid red test image: original still (255, 0, 0) after filtering
 - [ ] Explain what changes in the data: RGB → one brightness value (≈ 0.3R + 0.59G + 0.11B); invert = 1 − each channel (255 − value in 8-bit)
 - [ ] Explain where it runs: in Core Image (library, usually on the GPU), called from our code, not a camera setting
 - [ ] Note any effect on responsiveness or quality (check frame rate with filter on/off)

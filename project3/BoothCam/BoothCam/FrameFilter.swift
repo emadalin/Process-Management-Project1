@@ -4,14 +4,13 @@
 //
 //  Member 4 (Calli) — demo section 3c: the filter.
 //
-//  This is a STUB so the project builds. Both functions currently return the
-//  image unchanged, so the filtered panels look identical to the originals
-//  until they are implemented. Checklist (teamTask.md):
+//  Checklist (teamTask.md):
 //
-//    [ ] grayscale(_:) using CIPhotoEffectMono, or CIColorControls with saturation 0
-//    [ ] invert(_:) using CIColorInvert (optional second toggle)
-//    [ ] Apply the SAME function to the live frame and the captured still
-//    [ ] Never mutate the input — filtering always returns a new image
+//    [x] grayscale(_:) using CIPhotoEffectMono
+//    [x] invert(_:) using CIColorInvert (optional second toggle)
+//    [x] Apply the SAME function to the live frame and the captured still
+//        (ContentView.filter(_:) is the one call both columns go through)
+//    [x] Never mutate the input — filtering always returns a new image
 //    [ ] Explain the data change: RGB -> one brightness value
 //        (about 0.3R + 0.59G + 0.11B); invert = 1 - each channel
 //    [ ] Explain where it runs: inside Core Image, usually on the GPU, called
@@ -36,25 +35,37 @@ enum FrameFilter {
 
     /// Drops colour, keeping brightness.
     ///
-    /// Returns the input unchanged for now, so the UI has something to draw.
+    /// Each pixel's R, G and B become one brightness value — the textbook
+    /// version is 0.3R + 0.59G + 0.11B (green counts most because our eyes are
+    /// most sensitive to it). The input is not changed; this returns a new image.
+    ///
+    /// Observed: the real numbers differ from that formula. Pure red comes out
+    /// as 132 (of 255), not 77, because Core Image does the maths on linear
+    /// light rather than on the stored 0–255 values, and PhotoEffectMono adds
+    /// its own film-style contrast curve on top. Green > red > blue still holds.
     static func grayscale(_ image: CIImage) -> CIImage {
-        // TODO: Member 4 (Calli)
-        //   let f = CIFilter.photoEffectMono()
-        //   f.inputImage = image
-        //   return f.outputImage ?? image
-        image
+        let filter = CIFilter.photoEffectMono()
+        filter.inputImage = image
+        // outputImage is only nil if the filter has no input, which cannot
+        // happen here — falling back to the original keeps the panel drawing.
+        if let output = filter.outputImage {
+            return output
+        }
+        return image
     }
 
-    /// Flips every channel: 1 - value.
+    /// Flips every channel: 1 - value (255 - value in 8-bit terms), so
+    /// black becomes white and red becomes cyan. Returns a new image.
     static func invert(_ image: CIImage) -> CIImage {
-        // TODO: Member 4 (Calli), optional
-        //   let f = CIFilter.colorInvert()
-        //   f.inputImage = image
-        //   return f.outputImage ?? image
-        image
+        let filter = CIFilter.colorInvert()
+        filter.inputImage = image
+        if let output = filter.outputImage {
+            return output
+        }
+        return image
     }
 
     /// True once the filters actually do something — the UI uses this to label
     /// the filtered panels honestly instead of showing a copy of the original.
-    static let isImplemented = false
+    static let isImplemented = true
 }
