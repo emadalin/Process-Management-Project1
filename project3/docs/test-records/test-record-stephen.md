@@ -57,8 +57,8 @@ Tick only what you saw with your own eyes on your own Mac.
 |---|---|---|---|
 | 1 | **Live feed** — LIVE ORIGINAL shows moving video | ☑ | own face/room visible, live |
 | 2 | **Live filter** — LIVE FILTERED differs from the original, and tracks it | ☑ | grayscale panel visibly tracked the color original |
-| 3 | **Snap** — pressing Space captures a still | ☐ | not personally run yet — Georgia's test record already confirms it works |
-| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☐ | not personally run yet |
+| 3 | **Snap** — pressing Space captures a still | ☑ | confirmed on a clean run — CAPTURED ORIGINAL shows a still after pressing Space (`docs/screenshots/stephen-captured-original.png`) |
+| 4 | **Filtered still** — CAPTURED FILTERED matches the filter applied to the still, and the captured panel does **not** change when you move | ☑ | confirmed — CAPTURED FILTERED shows the grayscale filter correctly applied (`stephen-captured-filtered.png`). Captured panel is visibly a different moment than the live panel at the same point in time (mouth open in LIVE ORIGINAL vs. closed in CAPTURED ORIGINAL) — the still is a frozen copy, not a reference into the live buffer |
 | 5 | **Normal quit** — ⌘Q closes the app and the camera indicator light goes **off** | ☐ | attempted, but the session got tangled with a debugger-attached process (see Problem 2) — needs a clean redo |
 
 Check 4 is the one that catches the copy-vs-reference bug: wave at the camera after snapping.
@@ -126,10 +126,10 @@ did.
 
 | Screenshot | Committed | Filename |
 |---|---|---|
-| Live original | ☐ | not yet committed |
-| Live filtered | ☐ | not yet committed |
-| Captured original | ☐ | not yet committed |
-| Captured filtered | ☐ | not yet committed |
+| Live original | ☑ | `stephen-live-original.png` |
+| Live filtered | ☑ | `stephen-live-filtered.png` |
+| Captured original | ☑ | `stephen-captured-original.png` |
+| Captured filtered | ☑ | `stephen-captured-filtered.png` |
 
 ## 7. Limitations you noticed on this Mac
 
