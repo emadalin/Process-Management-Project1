@@ -1,10 +1,10 @@
 # Georgia — Project 3 Learning Log
 
 **I built:** snap / still capture (section 3b)
+
 **I may be asked to present:** any of the five sections.
 
-> Your own words, short. Two sentences per answer is fine. AI can explain a concept to you; it
-> does not write this. If it helped, say so at the bottom.
+When you press Space the current frame of the live feed is copied into its own memory and shown on the captured panel. The saved photo will stay frozen while the live feed will continue to move.
 
 ---
 
@@ -13,7 +13,8 @@
 **What I built, and the OS concept behind it** — not what the code does, but what it shows about
 how the operating system works:
 
-**One thing I got wrong at first, and how I found out:**
+The OS concept is copying data vs holding a reference to reused memory. That means that the snap is copying the memory from the camera and remembers it until the next snap, then it erases that and replaces it with new memory.
+
 
 ---
 
@@ -45,6 +46,9 @@ a description of the code.
 ## AI use
 
 **What I asked, what I checked, and what was wrong or missing:**
+I used Claude Code to pull and build the project, set up my test record, write `snap()`, and explain the code and OS concepts to me. I checked `snap()` by running the app myself: the wave test (the CAPTURED panel stayed still while I moved), pressing Space before the camera started ("No frame yet", no crash), and quitting to see the camera light go off. It first added a Save to PNG button that the app's sandbox would have blocked, so I had it removed, and my first explanation of the OS concept said the camera made the copy until checking the code showed it is `snap()` that copies.
+
+*(This AI use section was drafted by Claude Code from what happened in my sessions.)*
 
 (Also add a row to [`ai-use-log.md`](ai-use-log.md).)
 
