@@ -89,11 +89,11 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 Owns demo section **4 (research & problem solving)**.
 
 - [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-records/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs one clean redo
-- [ ] Run the app on every Mac with that person as early as possible, help diagnose problems together
+- [x] Run the app on every Mac with that person as early as possible, help diagnose problems together — BoothCam has run on all five Macs
 - [x] Sort each problem by type: install, permissions, device selection, frame acquisition, display/image format — README, *Problems by category*
 - [x] Write the **research & troubleshooting record**: sources, what we adapted, problems + fixes, AI use and how we checked it (or "no AI used") — README, *Research & troubleshooting record*
 - [ ] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name — in so far: Sarah (2), Calli (1), Ella (4). **Still needed: Stephen, Georgia**
-- [ ] Write the strengths, limitations, and one improvement with more time (demo section 5)
+- [x] Write the strengths, limitations, and one improvement with more time (demo section 5) — README, *Strengths, limitations, and one improvement*
 
 ---
 
@@ -152,8 +152,7 @@ demo that way instead (project 2 did), this table gets updated to match.
       marked documented or observed, with the command or the Apple link behind it
 - [x] **Research & troubleshooting record (incl. AI use)** — written by Ella in the README,
       with problems by category, error cases and AI use. Sarah's five rows in
-      `docs/reflections/ai-use-log.md` carry their "what we learned" lines; Ella's row still
-      needs hers
+      `docs/reflections/ai-use-log.md` and Ella's row all carry their "what we learned" lines
 - [ ] **Team contribution statement** — all five rows **seeded from what is committed** in the
       README, so each person only has to confirm or rewrite their own. 0 of 5 confirmed;
       Thursday's session is the moment to ask in person
