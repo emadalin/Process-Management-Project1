@@ -37,8 +37,7 @@ Order: Sarah → Stephen → Georgia → Calli → Ella, starting 9:40.
 **Held:** Thursday 29 October, in class. **All five of us were there.**
 
 Each member walked through their own code and the key parts of the project, and the rest of the
-team heard all five sections. The ticks above record that session, entered by Sarah with the
-team's agreement.
+team heard all five sections. The ticks above record that session, entered by Sarah.
 
 **What the ticks are based on:** everyone attended and heard every section taught and discussed.
 We did not run separate one-to-one explain-backs, so these are "heard it taught and could
