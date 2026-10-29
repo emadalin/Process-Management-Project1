@@ -161,7 +161,7 @@ demo that way instead (project 2 did), this table gets updated to match.
 - [ ] Everyone's learning log — **Sarah and Ella have written theirs**; Stephen, Georgia and
       Calli still have blank templates. Thursday's session is designed so they get written in
       the room
-- [ ] Readiness tracker — 1 tick of 20; filled in at Thursday's session
+- [x] Readiness tracker — **20 of 20**, from the 29 Oct session where all five attended and each walked through their own code. The drill is still to run
 - [ ] Team reflection — written together after testing
 
 ## Controls

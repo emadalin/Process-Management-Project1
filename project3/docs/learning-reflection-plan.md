@@ -114,5 +114,5 @@ present any section, that proves more than any document does.
 - [ ] Everyone fills in their own log straight after it — **Sarah ✔ and Ella ✔ already have**;
       Stephen, Georgia and Calli write theirs in the session
 - [ ] 15-minute random drill — same session, 10:30
-- [ ] Readiness tracker complete before demo day
+- [x] Readiness tracker complete before demo day — filled 29 Oct
 - [ ] Team reflection, one paragraph each
