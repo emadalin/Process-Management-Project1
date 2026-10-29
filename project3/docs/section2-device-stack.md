@@ -177,6 +177,19 @@ The second is a **Continuity Camera** — an iPhone, offered as a local capture 
 network, through the same API as the built-in one. `avconferenced` is running, which is the
 process that makes it available (**observed name, inferred role**).
 
+**macOS warns us about this directly (observed).** Running the app prints:
+
+```
+WARNING: AVCaptureDeviceTypeExternal is deprecated for Continuity Cameras.
+Please use AVCaptureDeviceTypeContinuityCamera and add
+NSCameraUseContinuityCameraDeviceType to your Info.plist.
+```
+
+We never mention Continuity anywhere in our code — this comes from AVFoundation noticing the
+iPhone while enumerating. It is a useful piece of evidence for this section: the framework is
+telling us it handles Continuity cameras as a distinct device type, and that an app which cares
+has to opt in. We don't, which is part of why `.default` keeps returning the built-in camera.
+
 **Consequence for the team:** every test record must say *which* camera it used. A teammate with
 an iPhone nearby may get a different device than the one they are looking at, and "the feed is
 not my webcam" will look like a bug. This is the strongest argument for listing devices
@@ -226,7 +239,7 @@ explicitly rather than taking `.default`.
 | Is the built-in camera a USB device? | No — `ioreg -p IOUSB` shows no camera |
 | Can something fake a camera? | Yes — the DAL plug-in directory is the documented way in |
 | Did our entitlement actually ship? | `codesign -d --entitlements` on the built app |
-| What format are frames in? | `AVCaptureVideoDataOutput.availableVideoPixelFormatTypes` lists six; the first is the default when we do not ask for one — and we don't |
+| What format are frames in? | `2vuy` — predicted from `availableVideoPixelFormatTypes`, then confirmed on a live frame with `CVPixelBufferGetPixelFormatType` |
 
 **The honest limit:** we can see the *processes* and the *interfaces*, and we can verify our own
 entitlement. We cannot see inside the driver or the ISP, and nothing we ran proves what the
@@ -258,9 +271,18 @@ started as RGB — the camera hands us brightness *already separated* from colou
 is already at half resolution. Core Image converts into a working colour space for us, which is
 exactly the kind of thing section 5 means by "what the library hides".
 
-**Honest limit:** this is the output's advertised default, read from
-`availableVideoPixelFormatTypes` rather than from a frame in flight. Confirming it on a live
-frame needs one line of `CVPixelBufferGetPixelFormatType` in Stephen's delegate.
+**Confirmed on a live frame.** Stephen added a one-time log in the capture delegate, and a real
+frame reports the same thing:
+
+```
+[CameraManager] device: FaceTime HD Camera (AVCaptureDeviceTypeBuiltInWideAngleCamera,
+                        uniqueID FDF90FEB-59E5-4FCF-AABD-DA03C4E19BFB)
+[CameraManager] pixel format: 2vuy (raw 846624121)
+```
+
+So the prediction from `availableVideoPixelFormatTypes` and the measurement from
+`CVPixelBufferGetPixelFormatType` agree — and the same line records **which** camera backed the
+run, which is the other thing this section says every test record needs.
 
 ## Sources
 
