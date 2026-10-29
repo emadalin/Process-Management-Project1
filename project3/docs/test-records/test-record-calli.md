@@ -131,16 +131,33 @@ One window shot with all four panels visible, grayscale mode, filter on.
 
 | Screenshot | Committed | Filename |
 |---|---|---|
-| Live original | ☑ | `screenshots/calli-all-panels.png` (top left) |
-| Live filtered | ☑ | `screenshots/calli-all-panels.png` (top right) |
-| Captured original | ☑ | `screenshots/calli-all-panels.png` (bottom left) |
-| Captured filtered | ☑ | `screenshots/calli-all-panels.png` (bottom right) |
+| Live original | ☑ | `../screenshots/calli-all-panels.png` (top left) |
+| Live filtered | ☑ | `../screenshots/calli-all-panels.png` (top right) |
+| Captured original | ☑ | `../screenshots/calli-all-panels.png` (bottom left) |
+| Captured filtered | ☑ | `../screenshots/calli-all-panels.png` (bottom right) |
 
 ## 7. Limitations you noticed on this Mac
 
 Anything that worked but not well: frame rate with the filter on, lag on snap, a camera that
 takes seconds to warm up, resolution differences. Say whether it is **observed** (you saw it) or
 **documented** (you read it).
+
+**Filter cost: BoothCam's CPU use** (observed, Activity Monitor % CPU, about 15 s each, FaceTime HD
+Camera, live feed running, a snap on screen)
+
+| Setting | % CPU |
+|---|---|
+| Filter on, grayscale | 77–82% |
+| Filter off (**F**) | 45–50% |
+| Filter on, invert (**I**) | 77–84% |
+
+- Turning the filter on adds about **30 percentage points** of CPU. Grayscale and invert cost about
+  the same.
+- That difference is not only the filter maths. **F** hides the two filtered panels completely, so
+  "off" also skips rendering those two panels (`createCGImage`) and drawing them on screen. The
+  30 points is the cost of the whole filtered column, not of `CIPhotoEffectMono` alone.
+- Even with the filter off, BoothCam uses about 45–50% CPU just to show the live feed and the
+  captured still.
 
 ## 8. Can you explain the whole app?
 
