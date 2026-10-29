@@ -337,7 +337,7 @@ and answer a "what if" question. Total cost per person is about **75 minutes**, 
 | 2 | Stephen | Camera connection & live video | `CameraManager.swift`: permission checking and requesting, device selection, the capture session, `AVCaptureVideoDataOutput` with its delegate on a background queue, frame → `CIImage` publishing on the main thread, the error cases, and releasing the camera on quit |
 | 3 | Georgia | Still capture | The snap path in `ContentView.swift`: rendering the live frame into a **new** `CGImage` with `CIContext` so the still owns its pixels rather than holding a reused buffer; the Space shortcut, the CAPTURED panels, and the no-frame-yet case |
 | 4 | Calli | Filters & comparison | `FrameFilter.swift`: grayscale with `CIPhotoEffectMono` and invert with `CIColorInvert`, applied through one call so the live frame and the still get the same treatment; and the measured finding that pure red comes out at 132 rather than the textbook 77, because Core Image works in linear light |
-| 5 | Ella | Testing & research record | The test records across five Macs, the screenshots, and the research and troubleshooting record; confirming the real permission prompt rather than the app's own denial message |
+| 5 | Ella | Testing & research record | I collected test records for all teammates, ran the app on all 5 Macs with each teammate, wrote section 5, and completed the research and troubleshooting record. |
 
 _Rows are compiled from what is committed. **Each member: confirm your row or rewrite it in your
 own words (3–5 sentences).** Thursday's session is a good moment to do it in person._
@@ -356,9 +356,9 @@ before the demo so the drill leaves time to fix whatever it exposes.
 **Ella Madalinski (Member 5)** owns testing, troubleshooting and the research record, and
 presents demo sections 4 and 5. I built and ran BoothCam on my own Mac and completed its test
 record: all five feature checks, the permission prompt, and the permission-denied error case,
-with screenshots. I'm collecting the test records from all five Macs and running the app with
-each teammate to sort any setup problems by type. I'm also writing the research and
-troubleshooting record, including how the team used AI and how we checked it. I used Claude
+with screenshots. I collected the test records from all five Macs and ran the app with each
+teammate to sort any setup problems by type. I also wrote the research and troubleshooting
+record, including how the team used AI and how we checked it. I used Claude
 Code to help fill in my test record, and I confirmed every result on my own machine.
 
 ## Sources
