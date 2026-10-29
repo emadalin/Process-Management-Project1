@@ -78,6 +78,11 @@ final class CameraManager: NSObject, ObservableObject {
     /// trying to add an input/output that's already there. `sessionQueue`-only.
     private nonisolated(unsafe) var isConfigured = false
 
+    /// Guards the one-time pixel-format log below, so it prints once per
+    /// session instead of once per frame. `sessionQueue`-only, same
+    /// justification as the rest of this group.
+    private nonisolated(unsafe) var hasLoggedPixelFormat = false
+
     // MARK: - Lifecycle
 
     /// Requests permission, builds the session, and starts frames flowing.
@@ -198,6 +203,15 @@ final class CameraManager: NSObject, ObservableObject {
             return (false, "no camera found")
         }
 
+        // One-time, for the README's device-selection note: this Mac reports
+        // TWO cameras (the built-in FaceTime/MacBook Pro camera, and an
+        // iPhone over Continuity), both through the same
+        // AVCaptureDevice.default(for:) call. We never chose which one — the
+        // system did, by whatever priority order it uses internally. Printed
+        // once so the test record can say which camera actually backed each
+        // run, which the team's device-stack doc already flags as required.
+        print("[CameraManager] device: \(device.localizedName) (\(device.deviceType.rawValue), uniqueID \(device.uniqueID))")
+
         let input: AVCaptureDeviceInput
         do {
             input = try AVCaptureDeviceInput(device: device)
@@ -263,6 +277,18 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
                                    didOutput sampleBuffer: CMSampleBuffer,
                                    from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+
+        // One-time, for Sarah Rae's section 2 "what the library hides vs
+        // what we can still find out": the pixel format is AVFoundation's
+        // choice, not ours — we never asked for one. Printed once (not per
+        // frame, which would spam the console at ~30/sec) the first time a
+        // frame actually arrives.
+        if !hasLoggedPixelFormat {
+            hasLoggedPixelFormat = true
+            let formatCode = CVPixelBufferGetPixelFormatType(pixelBuffer)
+            print("[CameraManager] pixel format: \(fourCCString(formatCode)) (raw \(formatCode))")
+        }
+
         // CIImage wrapping a CVPixelBuffer is a recipe, not a pixel copy —
         // cheap here. The actual render happens later, in ContentView, each
         // time a panel needs to draw.
@@ -282,4 +308,23 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
                                    from connection: AVCaptureConnection) {
         print("[CameraManager] dropped a frame")
     }
+}
+
+/// Decodes a `CVPixelBufferGetPixelFormatType` / `OSType` FourCC into its
+/// 4-character form (e.g. `420v`, `BGRA`) — the raw integer alone isn't
+/// something a person, or a doc, can read. Apple's own pixel format
+/// constants (`kCVPixelFormatType_420YpCbCr8BiPlanarFullRange`, etc.) are
+/// *defined* as these four bytes, so this is lossless, not a guess. A byte
+/// outside the printable ASCII range renders as `.` rather than garbage.
+private nonisolated func fourCCString(_ type: OSType) -> String {
+    let bytes: [UInt8] = [
+        UInt8((type >> 24) & 0xFF),
+        UInt8((type >> 16) & 0xFF),
+        UInt8((type >> 8) & 0xFF),
+        UInt8(type & 0xFF),
+    ]
+    let characters = bytes.map { byte in
+        (32...126).contains(byte) ? Character(UnicodeScalar(byte)) : "."
+    }
+    return String(characters)
 }
