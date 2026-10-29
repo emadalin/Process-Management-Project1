@@ -153,9 +153,9 @@ demo that way instead (project 2 did), this table gets updated to match.
 - [x] **Research & troubleshooting record (incl. AI use)** — written by Ella in the README,
       with problems by category, error cases and AI use. Sarah's five rows in
       `docs/reflections/ai-use-log.md` and Ella's row all carry their "what we learned" lines
-- [ ] **Team contribution statement** — all five rows **seeded from what is committed** in the
-      README, so each person only has to confirm or rewrite their own. 0 of 5 confirmed;
-      Thursday's session is the moment to ask in person
+- [ ] **Team contribution statement** — all five rows seeded from what is committed in the
+      README. **2 of 5 confirmed in their own words: Sarah and Ella.** Stephen, Georgia and
+      Calli still to confirm or rewrite theirs
 
 ### Not on the Canvas list, but the professor said it matters
 
