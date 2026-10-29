@@ -226,7 +226,7 @@ explicitly rather than taking `.default`.
 | Is the built-in camera a USB device? | No — `ioreg -p IOUSB` shows no camera |
 | Can something fake a camera? | Yes — the DAL plug-in directory is the documented way in |
 | Did our entitlement actually ship? | `codesign -d --entitlements` on the built app |
-| What format are frames in? | Read `CVPixelBufferGetPixelFormatType` in the delegate — _TODO once Stephen's code runs_ |
+| What format are frames in? | `AVCaptureVideoDataOutput.availableVideoPixelFormatTypes` lists six; the first is the default when we do not ask for one — and we don't |
 
 **The honest limit:** we can see the *processes* and the *interfaces*, and we can verify our own
 entitlement. We cannot see inside the driver or the ISP, and nothing we ran proves what the
@@ -235,9 +235,32 @@ says they are.
 
 ---
 
-## Still to do
+## 6. What format do frames arrive in?
 
-- [ ] Record the pixel format of a real frame
+We never set `videoSettings`, so AVFoundation picks. Asking the output what it supports
+(**observed**, no camera needed — the list comes from the class itself):
+
+```
+DEFAULT  846624121  '2vuy'      <- 8-bit 4:2:2 YCbCr
+         2037741171 'yuvs'
+         875704438  '420v'
+         875704422  '420f'
+         1111970369 'BGRA'
+```
+
+The default is **`2vuy`** — `kCVPixelFormatType_422YpCbCr8`. That is **YUV, not RGB**: one
+brightness value (Y) per pixel, with the colour (Cb, Cr) shared between pairs of pixels, which
+is why it is called 4:2:2.
+
+**Why that is worth saying out loud in the demo.** Section 3c describes grayscale as "take R, G
+and B and collapse them into one brightness number". That is the right idea, but the data never
+started as RGB — the camera hands us brightness *already separated* from colour, and the chroma
+is already at half resolution. Core Image converts into a working colour space for us, which is
+exactly the kind of thing section 5 means by "what the library hides".
+
+**Honest limit:** this is the output's advertised default, read from
+`availableVideoPixelFormatTypes` rather than from a frame in flight. Confirming it on a live
+frame needs one line of `CVPixelBufferGetPixelFormatType` in Stephen's delegate.
 
 ## Sources
 
