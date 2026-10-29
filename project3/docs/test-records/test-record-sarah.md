@@ -205,19 +205,13 @@ takes seconds to warm up, resolution differences. Say whether it is **observed**
 
 ## 8. Can you explain the whole app?
 
-> **Not filled in yet — deliberately.** These are honest self-assessments, and the team teaching
-> meeting has not happened. Ticking them now would defeat the point of the readiness tracker.
-> To be completed after the meeting; see
-> [`learning-reflection-plan.md`](../learning-reflection-plan.md).
-
-
 The ground rule is that anyone can be asked about any part. Tick honestly — an untick here is
 information for the rehearsal, not a mark against you.
 
 | | Confident | Explain it to me first |
 |---|---|---|
-| Which call opens the camera, and what its result tells you | ☐ | ☐ |
-| How a frame gets from the device to the screen | ☐ | ☐ |
-| Why the captured still does not change with the live feed | ☐ | ☐ |
-| What grayscale does to the pixel data | ☐ | ☐ |
-| Where camera resources are released, and why it matters | ☐ | ☐ |
+| Which call opens the camera, and what its result tells you | ☑ | ☐ |
+| How a frame gets from the device to the screen | ☑ | ☐ |
+| Why the captured still does not change with the live feed | ☑ | ☐ |
+| What grayscale does to the pixel data | ☑ | ☐ |
+| Where camera resources are released, and why it matters | ☑ | ☐ |
