@@ -322,6 +322,9 @@ how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
 **Booked: Thursday 29 October, 9:35–10:55, in class** — the teaching session and the random
 drill both fit in that slot. Agenda is in the plan.
 
+Progress: **Sarah and Ella have written their learning logs**; Stephen, Georgia and Calli have
+not yet. The readiness tracker is at 1 tick of 20 — it gets filled in at Thursday's session.
+
 A readiness box is only ticked by a **teammate** who heard you explain the section with no notes
 and answer a "what if" question. Total cost per person is about **75 minutes**, most of it a
 60-minute team meeting we need anyway.

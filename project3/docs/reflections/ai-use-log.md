@@ -14,9 +14,8 @@ one that matters**.
 | 10-27 | Ella | Claude Code: pull changes, gather my Mac's environment info, fill in my test record from what I reported | Ran every feature check myself and watched the camera light go off on quit. Claude had ticked the quit check before I'd confirmed the light. I mistook the app's "permission denied" message for the system prompt; Claude caught it, and I reset permission and confirmed the real prompt wording from a screenshot | |
 | | | | | |
 
-> **The five rows above are drafts.** The facts are what actually happened during setup — Sarah
-> was there for all of them. **The last column is blank on purpose: that part is yours to
-> write.** Check the facts too and fix anything wrong.
+> Sarah's five rows are complete — the facts are what happened during setup and the last column
+> is in her own words. **Ella's row still needs its "what we learned" line.**
 
 Everyone should be able to tell **two of these stories**, since anyone could be drawn for
 section 4.

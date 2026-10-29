@@ -111,7 +111,8 @@ present any section, that proves more than any document does.
 
 - [x] Skeletons exist in `docs/reflections/`
 - [x] Book the meeting — **Thursday 29 October, 9:35–10:55, in class**
-- [ ] Everyone fills in their own log straight after it
+- [ ] Everyone fills in their own log straight after it — **Sarah ✔ and Ella ✔ already have**;
+      Stephen, Georgia and Calli write theirs in the session
 - [ ] 15-minute random drill — same session, 10:30
 - [ ] Readiness tracker complete before demo day
 - [ ] Team reflection, one paragraph each

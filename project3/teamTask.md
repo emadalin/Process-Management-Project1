@@ -48,7 +48,7 @@ Owns demo section **2 (device stack & library selection)**.
 - [x] Mark each layer documented vs observed — every claim labelled; re-run with the camera live once Stephen's code lands. Observation ideas: `system_profiler SPCameraDataType`, `ioreg -p IOUSB` (USB cams), `UVCAssistant` in Activity Monitor while the camera is on
 - [x] Explain what's hidden by the library and what we could still determine about it — `docs/section2-device-stack.md` §5
 - [x] Own the README: setup/run instructions, dependencies + versions, permissions, device selection, controls — `README.md`; the device-selection detail fills in once Stephen's code picks a device
-- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal — **learning session + drill booked: Thursday 29 Oct, 9:35–10:55 in class**. Sources and contribution statements still to collect
+- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal — **rehearsal booked: Thursday 29 Oct, 9:35–10:55 in class** ✔. Both documents are written and seeded (`docs/sources.md`, README contribution table); what is left is four people confirming their own rows
 
 ## Member 2: Camera Connection & Live Video · `Stephen`
 Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `CameraManager.swift`
@@ -150,15 +150,19 @@ demo that way instead (project 2 did), this table gets updated to match.
       screenshots
 - [x] **Device-stack diagram with references** — `docs/section2-device-stack.md`, every claim
       marked documented or observed, with the command or the Apple link behind it
-- [ ] **Research & troubleshooting record (incl. AI use)** — Ella (demo section 4). The AI half
-      is seeded in `docs/reflections/ai-use-log.md`; five entries need their "what we learned"
-      line
-- [ ] **Team contribution statement** — 0 of 5 collected. Thursday's session is the moment to
-      ask in person
+- [x] **Research & troubleshooting record (incl. AI use)** — written by Ella in the README,
+      with problems by category, error cases and AI use. Sarah's five rows in
+      `docs/reflections/ai-use-log.md` carry their "what we learned" lines; Ella's row still
+      needs hers
+- [ ] **Team contribution statement** — all five rows **seeded from what is committed** in the
+      README, so each person only has to confirm or rewrite their own. 0 of 5 confirmed;
+      Thursday's session is the moment to ask in person
 
 ### Not on the Canvas list, but the professor said it matters
 
-- [ ] Everyone's learning log — only Ella has written hers
+- [ ] Everyone's learning log — **Sarah and Ella have written theirs**; Stephen, Georgia and
+      Calli still have blank templates. Thursday's session is designed so they get written in
+      the room
 - [ ] Readiness tracker — 1 tick of 20; filled in at Thursday's session
 - [ ] Team reflection — written together after testing
 
