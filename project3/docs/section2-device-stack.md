@@ -1,6 +1,6 @@
 # Demo Section 2: Device Stack & Library Selection (5 min)
 
-Owner: Member 1 (Sarah Rae). Presented by Stephen — nobody presents their own section.
+Owner: Member 1 (Sarah Rae).
 
 **One-sentence version:** BoothCam never speaks to the webcam. It asks AVFoundation, which asks
 the CoreMediaIO camera service, which is the thing that actually talks to a driver — and the
