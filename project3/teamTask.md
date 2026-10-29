@@ -83,7 +83,7 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 - [x] Keep the originals untouched; filtering always creates a new image — checked on a solid red test image: original still (255, 0, 0) after filtering
 - [x] Explain what changes in the data: RGB → one brightness value (≈ 0.3R + 0.59G + 0.11B); invert = 1 − each channel (255 − value in 8-bit) — in the `FrameFilter` doc comments, **with a measured correction**: pure red comes out 132, not 77, because Core Image works in linear light and PhotoEffectMono adds a contrast curve
 - [x] Explain where it runs: in Core Image (library, usually on the GPU), called from our code, not a camera setting — "Where it runs" in the `FrameFilter.swift` header: the pixels are computed when `createCGImage` renders the recipe, not when the filter is applied
-- [ ] Note any effect on responsiveness or quality (check frame rate with filter on/off)
+- [x] Note any effect on responsiveness or quality (check frame rate with filter on/off) — observed: CPU 45–50% off → 77–82% grayscale / 77–84% invert, video still smooth, grayscale looks normal (`docs/test-records/test-record-calli.md` §7)
 
 ## Member 5: Testing, Troubleshooting & Research Record · `Ella`
 Owns demo section **4 (research & problem solving)**.

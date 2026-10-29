@@ -15,7 +15,8 @@
 //        (about 0.3R + 0.59G + 0.11B); invert = 1 - each channel
 //    [x] Explain where it runs: inside Core Image, usually on the GPU, called
 //        from our code — it is NOT a camera setting (see "Where it runs" below)
-//    [ ] Note any effect on frame rate or quality, filter on vs off
+//    [x] Note any effect on frame rate or quality, filter on vs off — about
+//        +30 points of CPU, still smooth (test-record-calli.md §7)
 //
 //  Why these are free functions on a namespace rather than methods on a view:
 //  the live frame and the captured still both go through the same call, which

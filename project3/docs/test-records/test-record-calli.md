@@ -159,6 +159,13 @@ live feed running)
 - Even with the filter off, BoothCam uses about 45–50% CPU just to show the live feed and the
   captured still.
 
+**Responsiveness and quality** (observed, by eye)
+
+- With the filter on, LIVE FILTERED moved smoothly with no visible stutter or lag behind LIVE
+  ORIGINAL. The extra CPU did not show up as a slower picture.
+- The grayscale looked like a normal black-and-white photo. Nothing looked wrong with contrast or
+  dark areas.
+
 ## 8. Can you explain the whole app?
 
 The ground rule is that anyone can be asked about any part. Tick honestly — an untick here is
