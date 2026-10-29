@@ -88,11 +88,11 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 ## Member 5: Testing, Troubleshooting & Research Record · `Ella`
 Owns demo section **4 (research & problem solving)**.
 
-- [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-records/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs one clean redo
+- [x] Make the **test record template** (environment, camera, 5 feature checks, limitations, screenshots) and get everyone's filled in — template is `docs/test-records/test-record-template.md` (built by Member 1 because it blocked everyone); all five records exist, four pass every check, Stephen needs a clean redo of the quit check
 - [x] Run the app on every Mac with that person as early as possible, help diagnose problems together — BoothCam has run on all five Macs
 - [x] Sort each problem by type: install, permissions, device selection, frame acquisition, display/image format — README, *Problems by category*
 - [x] Write the **research & troubleshooting record**: sources, what we adapted, problems + fixes, AI use and how we checked it (or "no AI used") — README, *Research & troubleshooting record*
-- [ ] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name — in so far: Sarah (2), Calli (1), Ella (4). **Still needed: Stephen, Georgia**
+- [x] Collect and label all screenshots: LIVE / CAPTURED / ORIGINAL / FILTERED + member name — all five in: Sarah (2), Stephen (4), Georgia (1), Calli (1), Ella (4)
 - [x] Write the strengths, limitations, and one improvement with more time (demo section 5) — README, *Strengths, limitations, and one improvement*
 
 ---
@@ -105,9 +105,8 @@ Steps 1–4 are done: the app is feature-complete and four of five Macs pass eve
 2. ~~**Everyone** pulls and gets a blank build running on their own Mac~~ — done, all five
 3. ~~**Member 2** gets live video working~~ — done
 4. ~~**Members 3 and 4** build snap and filters on top~~ — done
-5. **Member 5** collects the remaining test records and screenshots — four of five records are
-   complete; **Stephen needs a clean redo of checks 3–5**, and Stephen and Georgia still owe
-   screenshots
+5. **Member 5** collects the remaining test records and screenshots — all screenshots are in and
+   four of five records are complete; **Stephen needs a clean redo of check 5 (quit)**
 6. Everyone adds their explanations and sources to the README / records — the write-ups are now
    the whole of what is left
 7. **Member 1** finishes the README, diagram, sources, and contribution statement
@@ -145,9 +144,9 @@ demo that way instead (project 2 did), this table gets updated to match.
 
 - [x] **Source code + Xcode project and assets** — `BoothCam/`, builds clean from a fresh clone
 - [x] **Setup & run instructions** (versions, permissions, device selection, controls) — `README.md`
-- [ ] **Test record for each of the 5 Macs, with labeled screenshots** — four of five records
-      complete. **Stephen** needs a clean redo of checks 3–5; **Stephen and Georgia** owe
-      screenshots
+- [ ] **Test record for each of the 5 Macs, with labeled screenshots** — all screenshots
+      are in and four of five records are complete. **Stephen** needs a clean redo of check 5
+      (quit)
 - [x] **Device-stack diagram with references** — `docs/section2-device-stack.md`, every claim
       marked documented or observed, with the command or the Apple link behind it
 - [x] **Research & troubleshooting record (incl. AI use)** — written by Ella in the README,

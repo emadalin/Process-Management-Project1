@@ -187,13 +187,13 @@ copied a working binary across.
 | Member | Record | macOS | Live | Filter | Snap | Filtered still | Quit releases camera |
 |---|---|---|---|---|---|---|---|
 | Sarah Rae | [record](docs/test-records/test-record-sarah.md) | 15.8.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Stephen | [record](docs/test-records/test-record-stephen.md) | 26.5.2 | ✅ | ✅ | ⬜ | ⬜ | ⬜ |
+| Stephen | [record](docs/test-records/test-record-stephen.md) | 26.5.2 | ✅ | ✅ | ✅ | ✅ | ⬜ |
 | Georgia | [record](docs/test-records/test-record-georgia.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Calli | [record](docs/test-records/test-record-calli.md) | 26.6.2 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Ella | [record](docs/test-records/test-record-ella.md) | 26.5.1 | ✅ | ✅ | ✅ | ✅ | ✅ |
 
-Stephen's three blanks are honest rather than missing: he tested before Georgia's snap landed,
-and his quit test got tangled with a debugger-attached process. Needs one clean redo.
+Stephen's quit blank is honest rather than missing: his quit test got tangled with a
+debugger-attached process. Needs one clean redo.
 
 **macOS spread: 15.8.1 to 26.6.2.** Sarah's is the oldest, which is why the deployment target is
 15.8 — the oldest Mac sets the floor and it blocks nobody.
@@ -209,9 +209,10 @@ All four panels, per person: [`docs/screenshots/`](docs/screenshots/).
 | Member | Files |
 |---|---|
 | Sarah Rae | `sarah-window-all-four-panels.png`, `sarah-permission-denied.png` |
+| Stephen | `stephen-live-original.png`, `stephen-live-filtered.png`, `stephen-captured-original.png`, `stephen-captured-filtered.png` |
+| Georgia | `georgia-all-panels.png` |
 | Calli | `calli-all-panels.png` |
 | Ella | `ella-window-1.png` … `ella-window-4.png` |
-| Stephen, Georgia | _not yet committed_ |
 
 ## Research & troubleshooting record
 
@@ -299,8 +300,8 @@ measuring tool. Every claim was checked by building, running, or measuring on ou
   Our guess is that macOS slows down hidden windows, but we haven't tested it on purpose.
 - **Snap's message is wrong when permission is denied.** It says to wait for the live feed,
   which will never arrive.
-- **Not fully tested.** Nobody tested "no camera available", and Stephen's snap and quit checks
-  still need a clean redo.
+- **Not fully tested.** Nobody tested "no camera available", and Stephen's quit check still
+  needs a clean redo.
 
 **One improvement with more time:** let the user pick the camera from a list built with
 `AVCaptureDevice.DiscoverySession`, and show the chosen camera's name in the window. That fixes
