@@ -121,6 +121,7 @@ project3/
   docs/
     section2-device-stack.md         the stack, documented vs observed      (Sarah Rae)
     learning-reflection-plan.md      how we make the learning visible       (everyone)
+    sources.md                       documentation and AI use                (Sarah Rae)
     test-records/
       test-record-template.md        blank; copy to test-record-<name>.md
       test-record-sarah.md · -stephen.md · -georgia.md · -calli.md · -ella.md   one per Mac
@@ -219,8 +220,9 @@ full detail for each problem is in the record named next to it.
 
 ### Sources
 
-Apple's developer documentation, every link fetched and confirmed on 2026-10-22. The full table,
-with which claim each one supports, is in
+Apple's developer documentation, every link fetched and confirmed on 2026-10-22. These are the
+sources behind the problems written up here; the **full list for the project**, including AI use,
+is [`docs/sources.md`](docs/sources.md), and the per-claim table for the device stack is in
 [`section2-device-stack.md`](docs/section2-device-stack.md#sources).
 
 | Source | Used for |
@@ -326,8 +328,27 @@ and answer a "what if" question. Total cost per person is about **75 minutes**, 
 
 ## Team contribution statement
 
-_TODO — Sarah Rae collects. 3–5 sentences from each member, plus how we made sure everyone can
-explain the whole app._
+| Member | Name | Area | What they built / wrote |
+|---|---|---|---|
+| 1 | Sarah Rae | Setup, device stack, README | Xcode project, camera permission and entitlement, and the stub files everyone started from; the device-stack investigation in `docs/section2-device-stack.md`, including measuring which daemon wakes when the camera opens; the README, the test record template, the sources list, and the learning and reflection plan |
+| 2 | Stephen | Camera connection & live video | `CameraManager.swift`: permission checking and requesting, device selection, the capture session, `AVCaptureVideoDataOutput` with its delegate on a background queue, frame → `CIImage` publishing on the main thread, the error cases, and releasing the camera on quit |
+| 3 | Georgia | Still capture | The snap path in `ContentView.swift`: rendering the live frame into a **new** `CGImage` with `CIContext` so the still owns its pixels rather than holding a reused buffer; the Space shortcut, the CAPTURED panels, and the no-frame-yet case |
+| 4 | Calli | Filters & comparison | `FrameFilter.swift`: grayscale with `CIPhotoEffectMono` and invert with `CIColorInvert`, applied through one call so the live frame and the still get the same treatment; and the measured finding that pure red comes out at 132 rather than the textbook 77, because Core Image works in linear light |
+| 5 | Ella | Testing & research record | The test records across five Macs, the screenshots, and the research and troubleshooting record; confirming the real permission prompt rather than the app's own denial message |
+
+_Rows are compiled from what is committed. **Each member: confirm your row or rewrite it in your
+own words (3–5 sentences).** Thursday's session is a good moment to do it in person._
+
+**How we made sure everyone can explain the whole app:**
+
+The professor draws presenters at random, so this is not optional for us. Everyone writes a
+personal learning log in [`docs/reflections/`](docs/reflections/), and the
+[readiness tracker](docs/reflections/readiness-tracker.md) is signed off **by a teammate** —
+you cannot tick your own box, and a tick means you explained the section with no notes and
+answered a "what if" question about it.
+
+The teaching session and random drill are booked for **Thursday 29 October, 9:35–10:55**, a week
+before the demo so the drill leaves time to fix whatever it exposes.
 
 **Ella Madalinski (Member 5)** owns testing, troubleshooting and the research record, and
 presents demo sections 4 and 5. I built and ran BoothCam on my own Mac and completed its test
@@ -339,5 +360,8 @@ Code to help fill in my test record, and I confirmed every result on my own mach
 
 ## Sources
 
-_TODO — Sarah Rae collects, including AI assistants and what each was used for, matching how
-projects 1 and 2 disclosed it._
+See [`docs/sources.md`](docs/sources.md): the Apple documentation our code references, the
+command-line tools behind the device-stack observations, and an AI assistants table recording
+which model helped with what, for whom. Every Apple URL was fetched and confirmed to resolve.
+
+Commits where an assistant helped carry a `Co-Authored-By` line in `git log`.
