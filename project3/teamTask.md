@@ -82,7 +82,7 @@ Owns demo section **3c (filter)**. File: `FrameFilter.swift`
 - [x] Layout: **LIVE ORIGINAL | LIVE FILTERED** on top, **CAPTURED ORIGINAL | CAPTURED FILTERED** below (or a toggle with **F**) — grid from Sarah Rae's `ContentView` skeleton, **F** toggles the filter, **I** switches to invert
 - [x] Keep the originals untouched; filtering always creates a new image — checked on a solid red test image: original still (255, 0, 0) after filtering
 - [x] Explain what changes in the data: RGB → one brightness value (≈ 0.3R + 0.59G + 0.11B); invert = 1 − each channel (255 − value in 8-bit) — in the `FrameFilter` doc comments, **with a measured correction**: pure red comes out 132, not 77, because Core Image works in linear light and PhotoEffectMono adds a contrast curve
-- [ ] Explain where it runs: in Core Image (library, usually on the GPU), called from our code, not a camera setting
+- [x] Explain where it runs: in Core Image (library, usually on the GPU), called from our code, not a camera setting — "Where it runs" in the `FrameFilter.swift` header: the pixels are computed when `createCGImage` renders the recipe, not when the filter is applied
 - [ ] Note any effect on responsiveness or quality (check frame rate with filter on/off)
 
 ## Member 5: Testing, Troubleshooting & Research Record · `Ella`

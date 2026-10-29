@@ -11,10 +11,10 @@
 //    [x] Apply the SAME function to the live frame and the captured still
 //        (ContentView.filter(_:) is the one call both columns go through)
 //    [x] Never mutate the input — filtering always returns a new image
-//    [ ] Explain the data change: RGB -> one brightness value
+//    [x] Explain the data change: RGB -> one brightness value
 //        (about 0.3R + 0.59G + 0.11B); invert = 1 - each channel
-//    [ ] Explain where it runs: inside Core Image, usually on the GPU, called
-//        from our code — it is NOT a camera setting
+//    [x] Explain where it runs: inside Core Image, usually on the GPU, called
+//        from our code — it is NOT a camera setting (see "Where it runs" below)
 //    [ ] Note any effect on frame rate or quality, filter on vs off
 //
 //  Why these are free functions on a namespace rather than methods on a view:
@@ -22,10 +22,21 @@
 //  is what makes "the filter does the same thing to both" true by construction
 //  rather than by two code paths agreeing.
 //
-//  A note on Core Image you will want for the demo: applying a filter does not
-//  compute anything. `CIImage` is a recipe, not pixels. The work happens when
-//  something renders it — `CIContext.createCGImage` in the snap path, or
-//  SwiftUI drawing it. That is why filtering a live frame is cheap.
+//  Where it runs:
+//
+//    1. Not in the camera. The camera always sends ordinary colour frames;
+//       nothing here changes a camera setting. LIVE ORIGINAL is still in
+//       colour while LIVE FILTERED is gray, from the same frame (observed).
+//    2. In our app's process, on our call. ContentView.filter(_:) calls the
+//       functions below for each frame the screen draws.
+//    3. Inside Core Image, Apple's image library. Applying a filter does not
+//       compute anything: `CIImage` is a recipe, not pixels. The pixels are
+//       worked out when the recipe is rendered — `ciContext.createCGImage` in
+//       ContentView.render(_:) and in snap(). That is why filtering a live
+//       frame is cheap to set up.
+//    4. Usually on the GPU. Core Image decides where to run a render, and uses
+//       the GPU when one is available, otherwise the CPU (documented: Apple's
+//       Core Image docs). We never pick — the default `CIContext()` chooses.
 //
 
 import CoreImage
