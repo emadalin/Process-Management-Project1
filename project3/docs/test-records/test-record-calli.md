@@ -142,8 +142,8 @@ Anything that worked but not well: frame rate with the filter on, lag on snap, a
 takes seconds to warm up, resolution differences. Say whether it is **observed** (you saw it) or
 **documented** (you read it).
 
-**Filter cost: BoothCam's CPU use** (observed, Activity Monitor % CPU, about 15 s each, FaceTime HD
-Camera, live feed running, a snap on screen)
+**Filter cost: BoothCam's CPU use** (observed, Activity Monitor % CPU, FaceTime HD Camera,
+live feed running)
 
 | Setting | % CPU |
 |---|---|
