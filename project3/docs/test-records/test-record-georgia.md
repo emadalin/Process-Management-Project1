@@ -101,18 +101,23 @@ Four per person, labelled, with your name in the filename:
 `-captured-filtered`. One window shot with all four panels visible also works — say which you
 did.
 
+One window shot with all four panels visible (Filter: on, Mode: grayscale).
+
 | Screenshot | Committed | Filename |
 |---|---|---|
-| Live original | ☐ | |
-| Live filtered | ☐ | |
-| Captured original | ☐ | |
-| Captured filtered | ☐ | |
+| Live original | ☑ | `docs/screenshots/georgia-all-panels.png` |
+| Live filtered | ☑ | `docs/screenshots/georgia-all-panels.png` |
+| Captured original | ☑ | `docs/screenshots/georgia-all-panels.png` |
+| Captured filtered | ☑ | `docs/screenshots/georgia-all-panels.png` |
 
 ## 7. Limitations you noticed on this Mac
 
 Anything that worked but not well: frame rate with the filter on, lag on snap, a camera that
 takes seconds to warm up, resolution differences. Say whether it is **observed** (you saw it) or
 **documented** (you read it).
+
+- **Camera warm-up (observed):** on first opening, the camera takes a few seconds before the live feed starts.
+- **No lag (observed):** once the feed started, there was no noticeable lag.
 
 ## 8. Can you explain the whole app?
 
