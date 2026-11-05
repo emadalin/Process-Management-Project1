@@ -36,12 +36,6 @@ a description of the code.
 
 ---
 
-## The drill
-
-**Section I was drawn for, and how it went:**
-
----
-
 ## AI use
 
 **What I asked, what I checked, and what was wrong or missing:**

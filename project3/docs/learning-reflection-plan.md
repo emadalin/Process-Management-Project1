@@ -17,9 +17,9 @@ it does not write this. If it helped, say so.
 
 ---
 
-## 📅 Booked: Thursday 29 October, 9:35–10:55, in class
+## 📅 Held: Thursday 29 October, 9:35–10:55, in class
 
-**A week before the demo on Thursday 5 November** — deliberately, so the drill leaves time to
+**A week before the demo on Thursday 5 November** — deliberately, so there is time to
 fix whatever it exposes. **Eighty minutes — the whole thing fits in that one slot.** Bring your laptop with the app
 building, and have your own log open in a second window.
 
@@ -27,8 +27,7 @@ building, and have your own log open in a second window.
 |---|---|
 | 9:35–9:40 | Everyone opens BoothCam and their own `reflections/<name>.md` |
 | 9:40–10:30 | **Five sections, 10 minutes each** — 5 min walking your part, 5 min answering questions on it |
-| 10:30–10:45 | **The random drill** — draw a name and a section, present cold |
-| 10:45–10:55 | Finish your log entries, tick the readiness tracker for each other |
+| 10:30–10:55 | Finish your log entries, tick the readiness tracker for each other |
 
 Order: Sarah (device stack) → Stephen (camera) → Georgia (snap) → Calli (filter) → Ella (testing).
 
@@ -81,27 +80,20 @@ record — there is no separate session write-up to produce afterwards.
 Question 4 is the one that shows real understanding. *What if we never stopped the session? What
 if snap kept a reference instead of a copy?*
 
-Whoever answers a section's questions well gets ticked off for it in
-[`reflections/readiness-tracker.md`](reflections/readiness-tracker.md) — by someone else, not
-themselves.
+[`reflections/readiness-tracker.md`](reflections/readiness-tracker.md) records who heard each
+section taught and discussed it.
 
-## 3. One drill — same session, 10:30
-
-The last 15 minutes of Thursday's slot. Draw a name and a section from a hat and present cold,
-exactly like the real thing. Log anything shaky in the tracker and review it before the demo.
-
-## 4. The files
+## 3. The files
 
 In [`reflections/`](reflections/) — all skeletons, fill in the blanks:
 
 | File | Who | Effort |
 |---|---|---|
 | `<yourname>.md` | each person | one page, after the meeting |
-| `readiness-tracker.md` | whoever signs someone off | a tick and a date |
+| `readiness-tracker.md` | entered after the session | a tick and a date |
 | `ai-use-log.md` | anyone who used AI | one row each |
-| `team-reflection.md` | together, at the end | one paragraph each |
 
-## 5. Showing it in the demo
+## 4. Showing it in the demo
 
 Whoever is drawn for section 5 shows the readiness tracker and names one moment where somebody
 learned a part they didn't build. The random draw itself is the real evidence — if any of us can
@@ -111,8 +103,6 @@ present any section, that proves more than any document does.
 
 - [x] Skeletons exist in `docs/reflections/`
 - [x] Book the meeting — **Thursday 29 October, 9:35–10:55, in class**
-- [ ] Everyone fills in their own log straight after it — **Sarah ✔ and Ella ✔ already have**;
-      Stephen, Georgia and Calli write theirs in the session
-- [ ] 15-minute random drill — same session, 10:30
+- [ ] Everyone fills in their own log straight after it — **Sarah ✔ and Ella ✔ have**, Georgia
+      has started; Stephen and Calli have not yet
 - [x] Readiness tracker complete before demo day — filled 29 Oct
-- [ ] Team reflection, one paragraph each

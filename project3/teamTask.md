@@ -6,8 +6,8 @@
 **Filters:** Grayscale (main) + Color Invert (optional second toggle)
 **Demo:** 30 min, in class · **Due: Thursday 5 November** · **Estimated effort:** ~6 hours
 
-**Learning session + random drill: Thursday 29 October, 9:35–10:55 in class** — a week before
-the demo, which is the point: the drill has to leave time to fix whatever it exposes.
+**Learning session: Thursday 29 October, 9:35–10:55 in class** — a week before the demo, which
+is the point: it has to leave time to fix whatever it exposes.
 
 ---
 
@@ -110,9 +110,8 @@ Steps 1–4 are done: the app is feature-complete and four of five Macs pass eve
 6. Everyone adds their explanations and sources to the README / records — the write-ups are now
    the whole of what is left
 7. **Member 1** finishes the README, diagram, sources, and contribution statement
-8. **The learning rounds** — one 60-minute teaching meeting and one random drill at the
-   rehearsal. See [`docs/learning-reflection-plan.md`](docs/learning-reflection-plan.md). This
-   can start now: the app works, so there is nothing left to wait for
+8. ~~**The learning rounds**~~ — teaching meeting held 29 October, all five there. See
+   [`docs/learning-reflection-plan.md`](docs/learning-reflection-plan.md)
 
 ## Suggested demo timing (30 min)
 | Section | Presenter | Time |
@@ -158,11 +157,9 @@ demo that way instead (project 2 did), this table gets updated to match.
 
 ### Not on the Canvas list, but the professor said it matters
 
-- [ ] Everyone's learning log — **Sarah and Ella have written theirs**; Stephen, Georgia and
-      Calli still have blank templates. Thursday's session is designed so they get written in
-      the room
-- [x] Readiness tracker — **20 of 20**, from the 29 Oct session where all five attended and each walked through their own code. The drill is still to run
-- [ ] Team reflection — written together after testing
+- [ ] Everyone's learning log — **Sarah and Ella have written theirs**, Georgia has started;
+      Stephen and Calli still have blank templates
+- [x] Readiness tracker — **20 of 20**, from the 29 Oct session where all five attended and each walked through their own code
 
 ## Controls
 | Key | Action |

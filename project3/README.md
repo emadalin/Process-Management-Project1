@@ -4,13 +4,11 @@ A Photo Booth–style macOS app: live webcam feed, a filter applied to it, and a
 snap and compare. Built to show how an app reaches a physical device through the operating
 system, and what each layer in between is responsible for.
 
-> **Due: Thursday 5 November, in class.** Learning session and random drill: Thursday 29 October,
-> 9:35–10:55.
+> **Due: Thursday 5 November, in class.** Learning session: Thursday 29 October, 9:35–10:55.
 >
 > **Status:** the app is feature-complete — live video, filter, snap and the filtered still all
-> work, and four of five Macs pass every check. What remains is write-up: the research record,
-> the sources list, and the contribution statement. Sections marked _TODO_ below name whose they
-> are.
+> work. Four of five Macs pass every check; Stephen's Mac still needs a clean redo of the quit
+> check.
 
 **Stack:** AVFoundation (capture) · Core Image (filters) · SwiftUI (window and UI)
 
@@ -127,9 +125,8 @@ project3/
       test-record-sarah.md · -stephen.md · -georgia.md · -calli.md · -ella.md   one per Mac
     reflections/
       sarah.md · stephen.md · georgia.md · calli.md · ella.md   personal learning logs
-      readiness-tracker.md           sign-off grid, the meeting and the drill
+      readiness-tracker.md           sign-off grid and the meeting
       ai-use-log.md                  what AI suggested, what we checked
-      team-reflection.md             written together at the end
   teamTask.md                        roles, work order, demo timing, questions
   README.md                          this file
 ```
@@ -316,19 +313,17 @@ how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
 | File | What it is | Effort |
 |---|---|---|
 | `sarah.md`, `stephen.md`, `georgia.md`, `calli.md`, `ella.md` | Personal learning log, each in that person's own words | one page |
-| [`readiness-tracker.md`](docs/reflections/readiness-tracker.md) | Sign-off grid, plus the meeting and the drill | four boxes each |
+| [`readiness-tracker.md`](docs/reflections/readiness-tracker.md) | Sign-off grid, plus the meeting | four boxes each |
 | [`ai-use-log.md`](docs/reflections/ai-use-log.md) | What AI suggested, what we checked, where it was wrong | one row |
-| [`team-reflection.md`](docs/reflections/team-reflection.md) | One shared reflection at the end | one paragraph each |
 
-**Booked: Thursday 29 October, 9:35–10:55, in class** — the teaching session and the random
-drill both fit in that slot. Agenda is in the plan.
+**Held: Thursday 29 October, 9:35–10:55, in class** — the teaching session. Agenda is in the plan.
 
-Progress: **Sarah and Ella have written their learning logs**; Stephen, Georgia and Calli have
-not yet. The readiness tracker is at 1 tick of 20 — it gets filled in at Thursday's session.
+Progress: **Sarah and Ella have written their learning logs**, Georgia has started hers, and
+Stephen and Calli have not yet. The readiness tracker is filled in, 20 of 20, from that session.
 
-A readiness box is only ticked by a **teammate** who heard you explain the section with no notes
-and answer a "what if" question. Total cost per person is about **75 minutes**, most of it a
-60-minute team meeting we need anyway.
+A tick means that person attended the 29 October session, heard the section taught and discussed
+it with the team. Sarah entered the ticks with the team's agreement. We did not run separate
+one-to-one explain-backs.
 
 ## Team contribution statement
 
@@ -340,19 +335,19 @@ and answer a "what if" question. Total cost per person is about **75 minutes**, 
 | 4 | Calli | Filters & comparison | `FrameFilter.swift`: grayscale with `CIPhotoEffectMono` and invert with `CIColorInvert`, applied through one call so the live frame and the still get the same treatment; and the measured finding that pure red comes out at 132 rather than the textbook 77, because Core Image works in linear light |
 | 5 | Ella | Testing & research record | I collected test records for all teammates, ran the app on all 5 Macs with each teammate, wrote section 5, and completed the research and troubleshooting record. |
 
-_Rows are compiled from what is committed. **Each member: confirm your row or rewrite it in your
-own words (3–5 sentences).** Thursday's session is a good moment to do it in person._
+_Sarah's and Ella's rows are in their own words. Stephen's, Georgia's and Calli's are compiled
+from what is committed._
 
 **How we made sure everyone can explain the whole app:**
 
-The professor draws presenters at random, so this is not optional for us. Everyone writes a
-personal learning log in [`docs/reflections/`](docs/reflections/), and the
-[readiness tracker](docs/reflections/readiness-tracker.md) is signed off **by a teammate** —
-you cannot tick your own box, and a tick means you explained the section with no notes and
-answered a "what if" question about it.
+The professor draws presenters at random, so this is not optional for us. Learning logs are in
+[`docs/reflections/`](docs/reflections/), and the
+[readiness tracker](docs/reflections/readiness-tracker.md) records who heard each section. A tick means that person attended the 29 October session, heard the section taught and discussed
+it with the team. Sarah entered the ticks with the team's agreement. We did not run separate
+one-to-one explain-backs.
 
-The teaching session and random drill are booked for **Thursday 29 October, 9:35–10:55**, a week
-before the demo so the drill leaves time to fix whatever it exposes.
+The teaching session was held on **Thursday 29 October, 9:35–10:55**, a week before the demo so
+there was time to fix whatever it exposed.
 
 **Ella Madalinski (Member 5)** owns testing, troubleshooting and the research record, and
 presents demo sections 4 and 5. I built and ran BoothCam on my own Mac and completed its test

@@ -39,12 +39,6 @@ Snap was the hardest to understand on the concept level; in testing it was the e
 
 ---
 
-## The drill
-
-**Section I was drawn for, and how it went:**
-
----
-
 ## AI use
 
 **What I asked, what I checked, and what was wrong or missing:**

@@ -3,8 +3,8 @@
 The professor draws presenters at random, so an empty box is a section someone could be asked to
 present cold. Everyone needs all five.
 
-**A box is ticked by a teammate, not by you** — they heard you explain it with no notes and
-answer a "what if" question. Write who and when: `✅ Calli 10/30`.
+A tick means that person heard the section taught at the 29 October session and discussed it
+with the team.
 
 | Section | Sarah | Stephen | Georgia | Calli | Ella |
 |---|---|---|---|---|---|
@@ -16,7 +16,7 @@ answer a "what if" question. Write who and when: `✅ Calli 10/30`.
 
 `—` is your own section: you built it, no sign-off needed. That leaves **four boxes each**.
 
-## The four questions a sign-off means
+## The four questions to be ready for
 
 1. **What** does this do? (point at the lines)
 2. **How** does it work, step by step?
@@ -44,11 +44,3 @@ We did not run separate one-to-one explain-backs, so these are "heard it taught 
 discuss it" rather than "stood up and presented it cold to one other person."
 
 **Who was there:** Sarah, Stephen, Georgia, Calli, Ella
-
-## The drill — **same session, 10:30**
-
-The last 15 minutes: draw a name and a section from a hat, present cold.
-
-| Drawn | Section | How it went | Needs another look? |
-|---|---|---|---|
-| | | | |
