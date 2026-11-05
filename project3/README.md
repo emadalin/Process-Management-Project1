@@ -318,7 +318,7 @@ how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
 
 **Held: Thursday 29 October, 9:35–10:55, in class** — the teaching session. Agenda is in the plan.
 
-Progress: **Sarah and Ella have written their learning logs**, Georgia has started hers, and
+Progress: **Sarah and Ella have written their learning logs**, Georgia has started one, and
 Stephen and Calli have not yet. The readiness tracker is filled in, 20 of 20, from that session.
 
 A tick means that person attended the 29 October session, heard the section taught and discussed
