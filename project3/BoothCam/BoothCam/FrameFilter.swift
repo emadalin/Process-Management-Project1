@@ -13,7 +13,7 @@
 //    [x] Never mutate the input — filtering always returns a new image
 //    [x] Explain the data change: RGB -> one brightness value
 //        (about 0.3R + 0.59G + 0.11B); invert = 1 - each channel
-//    [x] Explain where it runs: inside Core Image, usually on the GPU, called
+//    [x] Explain where it runs: inside Core Image, on the CPU or GPU as it chooses, called
 //        from our code — it is NOT a camera setting (see "Where it runs" below)
 //    [x] Note any effect on frame rate or quality, filter on vs off — about
 //        +30 points of CPU, still smooth (test-record-calli.md §7)
@@ -35,9 +35,11 @@
 //       worked out when the recipe is rendered — `ciContext.createCGImage` in
 //       ContentView.render(_:) and in snap(). That is why filtering a live
 //       frame is cheap to set up.
-//    4. Usually on the GPU. Core Image decides where to run a render, and uses
-//       the GPU when one is available, otherwise the CPU (documented: Apple's
-//       Core Image docs). We never pick — the default `CIContext()` chooses.
+//    4. On the CPU or the GPU, Core Image's choice. A default `CIContext()`
+//       picks "the appropriate or best available CPU or GPU rendering
+//       technology" and "can automatically render using the GPU" (documented:
+//       Core Image Programming Guide, "Processing Images" — docs/sources.md).
+//       We never pick. Which one it chose on our Macs is not observed.
 //
 
 import CoreImage

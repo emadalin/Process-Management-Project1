@@ -30,6 +30,7 @@ is the superset. If you add something, add it here.
 | [CIImage](https://developer.apple.com/documentation/coreimage/ciimage) | an image is a recipe, not pixels — nothing is computed until something renders it | Calli, Georgia |
 | [CIContext](https://developer.apple.com/documentation/coreimage/cicontext) | `createCGImage` — where the snap copy actually happens | Georgia |
 | [CVPixelBuffer](https://developer.apple.com/documentation/corevideo/cvpixelbuffer) | the buffer a frame arrives in, and that the session reuses | Georgia, Stephen |
+| [Core Image Programming Guide: Processing Images](https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_tasks/ci_tasks.html) | a default `CIContext()` lets Core Image choose "the appropriate or best available CPU or GPU rendering technology"; it "can automatically render using the GPU" (archived guide) | Calli |
 | `CIFilter.photoEffectMono`, `CIFilter.colorInvert` | the two filters | Calli |
 
 ## Permissions and the sandbox
@@ -66,6 +67,6 @@ answer, a YouTube walkthrough, or a classmate who explained something.
 
 - [ ] **Stephen** — anything beyond the AVFoundation pages above
 - [ ] **Georgia** — anything used for `CIContext` / copying frames
-- [ ] **Calli** — anything used for Core Image filters or the grayscale maths
+- [X] **Calli** — anything used for Core Image filters or the grayscale maths
 - [ ] **Ella** — anything used for testing, permissions or Continuity Camera
 - [x] **Sarah** — the Apple pages and man pages above; AI as listed
