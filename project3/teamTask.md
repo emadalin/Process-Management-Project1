@@ -48,7 +48,7 @@ Owns demo section **2 (device stack & library selection)**.
 - [x] Mark each layer documented vs observed — every claim labelled; re-run with the camera live once Stephen's code lands. Observation ideas: `system_profiler SPCameraDataType`, `ioreg -p IOUSB` (USB cams), `UVCAssistant` in Activity Monitor while the camera is on
 - [x] Explain what's hidden by the library and what we could still determine about it — `docs/section2-device-stack.md` §5
 - [x] Own the README: setup/run instructions, dependencies + versions, permissions, device selection, controls — `README.md`; the device-selection detail fills in once Stephen's code picks a device
-- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal — **rehearsal booked: Thursday 29 Oct, 9:35–10:55 in class** ✔. Both documents are written and seeded (`docs/sources.md`, README contribution table); what is left is four people confirming their own rows
+- [ ] Collect sources and contribution statements from everyone; schedule the rehearsal — **rehearsal booked: Thursday 29 Oct, 9:35–10:55 in class** ✔. Both documents are written and seeded (`docs/sources.md`, README contribution table); what is left is Stephen and Georgia confirming their own rows
 
 ## Member 2: Camera Connection & Live Video · `Stephen`
 Owns demo section **3a (opening the camera, frames, display, cleanup)**. File: `CameraManager.swift`
@@ -152,13 +152,13 @@ demo that way instead (project 2 did), this table gets updated to match.
       with problems by category, error cases and AI use. Sarah's five rows in
       `docs/reflections/ai-use-log.md` and Ella's row all carry their "what we learned" lines
 - [ ] **Team contribution statement** — all five rows seeded from what is committed in the
-      README. **2 of 5 confirmed in their own words: Sarah and Ella.** Stephen, Georgia and
-      Calli still to confirm or rewrite theirs
+      README. **3 of 5 confirmed in their own words: Sarah, Calli and Ella.** Stephen and
+      Georgia still to confirm or rewrite theirs
 
 ### Not on the Canvas list, but the professor said it matters
 
-- [ ] Everyone's learning log — **Sarah and Ella have written theirs**, Georgia has started;
-      Stephen and Calli still have blank templates
+- [ ] Everyone's learning log — **Sarah, Calli and Ella have written theirs**, Georgia has
+      started; Stephen still has a blank template
 - [x] Readiness tracker — **20 of 20**, from the 29 Oct session where all five attended and each walked through their own code
 
 ## Controls

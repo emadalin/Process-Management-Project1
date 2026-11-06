@@ -318,8 +318,8 @@ how we get there, and [`docs/reflections/`](docs/reflections/) holds the work:
 
 **Held: Thursday 29 October, 9:35–10:55, in class** — the teaching session. Agenda is in the plan.
 
-Progress: **Sarah and Ella have written their learning logs**, Georgia has started one, and
-Stephen and Calli have not yet. The readiness tracker is filled in, 20 of 20, from that session.
+Progress: **Sarah, Calli and Ella have written their learning logs**, Georgia has started
+one, and Stephen has not yet. The readiness tracker is filled in, 20 of 20, from that session.
 
 A tick means that person attended the 29 October session, heard the section taught and discussed
 it with the team. Sarah entered the ticks with the team's agreement. We did not run separate
@@ -335,7 +335,7 @@ one-to-one explain-backs.
 | 4 | Calli | Filters & comparison | I built the filters in FrameFilter.swift using CIPhotoEffectMono for grayscale and CIColorInvert for inversion. I applied both filters through one call so the live camera frames and captured stills receive the same treatment. I also tested the grayscale results and found that pure red comes out at 132 instead of the textbook value of 77 because Core Image works in linear light and CIPhotoEffectMono adds its own contrast curve. Finally, I ran a filter-on/filter-off CPU test and measured about a 30-point increase in CPU usage while the video remained smooth. |
 | 5 | Ella | Testing & research record | I collected test records for all teammates, ran the app on all 5 Macs with each teammate, wrote section 5, and completed the research and troubleshooting record. |
 
-_Sarah's and Ella's rows are in their own words. Stephen's, Georgia's and Calli's are compiled
+_Sarah's, Calli's and Ella's rows are in their own words. Stephen's and Georgia's are compiled
 from what is committed._
 
 **How we made sure everyone can explain the whole app:**

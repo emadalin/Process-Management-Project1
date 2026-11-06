@@ -103,6 +103,6 @@ present any section, that proves more than any document does.
 
 - [x] Skeletons exist in `docs/reflections/`
 - [x] Book the meeting — **Thursday 29 October, 9:35–10:55, in class**
-- [ ] Everyone fills in their own log straight after it — **Sarah ✔ and Ella ✔ have**, Georgia
-      has started; Stephen and Calli have not yet
+- [ ] Everyone fills in their own log straight after it — **Sarah ✔, Calli ✔ and Ella ✔ have**,
+      Georgia has started; Stephen has not yet
 - [x] Readiness tracker complete before demo day — filled 29 Oct
