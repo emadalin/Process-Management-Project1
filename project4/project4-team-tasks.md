@@ -78,12 +78,12 @@ Owns demo section **2c (roles of the app, runtime, OS, and file system)**.
 
 ## Member 2: Shared Records & Table Display (`RecordKit`) · `Georgia`
 Owns demo section **1 (showing the tables and record counts)**.
-- [ ] `Person` struct with the eight `String` fields, marked `Codable`
-- [ ] `makeRecords(from: 1, count: 100)` and `makeRecords(from: 101, count: 50)`: deterministic values from small name/city lists, street number = record number, `Maple St` vs `Oak Ave`
-- [ ] Make sure at least one ZIP per batch starts with `0`
-- [ ] `toCSVLine()` → 8 fields joined by commas; `fromCSVLine(_:)` → splits on commas, **errors if there aren't exactly 8 fields**
-- [ ] `printTable(_:)` → labeled, lined-up columns using the exact labels above, with a row number column
-- [ ] Test with 3 records first, then hand off to Members 3 and 4
+- [x] `Person` struct with the eight `String` fields, marked `Codable`
+- [x] `makeRecords(from: 1, count: 100)` and `makeRecords(from: 101, count: 50)`: deterministic values from small name/city lists, street number = record number, `Maple St` vs `Oak Ave`
+- [x] Make sure at least one ZIP per batch starts with `0`
+- [x] `toCSVLine()` → 8 fields joined by commas; `fromCSVLine(_:)` → splits on commas, **errors if there aren't exactly 8 fields**
+- [x] `printTable(_:)` → labeled, lined-up columns using the exact labels above, with a row number column
+- [x] Test with 3 records first, then hand off to Members 3 and 4
 
 ## Member 3: CSV Programs 1–3 · `Ella`
 Owns demo section **2a (CSV code walkthrough and why append works)**.
