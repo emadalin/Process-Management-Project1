@@ -8,8 +8,8 @@ APFS file system each do when a program writes and reads a file.
 > [`project4-team-tasks.md`](project4-team-tasks.md).
 >
 > **Status:** the package builds and `RecordKit` is done (Georgia): the `Person` struct, the
-> record generator, CSV line conversion and the table printer. The six programs are still stubs
-> that print their name; the CSV programs (Ella) and the JSON programs (Calli) replace them.
+> record generator, CSV line conversion and the table printer. The three CSV programs are done
+> (Ella). The JSON programs (Calli) are still stubs that print their name.
 
 ---
 

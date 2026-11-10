@@ -88,10 +88,10 @@ Owns demo section **1 (showing the tables and record counts)**.
 
 ## Member 3: CSV Programs 1–3 · `Ella`
 Owns demo section **2a (CSV code walkthrough and why append works)**.
-- [ ] **`CSVCreate`**: create the file (replacing any old one), write 100 lines, **no header**, one record per line, each line ending in `\n`, close
-- [ ] **`CSVAppend`**: open the **existing** file with `FileHandle(forWritingTo:)`, `seekToEnd()`, write 50 lines, close. Fail with a clear message if the file doesn't exist (don't silently create it)
-- [ ] Make sure record 101 starts on a **new line** (every line ends in `\n`, so the boundary is clean)
-- [ ] **`CSVRead`**: read the file, split into lines, parse each into a `Person`, store in an array, `printTable`, print `Read 150 records from output/people.csv`
+- [x] **`CSVCreate`**: create the file (replacing any old one), write 100 lines, **no header**, one record per line, each line ending in `\n`, close — 10 Nov; running it twice still gives 100 lines
+- [x] **`CSVAppend`**: open the **existing** file with `FileHandle(forWritingTo:)`, `seekToEnd()`, write 50 lines, close. Fail with a clear message if the file doesn't exist (don't silently create it) — 10 Nov; 6,512 → 9,767 bytes, first 6,512 bytes identical to a fresh create (`shasum`)
+- [x] Make sure record 101 starts on a **new line** (every line ends in `\n`, so the boundary is clean) — line 100 is `100 Maple St`, line 101 is `101 Oak Ave`
+- [x] **`CSVRead`**: read the file, split into lines, parse each into a `Person`, store in an array, `printTable`, print `Read 150 records from output/people.csv` — 10 Nov; also reports a missing file, and a 7-field line by its line number
 - [ ] Be ready to answer: *which open modes do we use, and what happens if append opened the file for replacement?* (The 100 originals would be erased, leaving only 50)
 
 ## Member 4: JSON Programs 4–6 · `Calli`
