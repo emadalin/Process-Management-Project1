@@ -7,9 +7,9 @@ APFS file system each do when a program writes and reads a file.
 > **Due: Tuesday 17 November.** Team roles and the full checklist are in
 > [`project4-team-tasks.md`](project4-team-tasks.md).
 >
-> **Status:** the package skeleton builds and all six programs run, but each one is still a stub
-> that prints its name. `RecordKit` (Georgia), the CSV programs (Ella) and the JSON programs
-> (Calli) replace them.
+> **Status:** the package builds and `RecordKit` is done (Georgia): the `Person` struct, the
+> record generator, CSV line conversion and the table printer. The six programs are still stubs
+> that print their name; the CSV programs (Ella) and the JSON programs (Calli) replace them.
 
 ---
 
@@ -135,6 +135,9 @@ project4/
   Package.swift                  the package: RecordKit + six programs
   Sources/
     RecordKit/                   shared code                          (Georgia)
+      Person.swift               the Person struct and CSV line conversion
+      Records.swift              makeRecords: the fictional people, the same every run
+      Table.swift                printTable: the labelled table both read programs print
       Paths.swift                the two output file paths            (Sarah)
     CSVCreate/ CSVAppend/ CSVRead/      main.swift each               (Ella)
     JSONCreate/ JSONAdd/ JSONRead/      main.swift each               (Calli)
