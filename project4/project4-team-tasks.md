@@ -64,9 +64,9 @@ Fields in this order for CSV columns **and** both tables:
 
 ## Member 1: Setup, OS & File-System Research, README · `Sarah`
 Owns demo section **2c (roles of the app, runtime, OS, and file system)**.
-- [ ] Create `project4/` as a Swift package with the `RecordKit` library target and six executable targets (stub `main.swift` in each that prints its name), then push on day 1
-- [ ] Add `project4/output/` with a `.gitkeep`, and put both file paths in `RecordKit/Paths.swift`
-- [ ] Add `reset.sh` that deletes **only** `output/people.csv` and `output/people.json` (nothing else)
+- [x] Create `project4/` as a Swift package with the `RecordKit` library target and six executable targets (stub `main.swift` in each that prints its name), then push on day 1 — pushed 10 Nov, `swift build` passes
+- [x] Add `project4/output/` with a `.gitkeep`, and put both file paths in `RecordKit/Paths.swift`
+- [x] Add `reset.sh` that deletes **only** `output/people.csv` and `output/people.json` (nothing else) — tested: a third file in `output/` survives a reset
 - [ ] Research and write `docs/file-system-layers.md` (documented vs observed):
   - What each layer does: **our code** (builds and interprets records) → **Swift/Foundation** (`FileHandle`, `JSONEncoder`) → **macOS** (system calls like `open`, `write`, `read`, `close`, file descriptors, permissions) → **APFS** (metadata, where the bytes are stored)
   - Opening a file gives a **handle/file descriptor**, not the whole file in memory
