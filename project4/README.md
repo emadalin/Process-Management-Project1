@@ -138,6 +138,10 @@ project4/
       Paths.swift                the two output file paths            (Sarah)
     CSVCreate/ CSVAppend/ CSVRead/      main.swift each               (Ella)
     JSONCreate/ JSONAdd/ JSONRead/      main.swift each               (Calli)
+  docs/
+    file-system-layers.md        demo section 2c: app → Foundation → macOS → APFS   (Sarah)
+    file-api-check.swift         re-runs the observed evidence for that doc        (Sarah)
+    sources.md                   documentation, adapted examples, AI use           (everyone)
   output/                        people.csv and people.json are written here
   reset.sh                       deletes the two output files only
   project4-team-tasks.md         roles, checklist, demo timing, practice questions

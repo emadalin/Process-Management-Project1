@@ -67,13 +67,13 @@ Owns demo section **2c (roles of the app, runtime, OS, and file system)**.
 - [x] Create `project4/` as a Swift package with the `RecordKit` library target and six executable targets (stub `main.swift` in each that prints its name), then push on day 1 — pushed 10 Nov, `swift build` passes
 - [x] Add `project4/output/` with a `.gitkeep`, and put both file paths in `RecordKit/Paths.swift`
 - [x] Add `reset.sh` that deletes **only** `output/people.csv` and `output/people.json` (nothing else) — tested: a third file in `output/` survives a reset
-- [ ] Research and write `docs/file-system-layers.md` (documented vs observed):
+- [ ] Research and write `docs/file-system-layers.md` (documented vs observed): — **written 10 Nov**, every claim labelled, evidence re-runs with `swift docs/file-api-check.swift`. Left: the `ls -l` / `stat` before-and-after checks, once the real programs work
   - What each layer does: **our code** (builds and interprets records) → **Swift/Foundation** (`FileHandle`, `JSONEncoder`) → **macOS** (system calls like `open`, `write`, `read`, `close`, file descriptors, permissions) → **APFS** (metadata, where the bytes are stored)
   - Opening a file gives a **handle/file descriptor**, not the whole file in memory
   - Confirm our file system is APFS; explain why we don't assume FAT
   - Optional observed evidence: `ls -l` sizes before/after append, `stat output/people.csv`
 - [ ] Write the README: OS + Swift version, dependencies (none beyond Foundation), output folder, **run order**, how to reset, the field-format table
-- [ ] Collect the sources list (Apple docs for `FileHandle`, `FileManager`, `JSONEncoder`, `JSONDecoder`, `Data.write(options: .atomic)`, APFS guide)
+- [ ] Collect the sources list (Apple docs for `FileHandle`, `FileManager`, `JSONEncoder`, `JSONDecoder`, `Data.write(options: .atomic)`, APFS guide) — **seeded in `docs/sources.md`**, all links checked 10 Nov; everyone adds what they used
 - [ ] Assemble the final contribution statement and resources/AI-use list
 
 ## Member 2: Shared Records & Table Display (`RecordKit`) · `Georgia`
