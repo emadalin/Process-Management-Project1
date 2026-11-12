@@ -144,7 +144,9 @@ project4/
   docs/
     file-system-layers.md        demo section 2c: app → Foundation → macOS → APFS   (Sarah)
     file-api-check.swift         re-runs the observed evidence for that doc        (Sarah)
-    sources.md                   documentation, adapted examples, AI use           (everyone)
+    sources.md                   documentation and adapted examples                (everyone)
+    ai-use/                      one file per person: what AI helped with, how we checked it
+    study-guide.md               the 10 practice questions answered, for whoever is drawn
   output/                        people.csv and people.json are written here
   reset.sh                       deletes the two output files only
   project4-team-tasks.md         roles, checklist, demo timing, practice questions

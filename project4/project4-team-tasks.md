@@ -123,10 +123,10 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 ---
 
 ## Learning & reflection (needed for an A)
-- [ ] Everyone keeps a short **learning log** in `docs/reflections/<name>.md`: what you learned, what confused you, how you learned a teammate's part
+- [ ] Everyone reads [`docs/study-guide.md`](docs/study-guide.md) (about 10 minutes): the 10 practice questions answered, with the line to point at and the command that shows it. Replaces the learning log
 - [ ] **Teach-back:** each person explains one program they didn't write to someone else before demo day; note who taught whom
-- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it)
-- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3
+- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's and Ella's have a row, the other three are blank
+- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection
 
 ## Work order
 1. **Everyone** agrees on the record format table above (day 1)

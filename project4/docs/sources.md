@@ -56,7 +56,7 @@ Every Apple URL below was fetched and confirmed to load on 2026-11-10.
 
 ## AI use
 
-| Who | What AI helped with | How we checked it |
-|---|---|---|
-| Sarah | Claude Code set up the package skeleton and `reset.sh`, drafted the README and this list, and wrote the layers doc and `docs/file-api-check.swift` | Ran `swift build` and all six stubs; tested `reset.sh` with a third file in `output/`; ran `file-api-check.swift` and copied its real output into the doc; fetched every Apple link and checked each quote against the page or man page |
-| Ella | Claude Code wrote `CSVCreate`, `CSVAppend` and `CSVRead` with their comments | Claude Code ran these checks on Ella's Mac: a fresh run gives 100 lines, then 150; row 100 is `100 Maple St` and row 101 is `101 Oak Ave`; ZIP `02134` keeps its 0; the first 6,512 bytes match a fresh create (`shasum`); missing-file runs of `CSVAppend` and `CSVRead` print a clear error and exit 1; a 7-field line makes `CSVRead` name line 57. *Ella: add what you checked yourself, e.g. reading each line against the Apple docs above* |
+Each person's AI use is in their own file in [`ai-use/`](ai-use/), so five people can edit at the
+same time without merge conflicts:
+[Sarah](ai-use/sarah.md) · [Georgia](ai-use/georgia.md) · [Ella](ai-use/ella.md) ·
+[Calli](ai-use/calli.md) · [Stephen](ai-use/stephen.md)
