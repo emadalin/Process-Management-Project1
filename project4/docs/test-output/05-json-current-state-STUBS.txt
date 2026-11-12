@@ -1,0 +1,20 @@
+=== JSONCreate (current state) ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'JSONCreate' complete! (0.07s)
+JSONCreate: not written yet (file: output/people.json)
+exit code: 0
+
+=== JSONAdd (current state) ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'JSONAdd' complete! (0.07s)
+JSONAdd: not written yet (file: output/people.json)
+exit code: 0
+
+=== JSONRead (current state) ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'JSONRead' complete! (0.08s)
+JSONRead: not written yet (file: output/people.json)
+exit code: 0

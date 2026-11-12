@@ -1,0 +1,13 @@
+=== CSVRead on missing file ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'CSVRead' complete! (0.07s)
+CSVRead: could not open output/people.csv for reading (file does not exist)
+exit code: 1
+
+=== CSVAppend on missing file ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'CSVAppend' complete! (0.07s)
+CSVAppend: could not open output/people.csv for appending (file does not exist; run CSVCreate first)
+exit code: 1

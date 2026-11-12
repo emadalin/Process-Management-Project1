@@ -1,0 +1,15 @@
+=== Environment ===
+ProductName:		macOS
+ProductVersion:		26.5.2
+BuildVersion:		25F84
+
+arm64
+
+Apple Swift version 6.3.2 (swiftlang-6.3.2.1.108 clang-2100.1.1.101)
+Target: arm64-apple-macosx26.0
+
+--- root volume ---
+   File System Personality:   APFS
+
+--- output/ volume ---
+   File System Personality:   APFS
