@@ -197,15 +197,44 @@ a scratch folder of its own, so it never touches `output/`. Output on Sarah's Ma
 6. broken JSON -> DecodingError: dataCorrupted(... "The given data was not valid JSON." ...)
 ```
 
-### Still to observe once the programs work
+### The real CSV file: append grows the same file — **observed**
 
-These need Ella's and Calli's real programs, not stubs:
+Run with Ella's programs on Sarah's Mac, 12 November, from inside `project4/` (the inode number
+changes every run):
 
-- [ ] `ls -l output/people.csv` after `CSVCreate` and again after `CSVAppend`: the size should
-      grow, and the first 100 lines should be byte-for-byte the same
-- [ ] `stat -f '%i %z' output/people.csv` before and after `CSVAppend`: same inode, bigger size
-- [ ] `stat -f '%i %z' output/people.json` before and after `JSONAdd`: **new** inode, because of
-      `.atomic`
+```
+$ ./reset.sh && swift run CSVCreate
+Wrote 100 records to output/people.csv
+$ ls -l output/people.csv
+-rw-r--r--@ 1 sarahpritchard  staff  6512 Nov 12 09:40 output/people.csv
+$ stat -f '%i %z' output/people.csv          # inode, size in bytes
+60190972 6512
+$ head -100 output/people.csv | shasum       # fingerprint of the first 100 lines
+8e4b81c620570d93ba71afe5e86724b69f06bda8  -
+
+$ swift run CSVAppend
+Appended 50 records to output/people.csv
+$ ls -l output/people.csv
+-rw-r--r--@ 1 sarahpritchard  staff  9767 Nov 12 09:40 output/people.csv
+$ stat -f '%i %z' output/people.csv
+60190972 9767
+$ head -100 output/people.csv | shasum
+8e4b81c620570d93ba71afe5e86724b69f06bda8  -
+```
+
+- **Same inode** (`60190972`) before and after: `CSVAppend` wrote into the **same file**. It did
+  not create a new one.
+- **The size grew** by 3,255 bytes (6,512 → 9,767), the 50 new lines.
+- **The first 100 lines have the same fingerprint**, so not one byte of the original records
+  changed. This is the answer to "how did we verify the originals were preserved?"
+
+This matches experiment 3, now on the real file.
+
+### Still to observe once the JSON programs work
+
+- [ ] `stat -f '%i %z' output/people.json` before and after `JSONAdd`: expect a **new** inode,
+      because `.atomic` swaps in a new file (experiment 5). That's the opposite of the CSV
+      append above, and it's the clearest way to show the difference between the two formats
 
 ## Sources
 
