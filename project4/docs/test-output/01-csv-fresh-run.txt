@@ -1,0 +1,18 @@
+=== CSVCreate (fresh) ===
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'CSVCreate' complete! (0.10s)
+Wrote 100 records to output/people.csv
+
+=== wc -l after create ===
+     100 output/people.csv
+
+=== CSVAppend ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'CSVAppend' complete! (0.07s)
+Appended 50 records to output/people.csv
+
+=== wc -l after append ===
+     150 output/people.csv

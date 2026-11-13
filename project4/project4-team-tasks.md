@@ -67,30 +67,32 @@ Owns demo section **2c (roles of the app, runtime, OS, and file system)**.
 - [x] Create `project4/` as a Swift package with the `RecordKit` library target and six executable targets (stub `main.swift` in each that prints its name), then push on day 1 — pushed 10 Nov, `swift build` passes
 - [x] Add `project4/output/` with a `.gitkeep`, and put both file paths in `RecordKit/Paths.swift`
 - [x] Add `reset.sh` that deletes **only** `output/people.csv` and `output/people.json` (nothing else) — tested: a third file in `output/` survives a reset
-- [ ] Research and write `docs/file-system-layers.md` (documented vs observed):
-  - What each layer does: **our code** (builds and interprets records) → **Swift/Foundation** (`FileHandle`, `JSONEncoder`) → **macOS** (system calls like `open`, `write`, `read`, `close`, file descriptors, permissions) → **APFS** (metadata, where the bytes are stored)
-  - Opening a file gives a **handle/file descriptor**, not the whole file in memory
-  - Confirm our file system is APFS; explain why we don't assume FAT
-  - Optional observed evidence: `ls -l` sizes before/after append, `stat output/people.csv`
-- [ ] Write the README: OS + Swift version, dependencies (none beyond Foundation), output folder, **run order**, how to reset, the field-format table
-- [ ] Collect the sources list (Apple docs for `FileHandle`, `FileManager`, `JSONEncoder`, `JSONDecoder`, `Data.write(options: .atomic)`, APFS guide)
+- [x] Research and write `docs/file-system-layers.md` (documented vs observed) — written 10 Nov, every claim labelled, evidence re-runs with `swift docs/file-api-check.swift`
+  - [x] What each layer does: **our code** (builds and interprets records) → **Swift/Foundation** (`FileHandle`, `JSONEncoder`) → **macOS** (system calls like `open`, `write`, `read`, `close`, file descriptors, permissions) → **APFS** (metadata, where the bytes are stored) — §1–2
+  - [x] Opening a file gives a **handle/file descriptor**, not the whole file in memory — §3, observed: descriptor 3 at position 0
+  - [x] Confirm our file system is APFS; explain why we don't assume FAT — §5, both volumes observed APFS
+- [x] Optional observed evidence, CSV: `ls -l` sizes before/after append, `stat output/people.csv` — 12 Nov, §7 of the layers doc: same inode, 6,512 → 9,767 bytes, first 100 lines unchanged
+- [ ] Optional observed evidence, JSON: `stat output/people.json` before/after `JSONAdd` — needs Calli's programs
+- [x] Write the README: OS + Swift version, dependencies (none beyond Foundation), output folder, **run order**, how to reset, the field-format table — `README.md`, pushed 10 Nov
+- [x] Collect the sources list (Apple docs for `FileHandle`, `FileManager`, `JSONEncoder`, `JSONDecoder`, `Data.write(options: .atomic)`, APFS guide) — all six in `docs/sources.md`, every link checked 10 Nov
+- [ ] Teammates add their own sources, adapted examples and AI use to `docs/sources.md` — "Used by" is still blank for FileManager, JSONEncoder, JSONDecoder, Codable, `init(forReadingFrom:)` and `readToEnd()`
 - [ ] Assemble the final contribution statement and resources/AI-use list
 
 ## Member 2: Shared Records & Table Display (`RecordKit`) · `Georgia`
 Owns demo section **1 (showing the tables and record counts)**.
-- [ ] `Person` struct with the eight `String` fields, marked `Codable`
-- [ ] `makeRecords(from: 1, count: 100)` and `makeRecords(from: 101, count: 50)`: deterministic values from small name/city lists, street number = record number, `Maple St` vs `Oak Ave`
-- [ ] Make sure at least one ZIP per batch starts with `0`
-- [ ] `toCSVLine()` → 8 fields joined by commas; `fromCSVLine(_:)` → splits on commas, **errors if there aren't exactly 8 fields**
-- [ ] `printTable(_:)` → labeled, lined-up columns using the exact labels above, with a row number column
-- [ ] Test with 3 records first, then hand off to Members 3 and 4
+- [x] `Person` struct with the eight `String` fields, marked `Codable`
+- [x] `makeRecords(from: 1, count: 100)` and `makeRecords(from: 101, count: 50)`: deterministic values from small name/city lists, street number = record number, `Maple St` vs `Oak Ave`
+- [x] Make sure at least one ZIP per batch starts with `0`
+- [x] `toCSVLine()` → 8 fields joined by commas; `fromCSVLine(_:)` → splits on commas, **errors if there aren't exactly 8 fields**
+- [x] `printTable(_:)` → labeled, lined-up columns using the exact labels above, with a row number column
+- [x] Test with 3 records first, then hand off to Members 3 and 4
 
 ## Member 3: CSV Programs 1–3 · `Ella`
 Owns demo section **2a (CSV code walkthrough and why append works)**.
-- [ ] **`CSVCreate`**: create the file (replacing any old one), write 100 lines, **no header**, one record per line, each line ending in `\n`, close
-- [ ] **`CSVAppend`**: open the **existing** file with `FileHandle(forWritingTo:)`, `seekToEnd()`, write 50 lines, close. Fail with a clear message if the file doesn't exist (don't silently create it)
-- [ ] Make sure record 101 starts on a **new line** (every line ends in `\n`, so the boundary is clean)
-- [ ] **`CSVRead`**: read the file, split into lines, parse each into a `Person`, store in an array, `printTable`, print `Read 150 records from output/people.csv`
+- [x] **`CSVCreate`**: create the file (replacing any old one), write 100 lines, **no header**, one record per line, each line ending in `\n`, close — 10 Nov; running it twice still gives 100 lines
+- [x] **`CSVAppend`**: open the **existing** file with `FileHandle(forWritingTo:)`, `seekToEnd()`, write 50 lines, close. Fail with a clear message if the file doesn't exist (don't silently create it) — 10 Nov; 6,512 → 9,767 bytes, first 6,512 bytes identical to a fresh create (`shasum`)
+- [x] Make sure record 101 starts on a **new line** (every line ends in `\n`, so the boundary is clean) — line 100 is `100 Maple St`, line 101 is `101 Oak Ave`
+- [x] **`CSVRead`**: read the file, split into lines, parse each into a `Person`, store in an array, `printTable`, print `Read 150 records from output/people.csv` — 10 Nov; also reports a missing file, and a 7-field line by its line number
 - [ ] Be ready to answer: *which open modes do we use, and what happens if append opened the file for replacement?* (The 100 originals would be erased, leaving only 50)
 
 ## Member 4: JSON Programs 4–6 · `Calli`
@@ -106,25 +108,25 @@ Owns demo section **2b (JSON code walkthrough and why we parse before writing)**
 
 ## Member 5: Testing, Error Handling & Test Record · `Stephen`
 Owns demo section **3 (missing-file error and what we learned from testing)**.
-- [ ] Write the error messages with Member 3/4 so each names the **operation and the file**, e.g. `CSVRead: could not open output/people.csv for reading (file does not exist)`
-- [ ] Explain how Swift reports errors: **thrown errors** caught with `do/catch`. File problems come back as `CocoaError` (e.g. `.fileReadNoSuchFile`), and bad JSON comes back as `DecodingError`
+- [ ] Write the error messages with Member 3/4 so each names the **operation and the file**, e.g. `CSVRead: could not open output/people.csv for reading (file does not exist)` — CSV side already follows this shape (Ella's work, confirmed by reading the source, not just the output). Drafted matching messages for the three JSON programs in `docs/test-record.md` §6 as a starting proposal; **still needs Calli's confirmation once the real JSON programs exist**
+- [x] Explain how Swift reports errors: **thrown errors** caught with `do/catch`. File problems come back as `CocoaError` (e.g. `.fileReadNoSuchFile`), and bad JSON comes back as `DecodingError` — written up in `docs/test-record.md` §5, with the specific line numbers behind each claim
 - [ ] Test and log:
-  - [ ] Fresh run: 100 after create, 150 after add (both formats)
-  - [ ] Records 1–100 unchanged and in order; 101–150 follow (check row 100 vs 101)
-  - [ ] Leading-zero ZIP survives in both formats
-  - [ ] Missing file: run each read program and both add programs after `reset.sh`
-  - [ ] Malformed CSV line (7 fields) → clear parse error with the line number
-  - [ ] Malformed JSON (delete a `]`) → `JSONAdd` reports a parse failure and **the file is unchanged** (compare before/after with `shasum`)
-- [ ] Save terminal output to `docs/test-output/` and fill in `docs/test-record.md`
-- [ ] Optional: `verify.sh` that runs the whole workflow and checks the counts with `wc -l` (CSV) and the read program output (JSON)
+  - [ ] Fresh run: 100 after create, 150 after add (both formats) — **CSV done** (100 → 150, confirmed with `wc -l`); **JSON blocked**, programs are still stubs
+  - [ ] Records 1–100 unchanged and in order; 101–150 follow (check row 100 vs 101) — **CSV done**, row 100 is `100 Maple St`, row 101 is `101 Oak Ave`; **JSON blocked**
+  - [ ] Leading-zero ZIP survives in both formats — **CSV done** (`02134` intact on row 1 and row 101); **JSON blocked**
+  - [ ] Missing file: run each read program and both add programs after `reset.sh` — **CSVRead and CSVAppend done**, both fail with a clear message, exit 1, no crash; **JSONRead/JSONAdd blocked** (their stubs don't exercise the real missing-file path)
+  - [x] Malformed CSV line (7 fields) → clear parse error with the line number — done: `CSVRead: could not read line 101 of output/people.csv (expected 8 fields, found 7)`, file restored and re-verified at 150 lines afterward
+  - [ ] Malformed JSON (delete a `]`) → `JSONAdd` reports a parse failure and **the file is unchanged** (compare before/after with `shasum`) — **blocked**, needs a real JSON file to corrupt
+- [x] Save terminal output to `docs/test-output/` and fill in `docs/test-record.md` — done for everything currently testable (CSV + environment); will need another pass once JSON lands
+- [ ] Optional: `verify.sh` that runs the whole workflow and checks the counts with `wc -l` (CSV) and the read program output (JSON) — holding off until JSON exists, so it checks both workflows at once instead of being rewritten
 
 ---
 
 ## Learning & reflection (needed for an A)
-- [ ] Everyone keeps a short **learning log** in `docs/reflections/<name>.md`: what you learned, what confused you, how you learned a teammate's part
+- [ ] Everyone reads [`docs/study-guide.md`](docs/study-guide.md) (about 10 minutes): the 10 practice questions answered, with the line to point at and the command that shows it. Replaces the learning log
 - [ ] **Teach-back:** each person explains one program they didn't write to someone else before demo day; note who taught whom
-- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it)
-- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3
+- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's and Ella's have a row, the other three are blank
+- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection
 
 ## Work order
 1. **Everyone** agrees on the record format table above (day 1)
