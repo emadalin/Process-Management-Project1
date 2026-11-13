@@ -97,13 +97,13 @@ Owns demo section **2a (CSV code walkthrough and why append works)**.
 
 ## Member 4: JSON Programs 4–6 · `Calli`
 Owns demo section **2b (JSON code walkthrough and why we parse before writing)**.
-- [ ] **`JSONCreate`**: encode 100 `Person`s as **one JSON array** with `JSONEncoder` (`.prettyPrinted`), write it, close
-- [ ] **`JSONAdd`**:
+- [x] **`JSONCreate`**: encode 100 `Person`s as **one JSON array** with `JSONEncoder` (`.prettyPrinted`), write it, close — written; tested against a temporary `RecordKit` stand-in, not yet against Georgia's
+- [x] **`JSONAdd`**: — written; tested with the stand-in: 100 → 150, missing file gives a file error, a deleted `]` gives a parse error and `shasum` shows the file unchanged
   1. Read the file → if that fails, report a **file error**
   2. Decode `[Person]` → if that fails, report a **parse error** and **stop without touching the file**
   3. Append 50 new records **after** the originals
   4. Encode and write with `.atomic` (writes a temp file, then swaps it in, so a crash can't leave half a file)
-- [ ] **`JSONRead`**: decode the array, `printTable` with the **same labels** as CSV, print the count of **objects** (not lines)
+- [x] **`JSONRead`**: decode the array, `printTable` with the **same labels** as CSV, print the count of **objects** (not lines) — written; prints `Read 150 records from output/people.json` with the stand-in. The labels come from Georgia's `printTable`
 - [ ] Be ready to answer: *why can't we just append bytes to the JSON file?* (Text after the closing `]` is invalid JSON)
 
 ## Member 5: Testing, Error Handling & Test Record · `Stephen`
