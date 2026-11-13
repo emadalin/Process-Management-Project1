@@ -23,7 +23,7 @@ let people: [Person]
 do {
     people = try JSONDecoder().decode([Person].self, from: data)
 } catch {
-    print("JSONRead: \(jsonPath) is not valid JSON (\(error))")
+    print("JSONRead: could not parse \(jsonPath) (\(error))")
     exit(1)
 }
 

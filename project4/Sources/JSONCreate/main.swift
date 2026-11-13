@@ -23,7 +23,7 @@ do {
 // Create an empty file, replacing any old one. createFile returns false if
 // macOS refused (e.g. the output folder is missing).
 guard FileManager.default.createFile(atPath: jsonPath, contents: nil) else {
-    print("JSONCreate: could not create \(jsonPath)")
+    print("JSONCreate: could not create \(jsonPath) (is the output folder there? run from inside project4/)")
     exit(1)
 }
 
@@ -36,7 +36,7 @@ do {
     // Write the whole array in one go.
     try handle.write(contentsOf: data)
 } catch {
-    print("JSONCreate: could not write \(jsonPath) (\(error.localizedDescription))")
+    print("JSONCreate: could not write to \(jsonPath) (\(error.localizedDescription))")
     exit(1)
 }
 

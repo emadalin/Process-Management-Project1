@@ -12,7 +12,7 @@ let data: Data
 do {
     data = try Data(contentsOf: jsonURL)
 } catch CocoaError.fileReadNoSuchFile {
-    print("JSONAdd: could not open \(jsonPath) for reading (file does not exist)")
+    print("JSONAdd: could not open \(jsonPath) for reading (file does not exist; run JSONCreate first)")
     exit(1)
 } catch {
     print("JSONAdd: could not open \(jsonPath) for reading (\(error.localizedDescription))")
@@ -26,7 +26,7 @@ var people: [Person]
 do {
     people = try JSONDecoder().decode([Person].self, from: data)
 } catch {
-    print("JSONAdd: \(jsonPath) is not valid JSON, file left unchanged (\(error))")
+    print("JSONAdd: could not parse \(jsonPath) (\(error) — file left unchanged)")
     exit(1)
 }
 let before = people.count
@@ -42,7 +42,7 @@ do {
     let newData = try encoder.encode(people)
     try newData.write(to: jsonURL, options: .atomic)
 } catch {
-    print("JSONAdd: could not write \(jsonPath) (\(error.localizedDescription))")
+    print("JSONAdd: could not write to \(jsonPath) (\(error.localizedDescription))")
     exit(1)
 }
 
