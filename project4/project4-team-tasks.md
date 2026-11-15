@@ -53,12 +53,12 @@ Fields in this order for CSV columns **and** both tables:
 - **Every batch includes at least one ZIP starting with 0** (e.g., record 1 and record 101) as the leading-zero check
 
 ## Everyone, on your own Mac
-- [ ] Pull the repo, `cd project4`, run `swift build`
-- [ ] Run the full workflow from a fresh reset (see README): CSV create → append → read, JSON create → add → read
-- [ ] Confirm: 100 after create ✓ 150 after add ✓ row 100 is `Maple`, row 101 is `Oak` ✓ ZIP `02134` still has its 0 ✓ missing-file error ✓
-- [ ] Record: `sw_vers`, `uname -m`, `swift --version`, file system of the output folder (`diskutil info / | grep "File System"`)
+- [ ] Pull the repo, `cd project4`, run `swift build` — done: Sarah, Stephen
+- [ ] Run the full workflow from a fresh reset (see README): CSV create → append → read, JSON create → add → read — done: Sarah (15 Nov), Stephen (14 Nov)
+- [ ] Confirm: 100 after create ✓ 150 after add ✓ row 100 is `Maple`, row 101 is `Oak` ✓ ZIP `02134` still has its 0 ✓ missing-file error ✓ — done: Sarah, Stephen
+- [ ] Record: `sw_vers`, `uname -m`, `swift --version`, file system of the output folder (`diskutil info / | grep "File System"`) — done: Sarah (README requirements), Stephen (`docs/test-record.md` §1)
 - [ ] Practice explaining one program you **didn't** write to a teammate
-- [ ] Add your problems/fixes (or "no special fixes needed") to the troubleshooting record
+- [ ] Add your problems/fixes (or "no special fixes needed") to the troubleshooting record (`docs/test-record.md` §7) — done: Stephen, Sarah
 
 ---
 
@@ -75,8 +75,8 @@ Owns demo section **2c (roles of the app, runtime, OS, and file system)**.
 - [x] Optional observed evidence, JSON: `stat output/people.json` before/after `JSONAdd` — new inode, originals unchanged (`docs/file-system-layers.md` §7)
 - [x] Write the README: OS + Swift version, dependencies (none beyond Foundation), output folder, **run order**, how to reset, the field-format table — `README.md`, pushed 10 Nov
 - [x] Collect the sources list (Apple docs for `FileHandle`, `FileManager`, `JSONEncoder`, `JSONDecoder`, `Data.write(options: .atomic)`, APFS guide) — all six in `docs/sources.md`, every link checked 10 Nov
-- [ ] Teammates add their own sources, adapted examples and AI use to `docs/sources.md` — "Used by" is still blank for FileManager, JSONEncoder, JSONDecoder, Codable, `init(forReadingFrom:)` and `readToEnd()`
-- [ ] Assemble the final contribution statement and resources/AI-use list
+- [ ] Teammates add their own sources, adapted examples and AI use to `docs/sources.md` — Ella's rows are in. Still blank: "Used by" for JSONEncoder, JSONDecoder and Codable (Calli, Georgia), and the adapted-examples table (anyone, or write "none")
+- [ ] Assemble the final contribution statement and resources/AI-use list — `docs/contributions.md` started 15 Nov with Sarah's section; waiting on the other four
 
 ## Member 2: Shared Records & Table Display (`RecordKit`) · `Georgia`
 Owns demo section **1 (showing the tables and record counts)**.
@@ -97,13 +97,13 @@ Owns demo section **2a (CSV code walkthrough and why append works)**.
 
 ## Member 4: JSON Programs 4–6 · `Calli`
 Owns demo section **2b (JSON code walkthrough and why we parse before writing)**.
-- [x] **`JSONCreate`**: encode 100 `Person`s as **one JSON array** with `JSONEncoder` (`.prettyPrinted`), write it, close — written; tested against a temporary `RecordKit` stand-in, not yet against Georgia's
+- [x] **`JSONCreate`**: encode 100 `Person`s as **one JSON array** with `JSONEncoder` (`.prettyPrinted`), write it, close — written; tested against a temporary `RecordKit` stand-in, then on main with Georgia's `RecordKit` (Stephen, 14 Nov)
 - [x] **`JSONAdd`**: — written; tested with the stand-in: 100 → 150, missing file gives a file error, a deleted `]` gives a parse error and `shasum` shows the file unchanged
   1. Read the file → if that fails, report a **file error**
   2. Decode `[Person]` → if that fails, report a **parse error** and **stop without touching the file**
   3. Append 50 new records **after** the originals
   4. Encode and write with `.atomic` (writes a temp file, then swaps it in, so a crash can't leave half a file)
-- [x] **`JSONRead`**: decode the array, `printTable` with the **same labels** as CSV, print the count of **objects** (not lines) — written; prints `Read 150 records from output/people.json` with the stand-in. The labels come from Georgia's `printTable`
+- [x] **`JSONRead`**: decode the array, `printTable` with the **same labels** as CSV, print the count of **objects** (not lines) — written; prints `Read 150 records from output/people.json`, with the stand-in and on main. The labels come from Georgia's `printTable`
 - [ ] Be ready to answer: *why can't we just append bytes to the JSON file?* (Text after the closing `]` is invalid JSON)
 
 ## Member 5: Testing, Error Handling & Test Record · `Stephen`
@@ -125,8 +125,8 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 ## Learning & reflection (needed for an A)
 - [ ] Everyone reads [`docs/study-guide.md`](docs/study-guide.md) (about 10 minutes): the 10 practice questions answered, with the line to point at and the command that shows it. Replaces the learning log
 - [ ] **Teach-back:** each person explains one program they didn't write to someone else before demo day; note who taught whom
-- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's and Ella's have a row, the other three are blank
-- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection
+- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's and Ella's are filled in, Georgia's, Calli's and Stephen's are blank
+- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection — done: Sarah
 
 ## Work order
 1. **Everyone** agrees on the record format table above (day 1)
@@ -162,12 +162,12 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 - Where is each file closed, including when an error happens?
 
 ## Submission checklist (Canvas) — due Tuesday 17 November
-- [ ] Source code for all six programs + `RecordKit`
-- [ ] Setup & run instructions (run order, dependencies, output folder, how to reset)
-- [ ] `people.csv` and `people.json`, each with 150 fictional records
-- [ ] Test record: counts for both workflows, proof the originals were preserved, missing-file result
-- [ ] Team contribution statement
-- [ ] Resources list, including adapted examples and AI use
+- [x] Source code for all six programs + `RecordKit` — on main; builds, all six run
+- [x] Setup & run instructions (run order, dependencies, output folder, how to reset) — `README.md`
+- [x] `people.csv` and `people.json`, each with 150 fictional records — clean run on Sarah's Mac 15 Nov, in `output/` (not in git; attach these two files)
+- [x] Test record: counts for both workflows, proof the originals were preserved, missing-file result — `docs/test-record.md` (Stephen)
+- [ ] Team contribution statement — `docs/contributions.md`: Sarah's done, four sections to go
+- [ ] Resources list, including adapted examples and AI use — `docs/sources.md` + `docs/ai-use/`: three "Used by" cells, adapted examples, and three AI-use files to go
 
 ## Run order (for the README)
 ```

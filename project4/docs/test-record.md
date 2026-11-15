@@ -129,6 +129,13 @@ find the file. Fixed by listing `/tmp` for the actual filename and restoring fro
 JSON file was never at risk, since the corruption only ever touched `output/people.json`, not the
 backup in `/tmp`.
 
+**Sarah's Mac (macOS 15.8.1, arm64, Swift 6.2.1): no special fixes needed.** The full workflow
+ran as the README describes on 15 November: 150 records in each file. One thing to watch for:
+`diskutil info /` reports macOS's read-only system volume, but the repo lives on the separate
+Data volume. To check the output folder's own volume, run
+`diskutil info "$(df output | tail -1 | cut -d' ' -f1)" | grep "File System"` from inside
+`project4/`. Both volumes are APFS.
+
 ## 8. Extra case: an empty (0-byte) file — a real asymmetry, not a guess
 
 Neither format's spec calls this out explicitly, so it was worth checking directly rather than
