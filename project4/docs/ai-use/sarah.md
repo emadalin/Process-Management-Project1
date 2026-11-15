@@ -14,4 +14,7 @@ anything it got **wrong** or you **changed**. If you didn't use AI, write "No AI
 
 ## My lesson for demo section 3
 
-_One or two sentences: a design decision or troubleshooting lesson, in your own words._
+One thing I learned from this project is that adding records to a CSV file and a JSON file works
+differently at the file-system level. I verified this by checking the inode before and after: the
+CSV append kept the same file and increased its size, while the JSON add created a new file
+because it uses an atomic write, which makes it safer if the program crashes.
