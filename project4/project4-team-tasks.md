@@ -108,17 +108,17 @@ Owns demo section **2b (JSON code walkthrough and why we parse before writing)**
 
 ## Member 5: Testing, Error Handling & Test Record · `Stephen`
 Owns demo section **3 (missing-file error and what we learned from testing)**.
-- [ ] Write the error messages with Member 3/4 so each names the **operation and the file**, e.g. `CSVRead: could not open output/people.csv for reading (file does not exist)` — CSV side already follows this shape (Ella's work, confirmed by reading the source, not just the output). Drafted matching messages for the three JSON programs in `docs/test-record.md` §6 as a starting proposal; **still needs Calli's confirmation once the real JSON programs exist**
-- [x] Explain how Swift reports errors: **thrown errors** caught with `do/catch`. File problems come back as `CocoaError` (e.g. `.fileReadNoSuchFile`), and bad JSON comes back as `DecodingError` — written up in `docs/test-record.md` §5, with the specific line numbers behind each claim
-- [ ] Test and log:
-  - [ ] Fresh run: 100 after create, 150 after add (both formats) — **CSV done** (100 → 150, confirmed with `wc -l`); **JSON blocked**, programs are still stubs
-  - [ ] Records 1–100 unchanged and in order; 101–150 follow (check row 100 vs 101) — **CSV done**, row 100 is `100 Maple St`, row 101 is `101 Oak Ave`; **JSON blocked**
-  - [ ] Leading-zero ZIP survives in both formats — **CSV done** (`02134` intact on row 1 and row 101); **JSON blocked**
-  - [ ] Missing file: run each read program and both add programs after `reset.sh` — **CSVRead and CSVAppend done**, both fail with a clear message, exit 1, no crash; **JSONRead/JSONAdd blocked** (their stubs don't exercise the real missing-file path)
-  - [x] Malformed CSV line (7 fields) → clear parse error with the line number — done: `CSVRead: could not read line 101 of output/people.csv (expected 8 fields, found 7)`, file restored and re-verified at 150 lines afterward
-  - [ ] Malformed JSON (delete a `]`) → `JSONAdd` reports a parse failure and **the file is unchanged** (compare before/after with `shasum`) — **blocked**, needs a real JSON file to corrupt
-- [x] Save terminal output to `docs/test-output/` and fill in `docs/test-record.md` — done for everything currently testable (CSV + environment); will need another pass once JSON lands
-- [ ] Optional: `verify.sh` that runs the whole workflow and checks the counts with `wc -l` (CSV) and the read program output (JSON) — holding off until JSON exists, so it checks both workflows at once instead of being rewritten
+- [x] Write the error messages with Member 3/4 so each names the **operation and the file**, e.g. `CSVRead: could not open output/people.csv for reading (file does not exist)` — CSV side already followed this shape (Ella's work). Drafted matching JSON messages as a proposal; Calli matched them almost exactly when she shipped the real programs (`docs/test-record.md` §6)
+- [x] Explain how Swift reports errors: **thrown errors** caught with `do/catch`. File problems come back as `CocoaError` (e.g. `.fileReadNoSuchFile`), and bad JSON comes back as `DecodingError` — written up in `docs/test-record.md` §5, with the specific line numbers behind each claim, including the real `DecodingError.dataCorrupted` case triggered in testing
+- [x] Test and log:
+  - [x] Fresh run: 100 after create, 150 after add (both formats) — confirmed both ways: CSV via `wc -l`, JSON via the programs' own before→after counts
+  - [x] Records 1–100 unchanged and in order; 101–150 follow (check row 100 vs 101) — identical boundary confirmed in both formats: row 100 `100 Maple St`, row 101 `101 Oak Ave`
+  - [x] Leading-zero ZIP survives in both formats — confirmed: `02134` intact on row 1 and row 101, both formats
+  - [x] Missing file: run each read program and both add programs after `reset.sh` — all four tested for real, all fail cleanly with a specific message, exit 1, no crash
+  - [x] Malformed CSV line (7 fields) → clear parse error with the line number — `CSVRead: could not read line 101 of output/people.csv (expected 8 fields, found 7)`, file restored and re-verified afterward
+  - [x] Malformed JSON (delete a `]`) → `JSONAdd` reports a parse failure and **the file is unchanged** (compare before/after with `shasum`) — confirmed with SHA-256 before/after the failed run: identical hashes
+- [x] Save terminal output to `docs/test-output/` and fill in `docs/test-record.md` — both workflows fully tested and written up, plus an extra empty-file test that surfaced a real CSV-vs-JSON behavior difference (`docs/test-record.md` §8)
+- [ ] Optional: `verify.sh` that runs the whole workflow and checks the counts with `wc -l` (CSV) and the read program output (JSON) — both workflows are done now, so this is unblocked but not yet written
 
 ---
 

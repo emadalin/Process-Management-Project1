@@ -1,0 +1,7 @@
+=== JSONAdd on malformed JSON (missing closing ]) ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'JSONAdd' complete! (0.07s)
+JSONAdd: could not parse output/people.json (DecodingError.dataCorrupted: Data was corrupted. Debug description: The given data was not valid JSON.. Underlying error: Error Domain=NSCocoaErrorDomain Code=3840 "Unexpected end of file" UserInfo={NSDebugDescription=Unexpected end of file} — file left unchanged)
+exit code: 1
+IDENTICAL — file was not touched by the failed JSONAdd run

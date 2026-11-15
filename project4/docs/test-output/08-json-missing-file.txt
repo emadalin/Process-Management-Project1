@@ -1,0 +1,13 @@
+=== JSONRead on missing file ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'JSONRead' complete! (0.07s)
+JSONRead: could not open output/people.json for reading (file does not exist)
+exit code: 1
+
+=== JSONAdd on missing file ===
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'JSONAdd' complete! (0.08s)
+JSONAdd: could not open output/people.json for reading (file does not exist; run JSONCreate first)
+exit code: 1
