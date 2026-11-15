@@ -72,7 +72,7 @@ Owns demo section **2c (roles of the app, runtime, OS, and file system)**.
   - [x] Opening a file gives a **handle/file descriptor**, not the whole file in memory — §3, observed: descriptor 3 at position 0
   - [x] Confirm our file system is APFS; explain why we don't assume FAT — §5, both volumes observed APFS
 - [x] Optional observed evidence, CSV: `ls -l` sizes before/after append, `stat output/people.csv` — 12 Nov, §7 of the layers doc: same inode, 6,512 → 9,767 bytes, first 100 lines unchanged
-- [ ] Optional observed evidence, JSON: `stat output/people.json` before/after `JSONAdd` — needs Calli's programs
+- [x] Optional observed evidence, JSON: `stat output/people.json` before/after `JSONAdd` — new inode, originals unchanged (`docs/file-system-layers.md` §7)
 - [x] Write the README: OS + Swift version, dependencies (none beyond Foundation), output folder, **run order**, how to reset, the field-format table — `README.md`, pushed 10 Nov
 - [x] Collect the sources list (Apple docs for `FileHandle`, `FileManager`, `JSONEncoder`, `JSONDecoder`, `Data.write(options: .atomic)`, APFS guide) — all six in `docs/sources.md`, every link checked 10 Nov
 - [ ] Teammates add their own sources, adapted examples and AI use to `docs/sources.md` — "Used by" is still blank for FileManager, JSONEncoder, JSONDecoder, Codable, `init(forReadingFrom:)` and `readToEnd()`

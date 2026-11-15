@@ -7,9 +7,9 @@ APFS file system each do when a program writes and reads a file.
 > **Due: Tuesday 17 November.** Team roles and the full checklist are in
 > [`project4-team-tasks.md`](project4-team-tasks.md).
 >
-> **Status:** the package builds and `RecordKit` is done (Georgia): the `Person` struct, the
-> record generator, CSV line conversion and the table printer. The three CSV programs are done
-> (Ella). The JSON programs (Calli) are still stubs that print their name.
+> **Status:** all six programs work. `RecordKit` (Georgia), the CSV programs (Ella) and the JSON
+> programs (Calli) are done, and Stephen has tested both workflows, including the error cases
+> (`docs/test-record.md`).
 
 ---
 

@@ -53,7 +53,9 @@ public func makeRecords(from start: Int, count: Int) -> [Person] {
         let day = 1 + (number % 28)
         let dateOfBirth = String(format: "%04d-%02d-%02d", year, month, day)
 
-        // 555 numbers are reserved for fiction; the last four digits are the record number.
+        // 555 is the exchange films and TV use for made-up numbers; only 555-0100 to
+        // 555-0199 are officially set aside for fiction. The last four digits are the
+        // record number, so they run 0001–0150. All the people are fictional either way.
         let phone = String(format: "205-555-%04d", number)
 
         let streetName = number <= 100 ? "Maple St" : "Oak Ave"

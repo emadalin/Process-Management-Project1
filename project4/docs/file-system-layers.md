@@ -230,11 +230,36 @@ $ head -100 output/people.csv | shasum
 
 This matches experiment 3, now on the real file.
 
-### Still to observe once the JSON programs work
+### The real JSON file: add replaces the file — **observed**
 
-- [ ] `stat -f '%i %z' output/people.json` before and after `JSONAdd`: expect a **new** inode,
-      because `.atomic` swaps in a new file (experiment 5). That's the opposite of the CSV
-      append above, and it's the clearest way to show the difference between the two formats
+Run with Calli's programs on Sarah's Mac, 15 November, from inside `project4/`. The fingerprint is
+of `JSONRead`'s table rows for records 1–100 (lines 3–102 of its output), because the JSON keys
+come out in a different order each run, so the file's own bytes can't be compared:
+
+```
+$ swift run JSONCreate
+Wrote 100 records to output/people.json
+$ stat -f '%i %z' output/people.json          # inode, size in bytes
+60535127 22014
+$ swift run JSONRead | sed -n '3,102p' | shasum
+89fc7c5d01addb04bda6c238555b99de863aecda  -
+
+$ swift run JSONAdd
+Added 50 records to output/people.json: 100 → 150
+$ stat -f '%i %z' output/people.json
+60535216 33019
+$ swift run JSONRead | sed -n '3,102p' | shasum
+89fc7c5d01addb04bda6c238555b99de863aecda  -
+```
+
+- **A new inode** (`60535127` → `60535216`): `JSONAdd` did not write into the old file. The
+  `.atomic` write made a new file and swapped it in under the same name (experiment 5).
+- **The size grew** by 11,005 bytes (22,014 → 33,019). JSON is bigger per record than CSV
+  because every value carries its key name.
+- **Records 1–100 read back identically**, so rewriting the whole array lost nothing.
+
+**This is the clearest difference between the formats:** the CSV append keeps the **same**
+file and adds to its end; the JSON add makes a **new** file holding the whole array.
 
 ## Sources
 

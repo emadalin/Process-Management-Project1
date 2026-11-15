@@ -4,9 +4,8 @@
 random, so anyone can be asked about any program. This answers the 10 practice questions from the
 task file. For each one: the answer, the line to **point at**, and the command that **shows** it.
 
-Line numbers are as committed. Calli's JSON programs are quoted from her `calli-json` branch;
-they stay the same once it's merged into main. *Drafted by Claude Code for Sarah, from the code and
-from test runs on Sarah's Mac on 12 November.*
+Line numbers are as committed on main. *Drafted by Claude Code for Sarah, from the code and from
+test runs on Sarah's Mac on 12 and 15 November.*
 
 ---
 
