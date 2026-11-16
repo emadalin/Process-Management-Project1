@@ -125,8 +125,8 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 ## Learning & reflection 
 - [ ] Everyone reads [`docs/study-guide.md`](docs/study-guide.md) (about 10 minutes): the 10 practice questions answered, with the line to point at and the command that shows it. Replaces the learning log
 - [ ] **Teach-back:** each person explains one program they didn't write to someone else before demo day; note who taught whom
-- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's and Ella's are filled in, Georgia's, Calli's and Stephen's are blank
-- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection — done: Sarah, Georgia
+- [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's, Ella's, Georgia's and Calli's are filled in; Stephen's is blank
+- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection — done: Sarah, Georgia, Calli
 
 ## Work order
 1. **Everyone** agrees on the record format table above (day 1)
@@ -166,7 +166,7 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 - [x] Setup & run instructions (run order, dependencies, output folder, how to reset) — `README.md`
 - [x] `people.csv` and `people.json`, each with 150 fictional records — clean run on Sarah's Mac 15 Nov, in `output/` (not in git; attach these two files)
 - [x] Test record: counts for both workflows, proof the originals were preserved, missing-file result — `docs/test-record.md` (Stephen)
-- [ ] Team contribution statement — `docs/contributions.md`: Sarah's done, four sections to go
+- [ ] Team contribution statement — `docs/contributions.md`: Sarah's, Georgia's and Calli's done; Ella's and Stephen's to go
 - [ ] Resources list, including adapted examples and AI use — `docs/sources.md` + `docs/ai-use/`: three "Used by" cells, adapted examples, and three AI-use files to go
 
 ## Run order (for the README)

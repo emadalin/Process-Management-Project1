@@ -32,7 +32,14 @@ _To be written by Ella._
 
 ## Member 4: Calli Nash — JSON programs
 
-_To be written by Calli._
+I built the three JSON programs. `JSONCreate` writes records 1–100 as one pretty-printed JSON
+array. `JSONAdd` reads and decodes that array, adds records 101–150 after the originals, and writes
+the whole array back with an atomic write; if the file is missing or the JSON is broken, it reports
+which one and stops without touching the file. `JSONRead` decodes the array and prints the same
+table as the CSV side, counting records rather than lines. I matched my error messages to the
+wording Stephen drafted, retested the programs against Georgia's `RecordKit`, and ran the full
+workflow on my own Mac. I used Claude Code to write and test the programs and to draft my
+write-ups; details are in [`ai-use/calli.md`](ai-use/calli.md).
 
 ## Member 5: Stephen Heath — testing, error handling, test record
 
