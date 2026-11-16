@@ -122,7 +122,7 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 
 ---
 
-## Learning & reflection (needed for an A)
+## Learning & reflection 
 - [ ] Everyone reads [`docs/study-guide.md`](docs/study-guide.md) (about 10 minutes): the 10 practice questions answered, with the line to point at and the command that shows it. Replaces the learning log
 - [ ] **Teach-back:** each person explains one program they didn't write to someone else before demo day; note who taught whom
 - [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's and Ella's are filled in, Georgia's, Calli's and Stephen's are blank
