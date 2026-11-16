@@ -13,8 +13,4 @@ anything it got **wrong** or you **changed**. If you didn't use AI, write "No AI
 
 ## My lesson for demo section 3
 
-The JSON file can't be added to the way the CSV can: it is one array, so any bytes written after
-the closing `]` make the whole file invalid. `JSONAdd` has to read and decode the whole array
-first, and if decoding fails it stops before writing anything. That is why a broken file is left
-exactly as it was, and why the program reports a missing file and bad JSON as two different
-errors.
+The JSON file can't be added to the way the CSV can: it is one array, so any bytes written after the closing `]` make the whole file invalid. `JSONAdd` has to read and decode the whole array first, and if decoding fails it stops before writing anything. That is why a broken file is left exactly as it was, and why the program reports a missing file and bad JSON as two different errors.
