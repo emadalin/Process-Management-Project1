@@ -30,7 +30,7 @@ Every Apple URL below was fetched and confirmed to load on 2026-11-10.
 |---|---|---|
 | [JSONEncoder](https://developer.apple.com/documentation/foundation/jsonencoder) · [prettyPrinted](https://developer.apple.com/documentation/foundation/jsonencoder/outputformatting-swift.struct/prettyprinted) | `[Person]` → JSON, readable layout | |
 | [JSONDecoder](https://developer.apple.com/documentation/foundation/jsondecoder) | JSON → `[Person]` | |
-| [Codable](https://developer.apple.com/documentation/swift/codable) | letting `Person` convert to and from JSON | |
+| [Codable](https://developer.apple.com/documentation/swift/codable) | letting `Person` convert to and from JSON | Georgia (`Person` in `RecordKit/Person.swift`) |
 
 ## Errors
 

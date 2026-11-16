@@ -16,7 +16,15 @@ Apple documentation; details are in [`ai-use/sarah.md`](ai-use/sarah.md).
 
 ## Member 2: Georgia Hipp — shared records and table (`RecordKit`)
 
-_To be written by Georgia._
+I built `RecordKit`, the shared code all six programs use. It has the `Person` struct with eight
+`String` fields, marked `Codable` so the JSON programs can encode and decode it. It also has
+`makeRecords`, which makes the same fictional people every run, with records 1–100 on Maple St,
+101–150 on Oak Ave, and a ZIP starting with 0 in each batch. The CSV line conversion throws an
+error if a line doesn't have exactly eight fields, and `printTable` gives both read programs the
+same labelled columns. I tested it with three records before handing it to Ella and Calli. On 16
+November I ran the full workflow on my own Mac and added my results to the test record. I used
+Claude Code to write much of this, and checked it by running the programs and comparing their
+output to our format table; details are in [`ai-use/georgia.md`](ai-use/georgia.md).
 
 ## Member 3: Ella Madalinski — CSV programs
 
