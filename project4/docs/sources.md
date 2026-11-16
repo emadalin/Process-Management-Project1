@@ -17,19 +17,19 @@ Every Apple URL below was fetched and confirmed to load on 2026-11-10.
 | [init(forWritingTo:)](https://developer.apple.com/documentation/foundation/filehandle/init(forwritingto:)) | opening the existing CSV for appending; the file pointer starts at the beginning | Sarah, Ella (`CSVCreate`, `CSVAppend`) |
 | [init(forReadingFrom:)](https://developer.apple.com/documentation/foundation/filehandle/init(forreadingfrom:)) | opening a file for reading | Ella (`CSVRead`) |
 | [seekToEnd()](https://developer.apple.com/documentation/foundation/filehandle/seektoend()) | moving to the end before appending | Sarah, Ella (`CSVAppend`) |
-| [write(contentsOf:)](https://developer.apple.com/documentation/foundation/filehandle/write(contentsof:)) | writing bytes through a handle | Sarah, Ella (`CSVCreate`, `CSVAppend`) |
+| [write(contentsOf:)](https://developer.apple.com/documentation/foundation/filehandle/write(contentsof:)) | writing bytes through a handle | Sarah, Ella (`CSVCreate`, `CSVAppend`), Calli (`JSONCreate`) |
 | [readToEnd()](https://developer.apple.com/documentation/foundation/filehandle/readtoend()) | reading a whole file through a handle | Ella (`CSVRead`) |
-| [close()](https://developer.apple.com/documentation/foundation/filehandle/close()) | closing every handle we open | Sarah, Ella (all three CSV programs) |
-| [FileManager](https://developer.apple.com/documentation/foundation/filemanager) · [createFile(atPath:contents:attributes:)](https://developer.apple.com/documentation/foundation/filemanager/createfile(atpath:contents:attributes:)) | creating the file, checking whether it exists | Ella (`createFile` in `CSVCreate`; `fileExists(atPath:)` in `CSVAppend` and `CSVRead`) |
-| [Data(contentsOf:options:)](https://developer.apple.com/documentation/foundation/data/init(contentsof:options:)) | reading the whole JSON file into memory | Sarah |
-| [Data.write(to:options:)](https://developer.apple.com/documentation/foundation/data/write(to:options:)) · [atomic](https://developer.apple.com/documentation/foundation/nsdata/writingoptions/atomic) | writing the JSON with a temp file swapped in | Sarah |
+| [close()](https://developer.apple.com/documentation/foundation/filehandle/close()) | closing every handle we open | Sarah, Ella (all three CSV programs), Calli (`JSONCreate`) |
+| [FileManager](https://developer.apple.com/documentation/foundation/filemanager) · [createFile(atPath:contents:attributes:)](https://developer.apple.com/documentation/foundation/filemanager/createfile(atpath:contents:attributes:)) | creating the file, checking whether it exists | Ella (`createFile` in `CSVCreate`; `fileExists(atPath:)` in `CSVAppend` and `CSVRead`), Calli (`createFile` in `JSONCreate`) |
+| [Data(contentsOf:options:)](https://developer.apple.com/documentation/foundation/data/init(contentsof:options:)) | reading the whole JSON file into memory | Sarah, Calli (`JSONAdd`, `JSONRead`) |
+| [Data.write(to:options:)](https://developer.apple.com/documentation/foundation/data/write(to:options:)) · [atomic](https://developer.apple.com/documentation/foundation/nsdata/writingoptions/atomic) | writing the JSON with a temp file swapped in | Sarah, Calli (`JSONAdd`) |
 
 ## JSON
 
 | Source | Used for | Used by |
 |---|---|---|
-| [JSONEncoder](https://developer.apple.com/documentation/foundation/jsonencoder) · [prettyPrinted](https://developer.apple.com/documentation/foundation/jsonencoder/outputformatting-swift.struct/prettyprinted) | `[Person]` → JSON, readable layout | |
-| [JSONDecoder](https://developer.apple.com/documentation/foundation/jsondecoder) | JSON → `[Person]` | |
+| [JSONEncoder](https://developer.apple.com/documentation/foundation/jsonencoder) · [prettyPrinted](https://developer.apple.com/documentation/foundation/jsonencoder/outputformatting-swift.struct/prettyprinted) | `[Person]` → JSON, readable layout | Calli (`JSONCreate`, `JSONAdd`) |
+| [JSONDecoder](https://developer.apple.com/documentation/foundation/jsondecoder) | JSON → `[Person]` | Calli (`JSONAdd`, `JSONRead`) |
 | [Codable](https://developer.apple.com/documentation/swift/codable) | letting `Person` convert to and from JSON | Georgia (`Person` in `RecordKit/Person.swift`) |
 
 ## Errors
