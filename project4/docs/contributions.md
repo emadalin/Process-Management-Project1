@@ -28,7 +28,15 @@ output to our format table; details are in [`ai-use/georgia.md`](ai-use/georgia.
 
 ## Member 3: Ella Madalinski — CSV programs
 
-_To be written by Ella._
+I built the three CSV programs. `CSVCreate` creates `people.csv`, replacing any old copy, and
+writes records 1–100, one per line with no header. `CSVAppend` opens the existing file without
+erasing it, moves to the end with `seekToEnd()`, and writes records 101–150; if the file is
+missing it stops with an error instead of making a new one. `CSVRead` reads the file, turns each
+line into a `Person`, prints the table and the count, and names the line number if a line doesn't
+have eight fields. Every program closes its file with `defer`, even when a write fails. I checked
+that the first 6,512 bytes of the file are the same before and after the append (`shasum`), and on
+17 November I ran the full workflow on my own Mac. I used Claude Code to write and test the
+programs and to draft my write-ups; details are in [`ai-use/ella.md`](ai-use/ella.md).
 
 ## Member 4: Calli Nash — JSON programs
 

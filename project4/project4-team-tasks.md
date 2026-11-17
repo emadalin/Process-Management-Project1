@@ -53,12 +53,12 @@ Fields in this order for CSV columns **and** both tables:
 - **Every batch includes at least one ZIP starting with 0** (e.g., record 1 and record 101) as the leading-zero check
 
 ## Everyone, on your own Mac
-- [ ] Pull the repo, `cd project4`, run `swift build` — done: Sarah, Stephen, Georgia (16 Nov), Calli (16 Nov)
-- [ ] Run the full workflow from a fresh reset (see README): CSV create → append → read, JSON create → add → read — done: Sarah (15 Nov), Stephen (14 Nov), Georgia (16 Nov), Calli (16 Nov)
-- [ ] Confirm: 100 after create ✓ 150 after add ✓ row 100 is `Maple`, row 101 is `Oak` ✓ ZIP `02134` still has its 0 ✓ missing-file error ✓ — done: Sarah, Stephen, Georgia, Calli
-- [ ] Record: `sw_vers`, `uname -m`, `swift --version`, file system of the output folder (`diskutil info / | grep "File System"`) — done: Sarah (README requirements), Stephen (`docs/test-record.md` §1), Georgia and Calli (`docs/test-record.md` §7)
+- [ ] Pull the repo, `cd project4`, run `swift build` — done: Sarah, Stephen, Georgia (16 Nov), Calli (16 Nov), Ella (17 Nov)
+- [ ] Run the full workflow from a fresh reset (see README): CSV create → append → read, JSON create → add → read — done: Sarah (15 Nov), Stephen (14 Nov), Georgia (16 Nov), Calli (16 Nov), Ella (17 Nov)
+- [ ] Confirm: 100 after create ✓ 150 after add ✓ row 100 is `Maple`, row 101 is `Oak` ✓ ZIP `02134` still has its 0 ✓ missing-file error ✓ — done: Sarah, Stephen, Georgia, Calli, Ella
+- [ ] Record: `sw_vers`, `uname -m`, `swift --version`, file system of the output folder (`diskutil info / | grep "File System"`) — done: Sarah (README requirements), Stephen (`docs/test-record.md` §1), Georgia, Calli and Ella (`docs/test-record.md` §7)
 - [ ] Practice explaining one program you **didn't** write to a teammate
-- [ ] Add your problems/fixes (or "no special fixes needed") to the troubleshooting record (`docs/test-record.md` §7) — done: Stephen, Sarah, Georgia, Calli
+- [ ] Add your problems/fixes (or "no special fixes needed") to the troubleshooting record (`docs/test-record.md` §7) — done: Stephen, Sarah, Georgia, Calli, Ella
 
 ---
 
@@ -126,7 +126,7 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 - [ ] Everyone reads [`docs/study-guide.md`](docs/study-guide.md) (about 10 minutes): the 10 practice questions answered, with the line to point at and the command that shows it. Replaces the learning log
 - [ ] **Teach-back:** each person explains one program they didn't write to someone else before demo day; note who taught whom
 - [ ] **AI-use log:** what AI helped with, and how you checked it (ran it, compared it to the docs, changed it) — one file each in `docs/ai-use/`; Sarah's, Ella's, Georgia's and Calli's are filled in; Stephen's is blank
-- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection — done: Sarah, Georgia, Calli
+- [ ] Each person writes down one **design decision or troubleshooting lesson** for demo section 3 — one or two sentences, at the bottom of your own `docs/ai-use/<name>.md`. This is our written reflection — done: Sarah, Georgia, Calli, Ella
 
 ## Work order
 1. **Everyone** agrees on the record format table above (day 1)
@@ -166,7 +166,7 @@ Owns demo section **3 (missing-file error and what we learned from testing)**.
 - [x] Setup & run instructions (run order, dependencies, output folder, how to reset) — `README.md`
 - [x] `people.csv` and `people.json`, each with 150 fictional records — clean run on Sarah's Mac 15 Nov, in `output/` (not in git; attach these two files)
 - [x] Test record: counts for both workflows, proof the originals were preserved, missing-file result — `docs/test-record.md` (Stephen)
-- [ ] Team contribution statement — `docs/contributions.md`: Sarah's, Georgia's and Calli's done; Ella's and Stephen's to go
+- [ ] Team contribution statement — `docs/contributions.md`: Sarah's, Georgia's, Calli's and Ella's done; Stephen's to go
 - [ ] Resources list, including adapted examples and AI use — `docs/sources.md` + `docs/ai-use/`: three "Used by" cells, adapted examples, and three AI-use files to go
 
 ## Run order (for the README)

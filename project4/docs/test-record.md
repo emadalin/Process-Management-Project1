@@ -155,6 +155,14 @@ records` from both read programs. In both tables row 100 is `100 Maple St`, row 
 `JSONAdd` and `JSONRead` each printed their missing-file message and exited with 1. Both `/` and
 the output folder's volume are APFS.
 
+**Ella's Mac (macOS 27.2 (26B123), arm64, Apple Swift 6.4.2): no special fixes needed.** On 17
+November, after pulling the JSON programs, `swift build` ended with `Build complete!` and the full
+workflow ran from a fresh `./reset.sh`: 100 → 150 lines in the CSV (`wc -l`), `100 → 150` for the
+JSON, and `Read 150 records` from both read programs. In both tables row 100 is `100 Maple St`,
+row 101 is `101 Oak Ave`, and rows 1 and 101 keep ZIP `02134`. After another reset, `CSVAppend`,
+`CSVRead`, `JSONAdd` and `JSONRead` each printed their missing-file message and exited with 1. Both
+`/` and the output folder's volume are APFS.
+
 ## 8. Extra case: an empty (0-byte) file — a real asymmetry, not a guess
 
 Neither format's spec calls this out explicitly, so it was worth checking directly rather than
